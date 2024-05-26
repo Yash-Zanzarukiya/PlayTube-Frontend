@@ -1,30 +1,38 @@
 import React from "react";
-import { MyChannelEmptyVideo } from "../components";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { channelProfile } from "../app/Slices/userSlice";
+
 function MyChannel() {
-  return (
+  const dispatch = useDispatch();
+  const [profile, setProfile] = useState(null);
+  const { username } = useParams();
+
+  useEffect(() => {
+    dispatch(channelProfile(username)).then((res) => setProfile(res.payload));
+  }, [username]);
+
+  return profile ? (
     <section className="relative w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
       <div className="relative min-h-[150px] w-full pt-[16.28%]">
         <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/1092424/pexels-photo-1092424.jpeg?auto=compress"
-            alt="cover-photo"
-          />
+          <img src={profile?.coverImage} alt={profile?.username} />
         </div>
       </div>
       <div className=" px-4 pb-4">
         <div className="flex flex-wrap gap-4 pb-4 pt-6">
           <span className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full border-2">
-            <img
-              src="https://images.pexels.com/photos/1115816/pexels-photo-1115816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Channel"
-              className="h-full w-full"
-            />
+            <img src={profile?.avatar} alt="Channel" className="h-full w-full" />
           </span>
           <div className="mr-auto inline-block">
-            <h1 className="font-bolg text-xl">React Patterns</h1>
-            <p className="text-sm text-gray-400">@reactpatterns</p>
-            <p className="text-sm text-gray-400">600k Subscribers · 220 Subscribed</p>
+            <h1 className="font-bolg text-xl">{profile?.fullName}</h1>
+            <p className="text-sm text-gray-400">@{profile?.username}</p>
+            <p className="text-sm text-gray-400">
+              {profile?.subscribersCount} Subscribers · {profile.channelsSubscribedToCount}{" "}
+              Subscribed
+            </p>
           </div>
           <div className="inline-block">
             <button className="group/btn mr-1 flex w-full items-center gap-x-2 bg-[#ae7aff] px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto">
@@ -33,13 +41,13 @@ function MyChannel() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="2"
+                  strokeWidth="2"
                   stroke="currentColor"
                   aria-hidden="true"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                   ></path>
                 </svg>
@@ -79,6 +87,51 @@ function MyChannel() {
           </li>
         </ul>
         <Outlet />
+      </div>
+    </section>
+  ) : (
+    <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+      {/* Cover Image Skeleton */}
+      <div className="relative min-h-[150px] w-full pt-[16.28%] bg-gray-800 animate-pulse">
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Placeholder for the cover image */}
+        </div>
+      </div>
+
+      <div className="px-4 pb-4">
+        {/* Channel Metadata Skeleton */}
+        <div className="flex flex-wrap gap-4 pb-4 pt-6">
+          <div className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full bg-gray-800 animate-pulse"></div>
+          <div className="mr-auto inline-block">
+            <div className="h-5 w-32 bg-gray-800 rounded animate-pulse"></div>
+            <div className="mt-2 h-3 w-24 bg-gray-800 rounded animate-pulse"></div>
+            <div className="mt-2 h-3 w-40 bg-gray-800 rounded animate-pulse"></div>
+          </div>
+          <div className="inline-block">
+            <div className="inline-flex min-w-[145px] justify-end">
+              <div className="h-10 w-32 bg-gray-800 rounded animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* List Options Skeleton */}
+        <ul className="no-scrollbar sticky top-[66px] z-[2] flex flex-row gap-x-2 overflow-auto border-b-2 border-gray-400 bg-[#121212] py-2 sm:top-[82px]">
+          <li className="w-full">
+            <div className="h-10 w-full bg-gray-800 rounded animate-pulse"></div>
+          </li>
+          <li className="w-full">
+            <div className="h-10 w-full bg-gray-800 rounded animate-pulse"></div>
+          </li>
+          <li className="w-full">
+            <div className="h-10 w-full bg-gray-800 rounded animate-pulse"></div>
+          </li>
+          <li className="w-full">
+            <div className="h-10 w-full bg-gray-800 rounded animate-pulse"></div>
+          </li>
+        </ul>
+
+        {/* Outlet Skeleton */}
+        <div className="h-64 w-full bg-gray-800 rounded animate-pulse"></div>
       </div>
     </section>
   );

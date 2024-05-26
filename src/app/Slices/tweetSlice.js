@@ -13,7 +13,7 @@ const initialState = {
 export const createTweet = createAsyncThunk("tweet/createTweet", async (data) => {
   try {
     const response = await axiosInstance.post(`/tweets`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -24,7 +24,7 @@ export const createTweet = createAsyncThunk("tweet/createTweet", async (data) =>
 export const getTweet = createAsyncThunk("tweet/getTweet", async (userId) => {
   try {
     const response = await axiosInstance.get(`/tweets/users/${userId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -35,7 +35,7 @@ export const getTweet = createAsyncThunk("tweet/getTweet", async (userId) => {
 export const updateTweet = createAsyncThunk("tweet/updateTweet", async (tweetId, data) => {
   try {
     const response = await axiosInstance.patch(`/tweets/${tweetId}`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -46,7 +46,7 @@ export const updateTweet = createAsyncThunk("tweet/updateTweet", async (tweetId,
 export const deleteTweet = createAsyncThunk("tweet/deleteTweet", async (tweetId) => {
   try {
     const response = await axiosInstance.delete(`/tweets/${tweetId}`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));

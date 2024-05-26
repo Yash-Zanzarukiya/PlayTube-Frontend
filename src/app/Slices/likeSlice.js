@@ -13,7 +13,7 @@ const initialState = {
 export const getLikedVideos = createAsyncThunk("like/getLikedVideos", async () => {
   try {
     const response = await axiosInstance.get(`/like/videos`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -24,7 +24,7 @@ export const getLikedVideos = createAsyncThunk("like/getLikedVideos", async () =
 export const toggleCommentLike = createAsyncThunk("like/toggleCommentLike", async (commentId) => {
   try {
     const response = await axiosInstance.patch(`/like/comment/${commentId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -35,7 +35,7 @@ export const toggleCommentLike = createAsyncThunk("like/toggleCommentLike", asyn
 export const toggleTweetLike = createAsyncThunk("like/toggleTweetLike", async (tweetId) => {
   try {
     const response = await axiosInstance.patch(`/like/tweet/${tweetId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -46,7 +46,7 @@ export const toggleTweetLike = createAsyncThunk("like/toggleTweetLike", async (t
 export const toggleVideoLike = createAsyncThunk("like/toggleVideoLike", async (videoId) => {
   try {
     const response = await axiosInstance.patch(`/like/video/${videoId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));

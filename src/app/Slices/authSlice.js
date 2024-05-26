@@ -91,7 +91,7 @@ export const uploadCoverImage = createAsyncThunk("user/coverImage", async () => 
 export const watchHistory = createAsyncThunk("user/history", async () => {
   try {
     const response = await axiosInstance.get(`/users/history`);
-    toast.success(response.data.message);
+    // toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -204,7 +204,7 @@ const authSlice = createSlice({
     builder.addCase(watchHistory.fulfilled, (state, action) => {
       state.loading = false;
       state.status = true;
-      state.userData = action.payload;
+      state.userData.watchHistory = action.payload;
     });
     builder.addCase(watchHistory.rejected, (state) => {
       state.loading = false;

@@ -1,3 +1,14 @@
+body *::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body * {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Request Progressbar styles */
 #nprogress .bar {
   background: red !important;
 }
@@ -11,3 +22,5 @@
   border-top-color: red !important;
   border-left-color: red !important;
 }
+
+

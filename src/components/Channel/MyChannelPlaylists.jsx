@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MyChannelEmptyPlaylist from "./MyChannelEmptyPlaylist";
+import MyChannelEmptyPlaylist from "../Playlist/MyChannelEmptyPlaylist";
 function MyChannelPlaylists() {
   const [playlist, setPlaylist] = useState("");
 

@@ -11,7 +11,7 @@ function ChangePassword() {
         <div className="rounded-lg border">
           <div className="flex flex-wrap gap-y-4 p-4">
             <div className="w-full">
-              <label className="mb-1 inline-block" for="old-pwd">
+              <label className="mb-1 inline-block" htmlFor="old-pwd">
                 Current password
               </label>
               <input
@@ -22,7 +22,7 @@ function ChangePassword() {
               />
             </div>
             <div className="w-full">
-              <label className="mb-1 inline-block" for="new-pwd">
+              <label className="mb-1 inline-block" htmlFor="new-pwd">
                 New password
               </label>
               <input
@@ -36,7 +36,7 @@ function ChangePassword() {
               </p>
             </div>
             <div className="w-full">
-              <label className="mb-1 inline-block" for="cnfrm-pwd">
+              <label className="mb-1 inline-block" htmlFor="cnfrm-pwd">
                 Confirm password
               </label>
               <input

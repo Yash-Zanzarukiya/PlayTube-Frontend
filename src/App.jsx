@@ -1,7 +1,7 @@
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { login, logout, getCurrentUser } from "./app/Slices/authSlice";
+import { getCurrentUser } from "./app/Slices/authSlice";
 import { healthCheck } from "./app/Slices/healthcheck";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -11,7 +11,6 @@ function App() {
 
   useEffect(() => {
     dispatch(healthCheck());
-    dispatch(login({ username: "yashpz", password: "12345678" }));
     dispatch(getCurrentUser());
   }, []);
 

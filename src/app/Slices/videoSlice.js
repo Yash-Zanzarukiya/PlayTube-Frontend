@@ -13,7 +13,7 @@ const initialState = {
 export const publishVideo = createAsyncThunk("video/publishVideo", async (data) => {
   try {
     const response = await axiosInstance.post(`/videos`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -24,7 +24,7 @@ export const publishVideo = createAsyncThunk("video/publishVideo", async (data) 
 export const getVideo = createAsyncThunk("video/getVideo", async (videoId) => {
   try {
     const response = await axiosInstance.get(`/videos/${videoId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -32,11 +32,11 @@ export const getVideo = createAsyncThunk("video/getVideo", async (videoId) => {
   }
 });
 
-export const getAllVideos = createAsyncThunk("video/getAllVideos", async () => {
+export const getAllVideos = createAsyncThunk("video/getAllVideos", async (userId) => {
   try {
     // TESTME : Not Implemented
-    const response = await axiosInstance.get(`/videos`);
-    toast.success(response.data.message);
+    const response = await axiosInstance.get(`/videos?userId=${userId}`);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -47,7 +47,7 @@ export const getAllVideos = createAsyncThunk("video/getAllVideos", async () => {
 export const updateVideo = createAsyncThunk("video/updateVideo", async (videoId, data) => {
   try {
     const response = await axiosInstance.patch(`/videos/${videoId}`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
@@ -57,7 +57,7 @@ export const updateVideo = createAsyncThunk("video/updateVideo", async (videoId,
 export const deleteVideo = createAsyncThunk("video/deleteVideo", async (videoId) => {
   try {
     const response = await axiosInstance.delete(`/videos/${videoId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
@@ -68,7 +68,7 @@ export const togglePublish = createAsyncThunk("video/togglePublish", async (vide
   try {
     // THINKME : how it will work
     const response = await axiosInstance.patch(`/videos/toggle/publish/${videoId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -79,7 +79,7 @@ export const togglePublish = createAsyncThunk("video/togglePublish", async (vide
 export const updateView = createAsyncThunk("video/updateView", async (videoId) => {
   try {
     const response = await axiosInstance.patch(`/videos/view/${videoId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);

@@ -29,9 +29,8 @@ import {
   Settings,
   EditChannelInfo,
   ChangePassword,
-  UploadingVideo,
-  UploadVideo,
   PlaylistVideos,
+  AuthLayout,
 } from "./components/index.js";
 import FeedVideos from "./pages/FeedVideos.jsx";
 import Channel from "./pages/Channel.jsx";
@@ -45,41 +44,98 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="" element={<Home />}>
         <Route path="" element={<Feed />}>
-          // Home Page Feed Videos
+          {/* Home Page Feed Videos */}
           <Route path="" element={<FeedVideos />} />
-          <Route path="feed/history" element={<History />} />
-          <Route path="feed/liked" element={<LikedVideos />} />
-          <Route path="feed/subscribers" element={<Subscribers />} />
-          // User Feeds // All Other Channels
+          {/* Playlists */}
+          <Route path="playlist/:playlistId" element={<PlaylistVideos />} />
+          {/* All Other Channels */}
           <Route path="user/:username" element={<Channel />}>
-            <Route path="videos" element={<ChannelVideos />} />
+            <Route path="" element={<ChannelVideos />} />
             <Route path="playlists" element={<ChannelPlaylist />} />
             <Route path="tweets" element={<ChannelTweets />} />
             <Route path="subscribed" element={<ChannelSubscribed />} />
           </Route>
-          // Owning My Channel
-          <Route path="channel/:username" element={<MyChannel />}>
+          {/* User Feeds */}
+          <Route
+            path="feed/history"
+            element={
+              <AuthLayout authentication>
+                <History />
+              </AuthLayout>
+            }
+          />
+          <Route
+            path="feed/liked"
+            element={
+              <AuthLayout authentication>
+                <LikedVideos />
+              </AuthLayout>
+            }
+          />
+          <Route
+            path="feed/subscribers"
+            element={
+              <AuthLayout authentication>
+                <Subscribers />
+              </AuthLayout>
+            }
+          />
+          {/* Owning My Channel(currently Logged in user) */}
+          <Route
+            path="channel/:username"
+            element={
+              <AuthLayout authentication>
+                <MyChannel />
+              </AuthLayout>
+            }
+          >
             <Route path="" element={<MyChannelVideos />} />
             <Route path="tweets" element={<MyChannelTweets />} />
             <Route path="playlists" element={<MyChannelPlaylists />} />
             <Route path="subscribed" element={<MyChannelSubscribed />} />
           </Route>
-          //Settings
-          <Route path="settings" element={<Settings />}>
+          {/* Settings */}
+          <Route
+            path="settings"
+            element={
+              <AuthLayout authentication>
+                <Settings />
+              </AuthLayout>
+            }
+          >
             <Route path="" element={<EditPersonalInfo />} />
             <Route path="channelinfo" element={<EditChannelInfo />} />
             <Route path="changepwd" element={<ChangePassword />} />
           </Route>
-          // Playlists
-          <Route path="playlist/:playlistId" element={<PlaylistVideos />} />
         </Route>
-        //Video Watching
-        <Route path="/video/:videoId" element={<VideoDetail />} />
-        // Admin Dashboard
-        <Route path="/admin/dashboard" element={<Dashboard />} />
+        {/* Video Watching */}
+        <Route path="/watch/:videoId" element={<VideoDetail />} />
+        {/* Admin Dashboard */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AuthLayout authentication>
+              <Dashboard />
+            </AuthLayout>
+          }
+        />
       </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route
+        path="/login"
+        element={
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <AuthLayout authentication={false}>
+            <SignUp />
+          </AuthLayout>
+        }
+      />
     </Route>
   )
 );

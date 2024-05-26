@@ -17,25 +17,21 @@ function EditVideo() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
           </div>
-          <label for="thumbnail" className="mb-1 inline-block">
+          <label htmlFor="thumbnail" className="mb-1 inline-block">
             Thumbnail
             <sup>*</sup>
           </label>
           <label
             className="relative mb-4 block cursor-pointer border border-dashed p-2 after:absolute after:inset-0 after:bg-transparent hover:after:bg-black/10"
-            for="thumbnail"
+            htmlFor="thumbnail"
           >
             <input type="file" className="sr-only" id="thumbnail" />
             <img
@@ -45,7 +41,7 @@ function EditVideo() {
           </label>
           <div className="mb-6 flex flex-col gap-y-4">
             <div className="w-full">
-              <label for="title" className="mb-1 inline-block">
+              <label htmlFor="title" className="mb-1 inline-block">
                 Title
                 <sup>*</sup>
               </label>
@@ -57,7 +53,7 @@ function EditVideo() {
               />
             </div>
             <div className="w-full">
-              <label for="desc" className="mb-1 inline-block">
+              <label htmlFor="desc" className="mb-1 inline-block">
                 Description
                 <sup>*</sup>
               </label>

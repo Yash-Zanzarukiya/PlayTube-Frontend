@@ -19,24 +19,39 @@ import EmptyTweet from "./Tweet/EmptyTweet";
 import ChannelTweets from "./Tweet/ChannelTweets";
 import ChannelSubscribed from "./Subscription/ChannelSubscribed";
 import EmptySubscription from "./Subscription/EmptySubscription";
-import MyChannelEmptyVideo from "./Channel/MyChannelEmptyVideo";
+import MyChannelEmptyVideo from "./Video/MyChannelEmptyVideo";
 import UploadVideo from "./Channel/UploadVideo";
 import UploadingVideo from "./Channel/UploadingVideo";
 import UploadSuccess from "./Channel/UploadSuccess";
-import MyChannelEmptyTweet from "./Channel/MyChannelEmptyTweet";
+import MyChannelEmptyTweet from "./Tweet/MyChannelEmptyTweet";
 import MyChannelTweets from "./Channel/MyChannelTweets";
-import EditPersonalInfo from "./Channel/EditPersonalInfo";
-import EditChannelInfo from "./Channel/EditChannelInfo";
-import ChangePassword from "./Channel/ChangePassword";
+import EditPersonalInfo from "./Settings/EditPersonalInfo";
+import EditChannelInfo from "./Settings/EditChannelInfo";
+import ChangePassword from "./Settings/ChangePassword";
 import EditVideo from "./Dashboard/EditVideo";
 import DeleteVideo from "./Dashboard/DeleteVideo";
 import VideoGrid from "./Video/VideoGrid";
 import MyChannelVideos from "./Channel/MyChannelVideos";
 import MyChannelSubscribed from "./Channel/MyChannelSubscribed";
 import MyChannelPlaylists from "./Channel/MyChannelPlaylists";
-import Settings from "./Channel/Settings";
+import Settings from "./Settings/Settings";
+import Input from "./Atoms/Input";
+import Button from "./Atoms/Button";
+import Comments from "./Video/Comments";
+import LogoutBtn from "./Atoms/LogoutBtn";
+import LikesComponent from "./Atoms/LikesComponent";
+import MyChannelEmptyPlaylist from "./Playlist/MyChannelEmptyPlaylist";
+import MyChannelEmptySubscribed from "./Subscription/MyChannelEmptySubscribed";
+
 export {
   Settings,
+  MyChannelEmptySubscribed,
+  MyChannelEmptyPlaylist,
+  Comments,
+  LikesComponent,
+  LogoutBtn,
+  Button,
+  Input,
   MyChannelVideos,
   MyChannelPlaylists,
   MyChannelSubscribed,

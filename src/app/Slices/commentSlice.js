@@ -13,7 +13,7 @@ const initialState = {
 export const getVideoComments = createAsyncThunk("comment/getVideoComments", async (videoId) => {
   try {
     const response = await axiosInstance.get(`/comment/get/${videoId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -24,7 +24,7 @@ export const getVideoComments = createAsyncThunk("comment/getVideoComments", asy
 export const addComment = createAsyncThunk("comment/addComment", async (videoId, data) => {
   try {
     const response = await axiosInstance.post(`/comment/add/${videoId}`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -35,7 +35,7 @@ export const addComment = createAsyncThunk("comment/addComment", async (videoId,
 export const updateComment = createAsyncThunk("comment/updateComment", async (commentId, data) => {
   try {
     const response = await axiosInstance.patch(`/comment/${commentId}`, data);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
@@ -46,7 +46,7 @@ export const updateComment = createAsyncThunk("comment/updateComment", async (co
 export const deleteComment = createAsyncThunk("comment/deleteComment", async (commentId) => {
   try {
     const response = await axiosInstance.delete(`/comment/${commentId}`);
-    toast.success(response.data.message);
+    //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
