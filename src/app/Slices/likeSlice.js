@@ -21,9 +21,9 @@ export const getLikedVideos = createAsyncThunk("like/getLikedVideos", async () =
   }
 });
 
-export const toggleCommentLike = createAsyncThunk("like/toggleCommentLike", async (commentId) => {
+export const toggleLike = createAsyncThunk("like/toggleLike", async ({ qs, toggleLike }) => {
   try {
-    const response = await axiosInstance.patch(`/like/comment/${commentId}`);
+    const response = await axiosInstance.patch(`/like?toggleLike=${toggleLike}&${qs}`);
     //toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
@@ -31,6 +31,21 @@ export const toggleCommentLike = createAsyncThunk("like/toggleCommentLike", asyn
     console.log(error);
   }
 });
+export const toggleCommentLike = createAsyncThunk(
+  "like/toggleCommentLike",
+  async ({ commentId, toggleLike }) => {
+    try {
+      const response = await axiosInstance.patch(
+        `/like/comment/${commentId}?toggleLike=${toggleLike}`
+      );
+      //toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      toast.error(parseErrorMessage(error.response.data));
+      console.log(error);
+    }
+  }
+);
 
 export const toggleTweetLike = createAsyncThunk("like/toggleTweetLike", async (tweetId) => {
   try {
@@ -61,6 +76,7 @@ const likeSlice = createSlice({
     // get Liked Videos
     builder.addCase(getLikedVideos.pending, (state) => {
       state.loading = true;
+      state.data = null;
     });
     builder.addCase(getLikedVideos.fulfilled, (state, action) => {
       state.loading = false;
@@ -72,9 +88,25 @@ const likeSlice = createSlice({
       state.status = false;
     });
 
+    // toggle like
+    builder.addCase(toggleLike.pending, (state) => {
+      state.loading = true;
+      state.data = null;
+    });
+    builder.addCase(toggleLike.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.status = true;
+    });
+    builder.addCase(toggleLike.rejected, (state) => {
+      state.loading = false;
+      state.status = false;
+    });
+
     // toggle Comment Like
     builder.addCase(toggleCommentLike.pending, (state) => {
       state.loading = true;
+      state.data = null;
     });
     builder.addCase(toggleCommentLike.fulfilled, (state, action) => {
       state.loading = false;

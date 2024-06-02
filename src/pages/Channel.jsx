@@ -75,28 +75,28 @@ function Channel() {
         {/* List Options */}
         <ul className="no-scrollbar sticky top-[66px] z-[2] flex flex-row gap-x-2 overflow-auto border-b-2 border-gray-400 bg-[#121212] py-2 sm:top-[82px]">
           <li className="w-full">
-            <NavLink to={""} activeClassName="active" className="navlink">
+            <NavLink to={""} activeclassname="active" className="navlink">
               <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
                 Videos
               </button>
             </NavLink>
           </li>
           <li className="w-full">
-            <NavLink to={"playlists"} activeClassName="active">
+            <NavLink to={"playlists"} activeclassname="active">
               <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
                 Playlist
               </button>
             </NavLink>
           </li>
           <li className="w-full">
-            <NavLink to={"tweets"} activeClassName="active">
+            <NavLink to={"tweets"} activeclassname="active">
               <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
                 Tweets
               </button>
             </NavLink>
           </li>
           <li className="w-full">
-            <NavLink to={"subscribed"} activeClassName="active">
+            <NavLink to={"subscribed"} activeclassname="active">
               <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
                 Subscribed
               </button>

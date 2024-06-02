@@ -15,7 +15,7 @@ export const toggleSubscription = createAsyncThunk(
   async (channelId) => {
     try {
       const response = await axiosInstance.patch(`/subscription/${channelId}`);
-      //toast.success(response.data.message);
+      toast.success(response.data.message);
       return response.data.data;
     } catch (error) {
       toast.error(parseErrorMessage(error.response.data));

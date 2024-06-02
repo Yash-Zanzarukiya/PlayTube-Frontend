@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../../app/Slices/authSlice";
 
-function EditChannelInfo() {
+function EditChannelInfo({ userData }) {
+  const defaultValues = {
+    username: userData?.username,
+    description:
+      userData?.description ||
+      "I'm a Product Designer based in Melbourne, Australia. I specialise in UX/UI design, brand strategy, and Webflow development.",
+  };
+
+  const [data, setData] = useState(defaultValues);
+  const dispatch = useDispatch();
+
+  const handleSaveChange = (event) => {
+    event.preventDefault();
+    const formData = { username: data?.username, description: data?.description };
+    dispatch(updateProfile(formData)).then((res) => {
+      if (res.type != "auth/updateProfile/rejected") {
+        setData(res.payload);
+      }
+    });
+  };
+
+  const handleCancle = () => setData(defaultValues);
+
   return (
     <div className="flex flex-wrap justify-center gap-y-4 py-4">
       <div className="w-full sm:w-1/2 lg:w-1/3">
@@ -8,7 +32,7 @@ function EditChannelInfo() {
         <p className="text-gray-300">Update your Channel details here.</p>
       </div>
       <div className="w-full sm:w-1/2 lg:w-2/3">
-        <div className="rounded-lg border">
+        <form onSubmit={handleSaveChange} className="rounded-lg border">
           <div className="flex flex-wrap gap-y-4 p-4">
             <div className="w-full">
               <label className="mb-1 inline-block" htmlFor="username">
@@ -22,8 +46,10 @@ function EditChannelInfo() {
                   type="text"
                   className="w-full bg-transparent px-2 py-1.5"
                   id="username"
+                  name="username"
                   placeholder="@username"
-                  value="reactpatterns"
+                  onChange={(e) => setData((pre) => ({ ...pre, username: e.target.value }))}
+                  value={data?.username}
                 />
               </div>
             </div>
@@ -37,8 +63,7 @@ function EditChannelInfo() {
                 id="desc"
                 placeholder="Channel Description"
               >
-                I&#x27;m a Product Designer based in Melbourne, Australia. I specialise in UX/UI
-                design, brand strategy, and Webflow development.
+                {data?.description}
               </textarea>
               <p className="mt-0.5 text-sm text-gray-300">275 characters left</p>
             </div>
@@ -199,14 +224,23 @@ function EditChannelInfo() {
           </div>
           <hr className="border border-gray-300" />
           <div className="flex items-center justify-end gap-4 p-4">
-            <button className="inline-block rounded-lg border px-3 py-1.5 hover:bg-white/10">
+            <button
+              type="button"
+              disabled={data == defaultValues}
+              onClick={() => handleCancle()}
+              className="inline-block rounded-lg border px-3 py-1.5 hover:bg-white/10 disabled:cursor-not-allowed"
+            >
               Cancel
             </button>
-            <button className="inline-block bg-[#ae7aff] px-3 py-1.5 text-black">
+            <button
+              type="submit"
+              disabled={data == defaultValues}
+              className="inline-block bg-[#ae7aff] px-3 py-1.5 text-black disabled:cursor-not-allowed"
+            >
               Save changes
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

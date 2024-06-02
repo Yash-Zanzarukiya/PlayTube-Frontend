@@ -31,3 +31,16 @@ export function formatVideoDuration(duration) {
     return `${minutes}:${seconds}`;
   }
 }
+
+export function formatDate(timestamp) {
+  const date = new Date(timestamp);
+  const day = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
+  const month = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth();
+  return day + "/" + month + "/" + date.getFullYear();
+}
+
+export function formatSubscription(count) {
+  if (count < 1) return "0 Subscriber";
+  else if (count == 1) return "1 Subscriber";
+  else if (count > 1) return `${count} Subscribers`;
+}

@@ -127,7 +127,7 @@ function Aside() {
                 </svg>
               </span>
               <span className="block sm:hidden sm:group-hover:inline lg:inline">
-                Admin Collections
+                Admin
               </span>
             </button>
           </NavLink>

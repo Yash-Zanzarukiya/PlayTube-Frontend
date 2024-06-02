@@ -89,10 +89,10 @@ const router = createBrowserRouter(
               </AuthLayout>
             }
           >
-            <Route path="" element={<MyChannelVideos />} />
-            <Route path="tweets" element={<MyChannelTweets />} />
-            <Route path="playlists" element={<MyChannelPlaylists />} />
-            <Route path="subscribed" element={<MyChannelSubscribed />} />
+            <Route path="" element={<ChannelVideos owner />} />
+            <Route path="tweets" element={<ChannelTweets owner />} />
+            <Route path="playlists" element={<ChannelPlaylist owner />} />
+            <Route path="subscribed" element={<ChannelSubscribed owner />} />
           </Route>
           {/* Settings */}
           <Route
@@ -102,11 +102,7 @@ const router = createBrowserRouter(
                 <Settings />
               </AuthLayout>
             }
-          >
-            <Route path="" element={<EditPersonalInfo />} />
-            <Route path="channelinfo" element={<EditChannelInfo />} />
-            <Route path="changepwd" element={<ChangePassword />} />
-          </Route>
+          />
         </Route>
         {/* Video Watching */}
         <Route path="/watch/:videoId" element={<VideoDetail />} />

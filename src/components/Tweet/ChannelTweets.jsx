@@ -2,58 +2,124 @@ import React, { useState } from "react";
 import EmptyTweet from "./EmptyTweet";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getTweet } from "../../app/Slices/tweetSlice";
+import { getTweet, createTweet } from "../../app/Slices/tweetSlice";
 import { formatTimestamp } from "../../helpers/formatFigures";
-import TweetLike from "./TweetLike";
-import { MyChannelEmptyTweet } from "../index";
+import { LikesComponent, MyChannelEmptyTweet, TweetAtom } from "../index";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-function ChannelTweets() {
-  const [tweets, setTweets] = useState("null");
-  const [isLoading, setIsLoading] = useState(true);
+function ChannelTweets({ owner = false }) {
+  const [localTweets, setLocalTweets] = useState(null);
+  const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
-
-  const userId = useSelector((state) => state.user.userData?._id);
-  const currentUser = useSelector((state) => state.auth.userData?._id);
+  let { username } = useParams();
+  const { data, status } = useSelector((state) => state.tweet);
+  let userId = useSelector((state) => state.user.userData?._id);
+  let currentUser = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
+    if (owner) {
+      userId = currentUser?._id;
+    }
+    if (!userId) return;
     dispatch(getTweet(userId)).then((res) => {
-      setIsLoading(false);
-      setTweets(res.payload);
+      setLocalTweets(res.payload);
     });
-  }, [userId]);
+  }, [username, userId]);
 
-  if (isLoading) {
-    return <h1></h1>;
+  function addTweet(data) {
+    if (!data.trim()) {
+      toast.error("Content is required");
+      return;
+    } else if (data.trim()?.length < 10) {
+      toast.error("Minimum 10 characters are required");
+      return;
+    } else if (data.trim()?.length > 80) {
+      toast.error("Maximum 80 characters are allowed");
+      return;
+    }
+    dispatch(createTweet({ data }));
   }
 
-  return tweets?.length > 1 ? (
-    <div className="py-4">
-      {tweets.map((tweet) => (
-        <div className="flex gap-3 border-b border-gray-700 py-4 last:border-b-transparent">
-          <div className="h-14 w-14 shrink-0">
-            <img
-              src={tweet.owner.avatar}
-              alt={tweet.owner.username}
-              className="h-full w-full rounded-full"
-            />
+  if (!localTweets) {
+    return (
+      <h1 className="h-full w-full text-center text-3xl text-orange-700">Loading tweets...</h1>
+    );
+  }
+
+  let tweets = data || localTweets;
+
+  if (!status && !tweets) {
+    return (
+      <h1 className="h-full w-full text-center text-3xl text-white bg-orange-700">
+        Something went wrong tweet...
+      </h1>
+    );
+  }
+
+  return (
+    <>
+      {owner && (
+        <form onSubmit={handleSubmit(addTweet)} className="mt-2 border pb-2">
+          <textarea
+            {...register("tweet")}
+            className="mb-2 h-10 w-full resize-none border-none bg-transparent px-3 pt-2 outline-none"
+            placeholder="Write a tweet"
+          ></textarea>
+
+          <div className="flex items-center justify-end gap-x-3 px-3">
+            {/* Emoji button */}
+            <button type="button" className="inline-block h-5 w-5 hover:text-[#ae7aff]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
+                ></path>
+              </svg>
+            </button>
+            {/* Cancel button */}
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="py-1 rounded-xl px-3 hover:text-black hover:bg-slate-500"
+            >
+              cancel
+            </button>
+            {/* send button */}
+            <button type="submit" className="bg-[#ae7aff] px-3 py-2 font-semibold text-black">
+              Send
+            </button>
           </div>
-          <div className="w-full">
-            <h4 className="mb-1 flex items-center gap-x-2">
-              <span className="font-semibold">{tweet.owner.fullName}</span> 
-              <span className="inline-block text-sm text-gray-400">
-                {formatTimestamp(tweet.createdAt)}
-              </span>
-            </h4>
-            <p className="mb-2">{tweet.content}</p>
-            <TweetLike
-              tweetId={tweet._id}
-              isLikedInitially={tweet.isLiked}
-              totalLikes={tweet.totalLikes}
-            />
-          </div>
-        </div>
-      ))}
-      {/* <div className="flex gap-3 border-b border-gray-700 py-4 last:border-b-transparent">
+        </form>
+      )}
+      {tweets?.length > 0 ? (
+        <ul className="py-4">
+          {tweets.map((tweet) => (
+            <TweetAtom tweet={tweet} owner />
+          ))}
+        </ul>
+      ) : owner ? (
+        <MyChannelEmptyTweet />
+      ) : (
+        <EmptyTweet />
+      )}
+    </>
+  );
+}
+
+export default ChannelTweets;
+
+{
+  /* <div className="flex gap-3 border-b border-gray-700 py-4 last:border-b-transparent">
         <div className="h-14 w-14 shrink-0">
           <img
             src="https://images.pexels.com/photos/1115816/pexels-photo-1115816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -682,13 +748,5 @@ function ChannelTweets() {
             </button>
           </div>
         </div>
-      </div> */}
-    </div>
-  ) : currentUser === userId ? (
-    <MyChannelEmptyTweet />
-  ) : (
-    <EmptyTweet />
-  );
+      </div> */
 }
-
-export default ChannelTweets;

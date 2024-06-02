@@ -3,7 +3,8 @@ import { EmptySubscription, MyChannelEmptySubscribed } from "../index";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getSubscribedChannels } from "../../app/Slices/subscriptionSlice";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { formatSubscription } from "../../helpers/formatFigures";
 
 // FIXME Fix redux logic in channel
 
@@ -12,15 +13,20 @@ function ChannelSubscribed() {
   const [subscribed, setSubscribed] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  let { username } = useParams();
   let channelId = useSelector((state) => state.user.userData?._id);
-  const currentUser = useSelector((state) => state.auth.userData?._id);
+  let currentUser = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
+    if (username === currentUser?.username) {
+      channelId = currentUser?._id;
+    }
+    if (!channelId) return;
     dispatch(getSubscribedChannels(channelId)).then((res) => {
       setIsLoading(false);
       setSubscribed(res.payload);
     });
-  }, [channelId]);
+  }, [username, channelId]);
 
   if (isLoading) {
     return (
@@ -78,7 +84,7 @@ function ChannelSubscribed() {
   }
 
   return subscribed?.length > 0 ? (
-    <div className="flex flex-col gap-y-4 py-4">
+    <ul className="flex flex-col gap-y-4 py-4">
       <div className="relative mb-2 rounded-lg bg-white py-2 pl-8 pr-3 text-black">
         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400">
           <svg
@@ -101,7 +107,7 @@ function ChannelSubscribed() {
       </div>
 
       {subscribed?.map((channelData) => (
-        <div className="flex w-full justify-between">
+        <li key={channelData.channel._id} className="flex w-full justify-between">
           <div className="flex items-center gap-x-2">
             <div className="h-14 w-14 shrink-0">
               <Link to={`/user/${channelData.channel.username}`}>
@@ -118,7 +124,9 @@ function ChannelSubscribed() {
                   {channelData.channel.fullName}
                 </Link>
               </h6>
-              <p className="text-sm text-gray-300">20K Subscribers</p>
+              <p className="text-sm text-gray-300">
+                {formatSubscription(channelData.channel.subscribersCount)}
+              </p>
             </div>
           </div>
           <div className="block">
@@ -130,7 +138,7 @@ function ChannelSubscribed() {
               <span>{channelData.channel.isSubscribed ? "Subscribed" : "Subscribe"}</span>
             </button>
           </div>
-        </div>
+        </li>
       ))}
 
       {/* subscribe button */}
@@ -140,8 +148,8 @@ function ChannelSubscribed() {
           <span className="hidden group-focus/btn:inline">Subscribed</span>
         </button>
       </div> */}
-    </div>
-  ) : currentUser === channelId ? (
+    </ul>
+  ) : currentUser?._id === channelId ? (
     <MyChannelEmptySubscribed />
   ) : (
     <EmptySubscription />

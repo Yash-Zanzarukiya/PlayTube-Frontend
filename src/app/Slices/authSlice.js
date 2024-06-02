@@ -18,6 +18,7 @@ export const login = createAsyncThunk("auth/login", async (data) => {
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error;
   }
 });
 
@@ -28,6 +29,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error;
   }
 });
 
@@ -42,9 +44,14 @@ export const getCurrentUser = createAsyncThunk("auth/getCurrentUser", async () =
   }
 });
 
+// FIXME MAke me secure by urlrncoding
 export const changePassword = createAsyncThunk("auth/changePassword", async (data) => {
   try {
-    const response = await axiosInstance.patch("/users/change-password", data);
+    const response = await axiosInstance.patch("/users/change-password", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
@@ -55,9 +62,14 @@ export const changePassword = createAsyncThunk("auth/changePassword", async (dat
 
 // TODO: Refresh Access Token
 
-const updateProfile = createAsyncThunk("auth/updateProfile", async (data) => {
+export const updateProfile = createAsyncThunk("auth/updateProfile", async (data) => {
   try {
-    const response = await axiosInstance.patch("/users/update-profile", data);
+    const response = await axiosInstance.patch("/users/update-profile", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
@@ -74,6 +86,7 @@ export const uploadAvatar = createAsyncThunk("user/avatar", async () => {
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error;
   }
 });
 
@@ -85,6 +98,7 @@ export const uploadCoverImage = createAsyncThunk("user/coverImage", async () => 
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error
   }
 });
 
@@ -96,6 +110,7 @@ export const watchHistory = createAsyncThunk("user/history", async () => {
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error
   }
 });
 
@@ -129,6 +144,7 @@ const authSlice = createSlice({
     });
     builder.addCase(logout.rejected, (state) => {
       state.loading = false;
+      state.status = false;
     });
 
     //getCurrentUser

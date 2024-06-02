@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../../app/Slices/authSlice";
 
-function EditPersonalInfo() {
+function EditPersonalInfo({ userData }) {
+  const defaultValues = {
+    firstname: (userData?.fullName.split(" ", 2))[0] || "",
+    lastname: (userData?.fullName.split(" ", 2))[1] || "",
+    email: userData?.email || "",
+  };
+
+  const [data, setData] = useState(defaultValues);
+  const dispatch = useDispatch();
+
+  const handleSaveChange = (event) => {
+    event.preventDefault();
+    const formData = { fullName: data.firstname + " " + data.lastname, email: data.email };
+    dispatch(updateProfile(formData)).then((res) => {
+    });
+  };
+
+  const handleCancle = () => setData(defaultValues);
+
   return (
     <div className="flex flex-wrap justify-center gap-y-4 py-4">
+      {/* heading */}
       <div className="w-full sm:w-1/2 lg:w-1/3">
         <h5 className="font-semibold">Personal Info</h5>
         <p className="text-gray-300">Update your photo and personal details.</p>
       </div>
+      {/* Update Box */}
       <div className="w-full sm:w-1/2 lg:w-2/3">
-        <div className="rounded-lg border">
+        <form onSubmit={handleSaveChange} className="rounded-lg border">
+          {/* Form Inputs */}
           <div className="flex flex-wrap gap-y-4 p-4">
+            {/* Fields */}
             <div className="w-full lg:w-1/2 lg:pr-2">
               <label htmlFor="firstname" className="mb-1 inline-block">
                 First name
@@ -18,8 +42,14 @@ function EditPersonalInfo() {
                 type="text"
                 className="w-full rounded-lg border bg-transparent px-2 py-1.5"
                 id="firstname"
+                name="firstname"
                 placeholder="Enter first name"
-                value="React"
+                onChange={(e) =>
+                  setData((pre) => {
+                    return { ...pre, firstname: e.target.value };
+                  })
+                }
+                value={data?.firstname}
               />
             </div>
             <div className="w-full lg:w-1/2 lg:pl-2">
@@ -30,8 +60,10 @@ function EditPersonalInfo() {
                 type="text"
                 className="w-full rounded-lg border bg-transparent px-2 py-1.5"
                 id="lastname"
+                name="lastname"
                 placeholder="Enter last name"
-                value="Patterns"
+                onChange={(e) => setData((pre) => ({ ...pre, lastname: e.target.value }))}
+                value={data?.lastname}
               />
             </div>
             <div className="w-full">
@@ -58,23 +90,36 @@ function EditPersonalInfo() {
                 <input
                   type="email"
                   className="w-full rounded-lg border bg-transparent py-1.5 pl-10 pr-2"
-                  id="lastname"
+                  id="email"
+                  name="email"
                   placeholder="Enter email address"
-                  value="patternsreact@gmail.com"
+                  onChange={(e) => setData((pre) => ({ ...pre, email: e.target.value }))}
+                  value={data?.email}
                 />
               </div>
             </div>
           </div>
           <hr className="border border-gray-300" />
+          {/* Action Buttons */}
           <div className="flex items-center justify-end gap-4 p-4">
-            <button className="inline-block rounded-lg border px-3 py-1.5 hover:bg-white/10">
+            <button
+              type="button"
+              onClick={handleCancle}
+              disabled={data == defaultValues}
+              className="inline-block rounded-lg border px-3 py-1.5 hover:bg-white/10 disabled:cursor-not-allowed"
+            >
               Cancel
             </button>
-            <button className="inline-block bg-[#ae7aff] px-3 py-1.5 text-black">
+
+            <button
+              type="submit"
+              disabled={data == defaultValues}
+              className="inline-block bg-[#ae7aff] px-3 py-1.5 text-black disabled:cursor-not-allowed"
+            >
               Save changes
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

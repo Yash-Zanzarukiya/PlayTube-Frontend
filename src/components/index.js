@@ -37,13 +37,18 @@ import MyChannelPlaylists from "./Channel/MyChannelPlaylists";
 import Settings from "./Settings/Settings";
 import Input from "./Atoms/Input";
 import Button from "./Atoms/Button";
-import Comments from "./Video/Comments";
+import Comments from "./Comment/Comments";
 import LogoutBtn from "./Atoms/LogoutBtn";
 import LikesComponent from "./Atoms/LikesComponent";
 import MyChannelEmptyPlaylist from "./Playlist/MyChannelEmptyPlaylist";
 import MyChannelEmptySubscribed from "./Subscription/MyChannelEmptySubscribed";
-
+import CommentLike from "./Comment/CommentLike";
+import CommentAtom from "./Comment/CommentAtom";
+import TweetAtom from "./Tweet/TweetAtom";
 export {
+  TweetAtom,
+  CommentAtom,
+  CommentLike,
   Settings,
   MyChannelEmptySubscribed,
   MyChannelEmptyPlaylist,

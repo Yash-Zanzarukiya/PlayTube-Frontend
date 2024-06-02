@@ -1,32 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { toggleLike } from "../../app/Slices/likeSlice";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { toggleCommentLike } from "../../app/Slices/likeSlice";
 
-function LikesComponent({
-  videoId,
+function CommentLike({
   commentId,
-  tweetId,
   isLiked = false,
   totalLikes = 0,
   isDisLiked = false,
   totalDisLikes = 0,
 }) {
+  const dispatch = useDispatch();
   const [like, setLike] = useState({ isLiked, totalLikes });
   const [dislike, setDislike] = useState({ isDisLiked, totalDisLikes });
-  const dispatch = useDispatch();
 
-  const handleToggleLike = (status) => {
-    let qs = "";
-    if (videoId) qs = `videoId=${videoId}`;
-    else if (commentId) qs = `commentId=${commentId}`;
-    else if (tweetId) qs = `tweetId=${tweetId}`;
-    else return toast.error("No id found");
-    dispatch(toggleLike({ qs, toggleLike: status })).then((res) => {
+  const toggleLike = (toggleLike) => {
+    dispatch(toggleCommentLike({ commentId, toggleLike })).then((res) => {
       if (res.payload) {
         let { isLiked, totalLikes, isDisLiked, totalDisLikes } = res.payload;
-        console.log(isLiked, totalLikes, isDisLiked, totalDisLikes);
         setLike({ isLiked, totalLikes });
         setDislike({ isDisLiked, totalDisLikes });
       }
@@ -34,23 +25,16 @@ function LikesComponent({
   };
 
   return (
-    <span
-      className={`flex overflow-hidden bg-slate-800 rounded-lg border ${
-        videoId ? "" : "max-w-fit h-fit text-xs"
-      }`}
-    >
+    <>
+      {/* Like button */}
       <button
-        onClick={() => handleToggleLike(true)}
-        className={`flex items-center border-r border-gray-700 gap-x-2 ${
-          videoId ? " px-4 py-1.5" : "px-2 py-[3px]"
-        } after:content-[attr(data-like)] hover:bg-white/10`}
+        onClick={() => toggleLike(true)}
+        className={`flex items-center border-r border-gray-700 gap-x-2 px-2 py-[3px] after:content-[attr(data-like)] hover:bg-white/10 `}
         data-like={like?.totalLikes}
         data-like-alt={like?.totalLikes + 1}
       >
         <span
-          className={`inline-block ${videoId ? "w-5" : "w-4"} ${
-            like?.isLiked ? "btn:text-[#ae7aff]" : "btn:text-white"
-          }`}
+          className={`inline-block w-4 ${like?.isLiked ? "btn:text-[#ae7aff]" : "btn:text-white"} `}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,18 +52,17 @@ function LikesComponent({
           </svg>
         </span>
       </button>
+      {/* Dislike button */}
       <button
-        onClick={() => handleToggleLike(false)}
-        className={`flex items-center border-r border-gray-700 gap-x-2 ${
-          videoId ? " px-4 py-1.5" : "px-2 py-[2px]"
-        } after:content-[attr(data-like)] hover:bg-white/10`}
+        onClick={() => toggleLike(false)}
+        className={`flex items-center border-r border-gray-700 gap-x-2 px-2 py-[2px] after:content-[attr(data-like)] hover:bg-white/10 `}
         data-like={dislike?.totalDisLikes}
         data-like-alt={dislike?.totalDisLikes + 1}
       >
         <span
-          className={`inline-block ${videoId ? "w-5" : "w-4"} ${
+          className={`inline-block w-4 ${
             dislike?.isDisLiked ? "btn:text-[#ae7aff]" : "btn:text-white"
-          }`}
+          } `}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +80,8 @@ function LikesComponent({
           </svg>
         </span>
       </button>
-    </span>
+    </>
   );
 }
 
-export default LikesComponent;
+export default CommentLike;

@@ -3,7 +3,7 @@ import React, { useId } from "react";
 function Input({ label, type = "text", required = false, className = "", ...props }, ref) {
   const id = useId();
   return (
-    <div className="flex flex-col w-full max-w-sm ">
+    <div className="flex flex-col w-full">
       {label && (
         <label htmlFor={id} className="mb-1 inline-block text-gray-300 capitalize">
           {required && <span className=" text-red-600 text-l">* </span>}

@@ -4,22 +4,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUserPlaylists } from "../../app/Slices/playlistSlice";
 import { formatTimestamp } from "../../helpers/formatFigures";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function ChannelPlaylist() {
   const dispatch = useDispatch();
   const [playlists, setPlaylists] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const userId = useSelector((state) => state.user?.userData?._id);
-  const currentUser = useSelector((state) => state.auth.userData?._id);
+  let { username } = useParams();
+  let userId = useSelector((state) => state.user?.userData?._id);
+  let currentUser = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
+    if (username === currentUser?.username) {
+      userId = currentUser?._id;
+    }
+    if (!userId) return;
     dispatch(getUserPlaylists(userId)).then((res) => {
       setIsLoading(false);
       setPlaylists(res.payload);
     });
-  }, [userId]);
+  }, [username, userId]);
 
   if (isLoading) {
     <div className="grid gap-4 pt-2 sm:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))]">
@@ -97,7 +102,7 @@ function ChannelPlaylist() {
   }
 
   return playlists?.length < 1 ? (
-    currentUser === userId ? (
+    currentUser?._id === userId ? (
       <MyChannelEmptyPlaylist />
     ) : (
       <EmptyPlaylist />

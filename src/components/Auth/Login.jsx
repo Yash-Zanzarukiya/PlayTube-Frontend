@@ -18,7 +18,9 @@ function Login() {
 
   const handleLogin = (data) => {
     dispatch(login(data)).then((res) => {
-      navigate("/");
+      if (res.type !== "auth/login/rejected") {
+        // navigate("/");
+      }
     });
   };
   return (

@@ -5,22 +5,27 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getAllVideos } from "../../app/Slices/videoSlice";
 import { formatTimestamp, formatVideoDuration } from "../../helpers/formatFigures";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function ChannelVideos() {
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.user?.userData?._id);
-  const currentUser = useSelector((state) => state.auth.userData?._id);
+  let { username } = useParams();
+  let userId = useSelector((state) => state.user?.userData?._id);
+  let currentUser = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
+    if (username === currentUser?.username) {
+      userId = currentUser?._id;
+    }
+    if (!userId) return;
     dispatch(getAllVideos(userId)).then((res) => {
       setVideos(res.payload);
       setIsLoading(false);
     });
-  }, [userId]);
+  }, [username, userId]);
 
   if (isLoading) {
     return (
@@ -62,7 +67,7 @@ function ChannelVideos() {
   }
 
   return videos?.length < 1 ? (
-    currentUser === userId ? (
+    currentUser?._id === userId ? (
       <MyChannelEmptyVideo />
     ) : (
       <EmptyChannelVideo />
@@ -70,7 +75,7 @@ function ChannelVideos() {
   ) : (
     <ul className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 pt-2">
       {videos.map((video) => (
-        <li className="w-full">
+        <li key={video._id} className="w-full">
           <Link to={`/watch/${video?._id}`}>
             <div className="relative mb-2 w-full pt-[56%]">
               <div className="absolute inset-0">

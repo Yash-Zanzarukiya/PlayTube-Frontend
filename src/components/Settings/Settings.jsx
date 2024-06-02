@@ -1,18 +1,25 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import EditPersonalInfo from "./EditPersonalInfo";
+import EditChannelInfo from "./EditChannelInfo";
+import ChangePassword from "./ChangePassword";
 
 function Settings() {
+  const [currentTab, setCurrentTab] = useState(0);
+  const userData = useSelector((state) => state.auth?.userData);
+  const navigate = useNavigate();
+
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+      {/* CoverImage */}
       <div className="relative min-h-[150px] w-full pt-[16.28%]">
         <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/1092424/pexels-photo-1092424.jpeg?auto=compress"
-            alt="cover-photo"
-          />
+          <img src={userData?.coverImage} alt="cover-photo" />
         </div>
+        {/* coverImage Upload */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <input type="file" id="cover-image" className="hidden" />
+          <input type="file" id="cover-image" name="coverImage" className="hidden" />
           <label
             htmlFor="cover-image"
             className="inline-block h-10 w-10 cursor-pointer rounded-lg bg-white/60 p-1 text-[#ae7aff] hover:bg-white"
@@ -34,14 +41,12 @@ function Settings() {
           </label>
         </div>
       </div>
+
       <div className="px-4 pb-4">
         <div className="flex flex-wrap gap-4 pb-4 pt-6">
+          {/* avatar */}
           <div className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full border-2">
-            <img
-              src="https://images.pexels.com/photos/1115816/pexels-photo-1115816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Channel"
-              className="h-full w-full"
-            />
+            <img src={userData?.avatar} alt="Channel" className="h-full w-full" />
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <input type="file" id="profile-image" className="hidden" />
               <label
@@ -65,40 +70,65 @@ function Settings() {
               </label>
             </div>
           </div>
+          {/* Channel Metadata */}
           <div className="mr-auto inline-block">
-            <h1 className="font-bolg text-xl">React Patterns</h1>
-            <p className="text-sm text-gray-400">@reactpatterns</p>
+            <h1 className="font-bolg text-xl">{userData?.fullName}</h1>
+            <p className="text-sm text-gray-400">@{userData?.username}</p>
           </div>
+          {/* View channel Button */}
           <div className="inline-block">
-            <button className="group/btn mr-1 flex w-full items-center gap-x-2 bg-[#ae7aff] px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto">
+            <button
+              onClick={() => navigate(`/channel/${userData?.username}`)}
+              className="group/btn mr-1 flex w-full items-center gap-x-2 bg-[#ae7aff] px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto"
+            >
               View channel
             </button>
           </div>
         </div>
+        {/* Tabs List */}
         <ul className="no-scrollbar sticky top-[66px] z-[2] flex flex-row gap-x-2 overflow-auto border-b-2 border-gray-400 bg-[#121212] py-2 sm:top-[82px]">
-          <li className="w-full">
-            <NavLink to={""}>
-              <button className="w-full border-b-2 border-[#ae7aff] bg-white px-3 py-1.5 text-[#ae7aff]">
-                Personal Information
-              </button>
-            </NavLink>
+          <li key="personel-info" className="w-full">
+            <button
+              onClick={() => setCurrentTab(0)}
+              className={`w-full border-b-2 ${
+                currentTab === 0
+                  ? "border-[#ae7aff] text-[#ae7aff] bg-white px-3"
+                  : "border-transparent text-gray-400"
+              } py-1.5 `}
+            >
+              Personal Information
+            </button>
           </li>
-          <li className="w-full">
-            <NavLink to={"channelinfo"}>
-              <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400">
-                Channel Information
-              </button>
-            </NavLink>
+          <li key="channel-info" className="w-full">
+            <button
+              onClick={() => setCurrentTab(1)}
+              className={`w-full border-b-2 px-3 py-1.5 ${
+                currentTab === 1
+                  ? "border-[#ae7aff] text-[#ae7aff] bg-white"
+                  : "border-transparent text-gray-400"
+              } `}
+            >
+              Channel Information
+            </button>
           </li>
-          <li className="w-full">
-            <NavLink to={"changepwd"}>
-              <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400">
-                Change Password
-              </button>
-            </NavLink>
+          <li key="change-pwd" className="w-full">
+            <button
+              onClick={() => setCurrentTab(2)}
+              className={`w-full border-b-2 px-3 py-1.5 ${
+                currentTab === 2
+                  ? "border-[#ae7aff] text-[#ae7aff] bg-white"
+                  : "border-transparent text-gray-400"
+              } `}
+            >
+              Change Password
+            </button>
           </li>
         </ul>
-        <Outlet />
+
+        {currentTab === 0 && <EditPersonalInfo userData={userData} />}
+        {currentTab === 1 && <EditChannelInfo userData={userData} />}
+        {currentTab === 2 && <ChangePassword userData={userData} />}
+        {/* <Outlet /> */}
       </div>
     </section>
   );
