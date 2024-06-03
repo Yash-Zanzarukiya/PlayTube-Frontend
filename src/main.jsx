@@ -19,25 +19,18 @@ import {
   Feed,
   Home,
   Login,
-  MyChannelTweets,
-  MyChannelVideos,
   SignUp,
   VideoDetail,
-  MyChannelSubscribed,
-  MyChannelPlaylists,
-  EditPersonalInfo,
   Settings,
-  EditChannelInfo,
-  ChangePassword,
   PlaylistVideos,
   AuthLayout,
 } from "./components/index.js";
+
 import FeedVideos from "./pages/FeedVideos.jsx";
 import Channel from "./pages/Channel.jsx";
 import MyChannel from "./pages/MyChannel.jsx";
 import History from "./pages/History.jsx";
 import LikedVideos from "./pages/LikedVideos.jsx";
-import Subscribers from "./pages/Subscribers.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,10 +43,24 @@ const router = createBrowserRouter(
           <Route path="playlist/:playlistId" element={<PlaylistVideos />} />
           {/* All Other Channels */}
           <Route path="user/:username" element={<Channel />}>
-            <Route path="" element={<ChannelVideos />} />
-            <Route path="playlists" element={<ChannelPlaylist />} />
-            <Route path="tweets" element={<ChannelTweets />} />
-            <Route path="subscribed" element={<ChannelSubscribed />} />
+            <Route path="" element={<ChannelVideos owner={false} />} />
+            <Route path="playlists" element={<ChannelPlaylist owner={false} />} />
+            <Route path="tweets" element={<ChannelTweets />} owner={false} />
+            <Route path="subscribed" element={<ChannelSubscribed owner={false} />} />
+          </Route>
+          {/* Owning My Channel(currently Logged in user) */}
+          <Route
+            path="channel/:username"
+            element={
+              <AuthLayout authentication>
+                <MyChannel />
+              </AuthLayout>
+            }
+          >
+            <Route path="" element={<ChannelVideos owner />} />
+            <Route path="tweets" element={<ChannelTweets owner />} />
+            <Route path="playlists" element={<ChannelPlaylist owner />} />
+            <Route path="subscribed" element={<ChannelSubscribed owner />} />
           </Route>
           {/* User Feeds */}
           <Route
@@ -76,24 +83,11 @@ const router = createBrowserRouter(
             path="feed/subscribers"
             element={
               <AuthLayout authentication>
-                <Subscribers />
+                <ChannelSubscribed owner isSubscribers />
+                {/* <Subscribers /> */}
               </AuthLayout>
             }
           />
-          {/* Owning My Channel(currently Logged in user) */}
-          <Route
-            path="channel/:username"
-            element={
-              <AuthLayout authentication>
-                <MyChannel />
-              </AuthLayout>
-            }
-          >
-            <Route path="" element={<ChannelVideos owner />} />
-            <Route path="tweets" element={<ChannelTweets owner />} />
-            <Route path="playlists" element={<ChannelPlaylist owner />} />
-            <Route path="subscribed" element={<ChannelSubscribed owner />} />
-          </Route>
           {/* Settings */}
           <Route
             path="settings"

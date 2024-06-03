@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 function App() {
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(healthCheck());
     dispatch(getCurrentUser());

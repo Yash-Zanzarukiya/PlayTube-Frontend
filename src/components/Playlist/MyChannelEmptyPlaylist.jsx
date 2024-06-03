@@ -1,6 +1,6 @@
 import React from "react";
 
-function MyChannelEmptyPlaylist() {
+function MyChannelEmptyPlaylist({ onClickBtn }) {
   return (
     <div className="flex justify-center p-4">
       <div className="w-full max-w-sm text-center">
@@ -27,7 +27,10 @@ function MyChannelEmptyPlaylist() {
         <p>
           Your Channel has yet to create a playlist. <br /> create a playlist and add some videos.
         </p>
-        <button className="mt-4 inline-flex items-center gap-x-2 bg-[#ae7aff] px-3 py-2 font-semibold text-black">
+        <button
+          onClick={onClickBtn}
+          className="mt-4 inline-flex items-center gap-x-2 bg-[#ae7aff] px-3 py-2 font-semibold text-black"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

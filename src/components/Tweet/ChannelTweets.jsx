@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 function ChannelTweets({ owner = false }) {
   const [localTweets, setLocalTweets] = useState(null);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, setFocus } = useForm();
   const dispatch = useDispatch();
   let { username } = useParams();
   const { data, status } = useSelector((state) => state.tweet);
@@ -24,22 +24,28 @@ function ChannelTweets({ owner = false }) {
     }
     if (!userId) return;
     dispatch(getTweet(userId)).then((res) => {
-      setLocalTweets(res.payload);
+      if (res.payload) setLocalTweets(res.payload);
     });
   }, [username, userId]);
 
   function addTweet(data) {
-    if (!data.trim()) {
+    if (!data.tweet.trim()) {
       toast.error("Content is required");
+      setFocus("tweet");
       return;
-    } else if (data.trim()?.length < 10) {
+    } else if (data.tweet.trim()?.length < 10) {
       toast.error("Minimum 10 characters are required");
+      setFocus("tweet");
       return;
-    } else if (data.trim()?.length > 80) {
+    } else if (data.tweet.trim()?.length > 80) {
       toast.error("Maximum 80 characters are allowed");
+      setFocus("tweet");
       return;
     }
-    dispatch(createTweet({ data }));
+    dispatch(createTweet({ data })).then(() => {
+      getTweet(currentUser?._id);
+      reset();
+    });
   }
 
   if (!localTweets) {
@@ -104,7 +110,12 @@ function ChannelTweets({ owner = false }) {
       {tweets?.length > 0 ? (
         <ul className="py-4">
           {tweets.map((tweet) => (
-            <TweetAtom tweet={tweet} owner />
+            <li
+              key={tweet._id}
+              className="flex gap-3 border-b border-gray-700 py-4 last:border-b-transparent"
+            >
+              <TweetAtom tweet={tweet} owner />
+            </li>
           ))}
         </ul>
       ) : owner ? (

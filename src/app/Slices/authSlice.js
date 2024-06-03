@@ -98,7 +98,7 @@ export const uploadCoverImage = createAsyncThunk("user/coverImage", async () => 
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
-    throw error
+    throw error;
   }
 });
 
@@ -110,7 +110,19 @@ export const watchHistory = createAsyncThunk("user/history", async () => {
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
-    throw error
+    throw error;
+  }
+});
+
+export const userPlaylists = createAsyncThunk("user/userPlaylists", async (userId) => {
+  try {
+    const response = await axiosInstance.get(`/playlist/users/${userId}`);
+    //toast.success(response.data.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(parseErrorMessage(error.response.data));
+    console.log(error);
+    throw error;
   }
 });
 
@@ -223,6 +235,20 @@ const authSlice = createSlice({
       state.userData.watchHistory = action.payload;
     });
     builder.addCase(watchHistory.rejected, (state) => {
+      state.loading = false;
+      state.status = false;
+    });
+
+    //get Playlists
+    builder.addCase(userPlaylists.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(userPlaylists.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.userData.userPlaylists = action.payload;
+    });
+    builder.addCase(userPlaylists.rejected, (state) => {
       state.loading = false;
       state.status = false;
     });

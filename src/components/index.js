@@ -9,7 +9,7 @@ import SignUp from "./Auth/SignUp";
 import Feed from "./Feed";
 import EmptyVideo from "./Video/EmptyVideo";
 import VideoList from "./Video/VideoList";
-import VideoDetail from "./Video/VideoDetail";
+import VideoDetail from "../pages/VideoDetail";
 import EmptyChannelVideo from "./Video/EmptyChannelVideo";
 import ChannelVideos from "./Video/ChannelVideos";
 import EmptyPlaylist from "./Playlist/EmptyPlaylist";
@@ -45,7 +45,17 @@ import MyChannelEmptySubscribed from "./Subscription/MyChannelEmptySubscribed";
 import CommentLike from "./Comment/CommentLike";
 import CommentAtom from "./Comment/CommentAtom";
 import TweetAtom from "./Tweet/TweetAtom";
+import PlaylistForm from "./Playlist/PlaylistForm";
+import ConfirmPopup from "./Atoms/ConfirmPopup";
+import UserProfile from "./Atoms/UserProfile";
+import SubscriptionUser from "./Subscription/SubscriptionUser";
+import ChannelProfileAtom from "./Atoms/ChannelProfileAtom";
 export {
+  ChannelProfileAtom,
+  UserProfile,
+  SubscriptionUser,
+  ConfirmPopup,
+  PlaylistForm,
   TweetAtom,
   CommentAtom,
   CommentLike,

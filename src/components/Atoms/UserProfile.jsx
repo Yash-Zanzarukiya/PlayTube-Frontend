@@ -24,7 +24,7 @@ function UserProfile({ userId }) {
   if (!localData)
     return <h1 className="h-full w-full text-center text-3xl text-red-700">Loading Profile...</h1>;
 
-  const profileData = userData || localData;
+  let profileData = userData || localData;
 
   if (!profileData)
     return (

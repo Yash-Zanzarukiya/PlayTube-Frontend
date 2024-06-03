@@ -1,34 +1,40 @@
 import React, { useState } from "react";
-import { EmptySubscription, MyChannelEmptySubscribed } from "../index";
+import {
+  EmptySubscription,
+  MyChannelEmptySubscribed,
+  SubscriptionUser,
+  UserProfile,
+} from "../index";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getSubscribedChannels } from "../../app/Slices/subscriptionSlice";
+import { getChannelSubscribers, getSubscribedChannels } from "../../app/Slices/subscriptionSlice";
 import { Link, useParams } from "react-router-dom";
 import { formatSubscription } from "../../helpers/formatFigures";
 
-// FIXME Fix redux logic in channel
+// TESTME Fix redux logic in channel
+// TODO <a> cannot appear as a descendant of <a>.
 
-function ChannelSubscribed() {
+function ChannelSubscribed({ owner = false, isSubscribers = false }) {
   const dispatch = useDispatch();
-  const [subscribed, setSubscribed] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
   let { username } = useParams();
   let channelId = useSelector((state) => state.user.userData?._id);
   let currentUser = useSelector((state) => state.auth.userData);
 
-  useEffect(() => {
-    if (username === currentUser?.username) {
-      channelId = currentUser?._id;
-    }
-    if (!channelId) return;
-    dispatch(getSubscribedChannels(channelId)).then((res) => {
-      setIsLoading(false);
-      setSubscribed(res.payload);
-    });
-  }, [username, channelId]);
+  const [subscribedFiltered, setSubscribedFiltered] = useState(null);
+  let { data, loading, status } = useSelector((state) => state.subscription);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isSubscribers) {
+      console.log("isSubscribers: ", isSubscribers);
+      dispatch(getChannelSubscribers(currentUser?._id));
+      return;
+    }
+    if (owner) channelId = currentUser?._id;
+    if (!channelId) return;
+    dispatch(getSubscribedChannels(channelId));
+  }, [username, channelId, currentUser]);
+
+  if (!isSubscribers && (loading || !channelId)) {
     return (
       <div className="flex flex-col gap-y-4 pt-1">
         <div className="flex flex-col gap-y-4 pt-4">
@@ -83,8 +89,28 @@ function ChannelSubscribed() {
     );
   }
 
-  return subscribed?.length > 0 ? (
-    <ul className="flex flex-col gap-y-4 py-4">
+  let subscribed = subscribedFiltered || data;
+
+  if ((!status && !loading) || !subscribed)
+    return (
+      <h1 className="h-full w-full text-center text-3xl text-white bg-blue-700">
+        Something went wrong Video...
+      </h1>
+    );
+
+  function handleUserInput(input) {
+    if (!input) setSubscribedFiltered(data);
+    else {
+      const filteredData = data.filter((user) =>
+        user.fullName.toLowerCase().includes(input.toLowerCase())
+      );
+      setSubscribedFiltered(filteredData);
+    }
+  }
+
+  return data?.length > 0 ? (
+    <ul className={`flex w-full flex-col gap-y-4 ${isSubscribers ? "px-16 py-12" : "py-4"}`}>
+      {/* Search bar */}
       <div className="relative mb-2 rounded-lg bg-white py-2 pl-8 pr-3 text-black">
         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400">
           <svg
@@ -103,53 +129,19 @@ function ChannelSubscribed() {
             ></path>
           </svg>
         </span>
-        <input className="w-full bg-transparent outline-none" placeholder="Search" />
+        <input
+          onChange={(e) => handleUserInput(e.target.value.trim())}
+          className="w-full bg-transparent outline-none"
+          placeholder="Search"
+        />
       </div>
 
-      {subscribed?.map((channelData) => (
-        <li key={channelData.channel._id} className="flex w-full justify-between">
-          <div className="flex items-center gap-x-2">
-            <div className="h-14 w-14 shrink-0">
-              <Link to={`/user/${channelData.channel.username}`}>
-                <img
-                  src={channelData.channel.avatar}
-                  alt={channelData.channel.username}
-                  className="h-full w-full rounded-full"
-                />
-              </Link>
-            </div>
-            <div className="block">
-              <h6 className="font-semibold">
-                <Link to={`/user/${channelData.channel.username}`}>
-                  {channelData.channel.fullName}
-                </Link>
-              </h6>
-              <p className="text-sm text-gray-300">
-                {formatSubscription(channelData.channel.subscribersCount)}
-              </p>
-            </div>
-          </div>
-          <div className="block">
-            <button
-              className={`px-3 py-2 text-black ${
-                channelData.channel.isSubscribed ? "bg-[#ae7aff]" : "bg-white"
-              } `}
-            >
-              <span>{channelData.channel.isSubscribed ? "Subscribed" : "Subscribe"}</span>
-            </button>
-          </div>
-        </li>
+      {/* subscribed channels */}
+      {subscribed?.map((profile) => (
+        <SubscriptionUser key={profile._id} profile={profile} />
       ))}
-
-      {/* subscribe button */}
-      {/* <div className="block">
-        <button className="group/btn px-3 py-2 text-black bg-white focus:bg-[#ae7aff]">
-          <span className="group-focus/btn:hidden">Subscribe</span>
-          <span className="hidden group-focus/btn:inline">Subscribed</span>
-        </button>
-      </div> */}
     </ul>
-  ) : currentUser?._id === channelId ? (
+  ) : owner ? (
     <MyChannelEmptySubscribed />
   ) : (
     <EmptySubscription />

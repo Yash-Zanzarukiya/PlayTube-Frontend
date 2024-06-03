@@ -26,7 +26,6 @@ function LikesComponent({
     dispatch(toggleLike({ qs, toggleLike: status })).then((res) => {
       if (res.payload) {
         let { isLiked, totalLikes, isDisLiked, totalDisLikes } = res.payload;
-        console.log(isLiked, totalLikes, isDisLiked, totalDisLikes);
         setLike({ isLiked, totalLikes });
         setDislike({ isDisLiked, totalDisLikes });
       }

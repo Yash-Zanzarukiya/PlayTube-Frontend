@@ -58,16 +58,16 @@ const subscriptionSlice = createSlice({
   extraReducers: (builder) => {
     // toggle subscription
     builder.addCase(toggleSubscription.pending, (state) => {
-      state.loading = true;
+      // state.loading = true;
     });
     builder.addCase(toggleSubscription.fulfilled, (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.status = true;
+      // state.loading = false;
+      // state.data = action.payload;
+      // state.status = true;
     });
     builder.addCase(toggleSubscription.rejected, (state) => {
-      state.loading = false;
-      state.status = false;
+      // state.loading = false;
+      // state.status = false;
     });
 
     // get Channel Subscribers

@@ -1,6 +1,6 @@
 import React from "react";
 
-function EmptyPlaylist() {
+function EmptyPlaylist({ playlistVideos = false }) {
   return (
     <div className="flex justify-center p-4">
       <div className="w-full max-w-sm text-center">
@@ -24,8 +24,14 @@ function EmptyPlaylist() {
             </span>
           </span>
         </p>
-        <h5 className="mb-2 font-semibold">No playlist created</h5>
-        <p>There are no playlist created on this channel.</p>
+        <h5 className="mb-2 font-semibold">
+          {playlistVideos ? "Empty Playlist" : "No playlist created"}
+        </h5>
+        <p>
+          {playlistVideos
+            ? "This Playlist has no Videos."
+            : "There are no playlist created on this channel."}
+        </p>
       </div>
     </div>
   );

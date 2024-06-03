@@ -47,10 +47,7 @@ function TweetAtom({ tweet, owner }) {
   }
 
   return (
-    <li
-      key={tweet._id}
-      className="flex gap-3 border-b border-gray-700 py-4 last:border-b-transparent"
-    >
+    <>
       <div className="h-14 w-14 shrink-0">
         <img
           src={tweet.owner?.avatar}
@@ -115,7 +112,7 @@ function TweetAtom({ tweet, owner }) {
           </span>
         </form>
       )}
-    </li>
+    </>
   );
 }
 

@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
-import { getPlaylistById } from "../../app/Slices/playlistSlice";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deletePlaylist, getPlaylistById } from "../../app/Slices/playlistSlice";
 import { formatTimestamp, formatVideoDuration } from "../../helpers/formatFigures";
+import { PlaylistForm, EmptyPlaylist, ConfirmPopup } from "../index";
 
 function PlaylistVideos() {
   const dispatch = useDispatch();
+  const dialog = useRef();
+  const confirmDialog = useRef();
+  const navigate = useNavigate();
   const { playlistId } = useParams();
-  const [playList, setPlayList] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // const playList = useSelector((state) => state.playlist.data);
-  // const isLoading = useSelector((state) => state.playlist.loading);
+  const { data: playList } = useSelector((state) => state.playlist);
+  const currentUser = useSelector((state) => state.auth.userData?._id);
 
   useEffect(() => {
-    dispatch(getPlaylistById(playlistId)).then((res) => {
-      setPlayList(res.payload);
-      setIsLoading(false);
-    });
+    if (!playlistId) return;
+    dispatch(getPlaylistById(playlistId));
   }, [playlistId]);
 
-  if (isLoading) {
+  function handleDeletePlaylist(isConform) {
+    if (isConform) {
+      dispatch(deletePlaylist(playlistId)).then(() => {});
+      navigate(`/`);
+    }
+  }
+
+  if (!playList) {
     return (
       <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
         <div className="flex flex-wrap gap-x-4 gap-y-10 p-4 xl:flex-nowrap">
@@ -145,13 +151,35 @@ function PlaylistVideos() {
     );
   }
 
+  let isOwner = currentUser === playList.owner?._id;
+
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+      {/* FIXME: this is rendering before the popup-model div renders */}
+      <PlaylistForm ref={dialog} playlist={playList} />
+      <ConfirmPopup
+        title="Confirm to Delete"
+        subtitle="Once deleted cannot be recovered"
+        confirm="Delete"
+        cancel="Cancel"
+        critical
+        ref={confirmDialog}
+        actionFunction={handleDeletePlaylist}
+      />
       <div className="flex flex-wrap gap-x-4 gap-y-10 p-4 xl:flex-nowrap">
+        {/* Playlist Info */}
         <div className="w-full shrink-0 sm:max-w-md xl:max-w-sm">
           <div className="relative mb-2 w-full pt-[56%]">
             <div className="absolute inset-0">
-              <img src={playList?.thumbnail} alt={playList.name} className="h-full w-full" />
+              <img
+                src={
+                  playList?.thumbnail
+                    ? playList?.thumbnail
+                    : "https://res.cloudinary.com/df6ztmktu/image/upload/v1717336091/videotube/photos/iqqvkshu1a14wfbr56lh.png"
+                }
+                alt={playList.name}
+                className="h-full w-full"
+              />
               <div className="absolute inset-x-0 bottom-0">
                 <div className="relative border-t bg-white/30 p-4 text-white backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
                   <div className="relative z-[1]">
@@ -170,10 +198,68 @@ function PlaylistVideos() {
               </div>
             </div>
           </div>
-          <h6 className="mb-1 font-semibold">{playList?.name}</h6>
-          <p className="flex text-sm text-gray-200">{playList?.description}</p>
-          <div className="mt-6 flex items-center gap-x-3">
-            <div className="h-16 w-16 shrink-0">
+          {/* Playlist Controls */}
+          {isOwner && (
+            <div className="flex justify-evenly h-5 py-1 gap-x-5 mb-2">
+              {/* delete button */}
+              <button
+                onClick={() => confirmDialog.current?.open()}
+                className="flex items-center justify-end gap-x-2 h-5  hover:text-red-600 text-red-400 text-xl mr-1"
+              >
+                <span className="h-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-trash-2 h-full w-full"
+                  >
+                    <path d="M3 6h18" />
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    <line x1="10" x2="10" y1="11" y2="17" />
+                    <line x1="14" x2="14" y1="11" y2="17" />
+                  </svg>
+                </span>
+                <span className="mb-[1px]">Delete</span>
+              </button>
+              {/* Edit button */}
+              <button
+                onClick={() => dialog.current?.open()}
+                className="flex items-center justify-end gap-x-2 h-5 hover:text-[#ad7affbc] text-[#ae7aff] text-xl mr-1"
+              >
+                <span className="h-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-pencil w-full h-full"
+                  >
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                    <path d="m15 5 4 4" />
+                  </svg>
+                </span>
+                <span className="mb-[1px]">Edit</span>
+              </button>
+            </div>
+          )}
+
+          <h2 className="mb-1 text-2xl font-semibold">{playList?.name}</h2>
+
+          {/* Owner Detail */}
+          <div className="mt-4 flex items-center gap-x-3">
+            <div className="h-12 w-12 shrink-0">
               <Link to={`/user/${playList?.owner?.username}`}>
                 <img
                   src={playList?.owner?.avatar}
@@ -183,17 +269,25 @@ function PlaylistVideos() {
               </Link>
             </div>
             <div className="w-full">
-              <h6 className="font-semibold">
-                <Link to={`/user/${playList?.owner?.username}`}>{playList?.owner?.fullName}</Link>
-              </h6>
-              <p className="text-sm text-gray-300">757K Subscribers</p>
+              <h6 className="font-semibold">{playList?.owner?.fullName}</h6>
+              <p className="text-sm text-gray-300 hover:text-gray-400">
+                <Link to={`/user/${playList?.owner?.username}`}>@{playList?.owner?.username}</Link>
+              </p>
+              {/* <p className="text-sm text-gray-300">757K Subscribers</p> */}
             </div>
           </div>
+          <p className="flex mt-3 text-sm text-gray-200">{playList?.description}</p>
         </div>
+        {/* Playlist videos */}
         <ul className="flex w-full flex-col gap-y-4">
-          {playList?.videos.map((video) => (
-            <li className="border">
-              <Link to={`/watch/${video._id}`}>
+          {playList.videos?.length > 0 || (
+            <div className="w-full h-full flex items-center justify-center">
+              <EmptyPlaylist playlistVideos />
+            </div>
+          )}
+          {playList?.videos?.map((video) => (
+            <li key={video._id} className="border">
+              <Link to={`/watch/${video?._id}`}>
                 <div className="w-full max-w-3xl gap-x-4 sm:flex">
                   <div className="relative mb-2 w-full sm:mb-0 sm:w-5/12">
                     <div className="w-full pt-[56%]">
@@ -213,8 +307,8 @@ function PlaylistVideos() {
                         className="h-full w-full rounded-full"
                       />
                     </div>
-                    <div className="w-full">
-                      <h6 className="mb-1 font-semibold sm:max-w-[75%]">{video.title}</h6>
+                    <div className="w-full mt-2">
+                      <h6 className="mb-1 text-lg font-semibold sm:max-w-[75%]">{video.title}</h6>
                       <p className="flex text-sm text-gray-200 sm:mt-3">
                         {video.views} View{video.views > 1 ? "s" : ""} ·{" "}
                         {formatTimestamp(video.createdAt)}

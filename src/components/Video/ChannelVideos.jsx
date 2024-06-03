@@ -7,7 +7,7 @@ import { getAllVideos } from "../../app/Slices/videoSlice";
 import { formatTimestamp, formatVideoDuration } from "../../helpers/formatFigures";
 import { Link, useParams } from "react-router-dom";
 
-function ChannelVideos() {
+function ChannelVideos({ owner = false }) {
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function ChannelVideos() {
   let currentUser = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
-    if (username === currentUser?.username) {
+    if (owner) {
       userId = currentUser?._id;
     }
     if (!userId) return;
@@ -67,13 +67,17 @@ function ChannelVideos() {
   }
 
   return videos?.length < 1 ? (
-    currentUser?._id === userId ? (
+    owner ? (
       <MyChannelEmptyVideo />
     ) : (
       <EmptyChannelVideo />
     )
   ) : (
-    <ul className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 pt-2">
+    <ul
+      className={`grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] ${
+        videos?.length < 3 && "lg:grid-cols-[repeat(auto-fit,_minmax(300px,0.25fr))]"
+      } gap-4 pt-2`}
+    >
       {videos.map((video) => (
         <li key={video._id} className="w-full">
           <Link to={`/watch/${video?._id}`}>
@@ -85,10 +89,15 @@ function ChannelVideos() {
                 {formatVideoDuration(video?.duration)}
               </span>
             </div>
-            <h6 className="mb-1 font-semibold">{video?.title}</h6>
-            <p className="flex text-sm text-gray-200">
-              {video?.views} Views · {formatTimestamp(video?.createdAt)}
-            </p>
+            <div className="flex items-center">
+              <img src={video.owner?.avatar} className="w-11 rounded-full" />
+              <span className="ml-3">
+                <h6 className="mb-1 font-semibold">{video?.title}</h6>
+                <p className="flex text-sm text-gray-200">
+                  {video?.views} Views · {formatTimestamp(video?.createdAt)}
+                </p>
+              </span>
+            </div>
           </Link>
         </li>
       ))}

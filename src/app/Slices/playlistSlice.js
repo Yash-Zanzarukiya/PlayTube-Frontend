@@ -17,70 +17,91 @@ export const getPlaylistById = createAsyncThunk("playlist/getPlaylistById", asyn
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
-    console.log(err);
+    console.log(error);
+    throw error;
   }
 });
 
 export const getUserPlaylists = createAsyncThunk("playlist/getUserPlaylists", async (userId) => {
   try {
     const response = await axiosInstance.get(`/playlist/users/${userId}`);
-    //toast.success(response.data.message);
+    // toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
-    console.log(err);
+    console.log(error);
+    throw error;
   }
 });
 
-export const createPlaylist = createAsyncThunk("playlist/createPlaylist", async (data) => {
+export const getCurrentPlaylists = createAsyncThunk(
+  "playlist/getCurrentPlaylists",
+  async (videoId) => {
+    try {
+      const response = await axiosInstance.get(`/playlist/user/playlists/${videoId}`);
+      // toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      toast.error(parseErrorMessage(error.response.data));
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+export const createPlaylist = createAsyncThunk("playlist/createPlaylist", async ({ data }) => {
   try {
     const response = await axiosInstance.post(`/playlist`, data);
-    //toast.success(response.data.message);
+    toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
-    console.log(err);
+    console.log(error);
+    throw error;
   }
 });
 
 export const addVideoToPlaylist = createAsyncThunk(
   "playlist/addVideoToPlaylist",
-  async (playlistId, videoId) => {
+  async ({ playlistId, videoId }) => {
     try {
       const response = await axiosInstance.patch(`/playlist/add/${playlistId}/${videoId}`);
-      //toast.success(response.data.message);
+      toast.success(response.data.message);
       return response.data.data;
     } catch (error) {
       toast.error(parseErrorMessage(error.response.data));
-      console.log(err);
+      console.log(error);
+      throw error;
     }
   }
 );
 
 export const removeVideoFromPlaylist = createAsyncThunk(
   "playlist/removeVideoFromPlaylist",
-  async (playlistId, videoId) => {
+  async ({ playlistId, videoId }) => {
     try {
       const response = await axiosInstance.patch(`/playlist/remove/${playlistId}/${videoId}`);
-      //toast.success(response.data.message);
+      // toast.success(response.data.message);
       return response.data.data;
     } catch (error) {
       toast.error(parseErrorMessage(error.response.data));
-      console.log(err);
+      console.log(error);
+      throw error;
     }
   }
 );
 
 export const updatePlaylist = createAsyncThunk(
   "playlist/updatePlaylist",
-  async (playlistId, data) => {
+  async ({ playlistId, data }) => {
     try {
       const response = await axiosInstance.patch(`/playlist/${playlistId}`, data);
-      //toast.success(response.data.message);
+      toast.success(response.data.message);
       return response.data.data;
     } catch (error) {
       toast.error(parseErrorMessage(error.response.data));
-      console.log(err);
+      console.log(error);
+      throw error;
     }
   }
 );
@@ -88,11 +109,12 @@ export const updatePlaylist = createAsyncThunk(
 export const deletePlaylist = createAsyncThunk("playlist/deletePlaylist", async (playlistId) => {
   try {
     const response = await axiosInstance.delete(`/playlist/${playlistId}`);
-    //toast.success(response.data.message);
+    toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
-    console.log(err);
+    console.log(error);
+    throw error;
   }
 });
 
@@ -103,6 +125,8 @@ const playlistSlice = createSlice({
     // get Playlist By Id
     builder.addCase(getPlaylistById.pending, (state) => {
       state.loading = true;
+      state.data = null;
+      state.status = false;
     });
     builder.addCase(getPlaylistById.fulfilled, (state, action) => {
       state.loading = false;
@@ -117,6 +141,7 @@ const playlistSlice = createSlice({
     // get User Playlists
     builder.addCase(getUserPlaylists.pending, (state) => {
       state.loading = true;
+      state.data = null;
     });
     builder.addCase(getUserPlaylists.fulfilled, (state, action) => {
       state.loading = false;
@@ -124,6 +149,21 @@ const playlistSlice = createSlice({
       state.status = true;
     });
     builder.addCase(getUserPlaylists.rejected, (state) => {
+      state.loading = false;
+      state.status = false;
+    });
+
+    // get Current Playlists
+    builder.addCase(getCurrentPlaylists.pending, (state) => {
+      state.loading = true;
+      state.data = null;
+    });
+    builder.addCase(getCurrentPlaylists.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.status = true;
+    });
+    builder.addCase(getCurrentPlaylists.rejected, (state) => {
       state.loading = false;
       state.status = false;
     });
@@ -144,11 +184,11 @@ const playlistSlice = createSlice({
 
     // add Video To Playlist
     builder.addCase(addVideoToPlaylist.pending, (state) => {
-      state.loading = true;
+      // state.loading = true;
     });
     builder.addCase(addVideoToPlaylist.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      // state.data = action.payload;
       state.status = true;
     });
     builder.addCase(addVideoToPlaylist.rejected, (state) => {
@@ -158,11 +198,11 @@ const playlistSlice = createSlice({
 
     // remove Video From Playlist
     builder.addCase(removeVideoFromPlaylist.pending, (state) => {
-      state.loading = true;
+      // state.loading = true;
     });
     builder.addCase(removeVideoFromPlaylist.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      // state.data = action.payload;
       state.status = true;
     });
     builder.addCase(removeVideoFromPlaylist.rejected, (state) => {
@@ -176,7 +216,8 @@ const playlistSlice = createSlice({
     });
     builder.addCase(updatePlaylist.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.data.name = action.payload.name;
+      state.data.description = action.payload.description;
       state.status = true;
     });
     builder.addCase(updatePlaylist.rejected, (state) => {
@@ -190,7 +231,7 @@ const playlistSlice = createSlice({
     });
     builder.addCase(deletePlaylist.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      // state.data = action.payload;
       state.status = true;
     });
     builder.addCase(deletePlaylist.rejected, (state) => {
