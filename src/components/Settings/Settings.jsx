@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import EditPersonalInfo from "./EditPersonalInfo";
-import EditChannelInfo from "./EditChannelInfo";
-import ChangePassword from "./ChangePassword";
+import { useNavigate } from "react-router-dom";
+import { EditPersonalInfo, EditChannelInfo, ChangePassword } from "../index";
+import { useDispatch } from "react-redux";
+import { uploadAvatar, uploadCoverImage } from "../../app/Slices/authSlice";
 
 function Settings() {
   const [currentTab, setCurrentTab] = useState(0);
   const userData = useSelector((state) => state.auth?.userData);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
@@ -18,8 +19,19 @@ function Settings() {
           <img src={userData?.coverImage} alt="cover-photo" />
         </div>
         {/* coverImage Upload */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <input type="file" id="cover-image" name="coverImage" className="hidden" />
+        <form
+          name="cover-image-form"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <input
+            type="file"
+            onChange={() =>
+              dispatch(uploadCoverImage({ data: new FormData(document.forms["cover-image-form"]) }))
+            }
+            id="cover-image"
+            name="coverImage"
+            className="hidden"
+          />
           <label
             htmlFor="cover-image"
             className="inline-block h-10 w-10 cursor-pointer rounded-lg bg-white/60 p-1 text-[#ae7aff] hover:bg-white"
@@ -39,7 +51,7 @@ function Settings() {
               ></path>
             </svg>
           </label>
-        </div>
+        </form>
       </div>
 
       <div className="px-4 pb-4">
@@ -47,8 +59,21 @@ function Settings() {
           {/* avatar */}
           <div className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full border-2">
             <img src={userData?.avatar} alt="Channel" className="h-full w-full" />
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <input type="file" id="profile-image" className="hidden" />
+            <form
+              name="avatar-image-form"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+              <input
+                onChange={() =>
+                  dispatch(
+                    uploadAvatar({ data: new FormData(document.forms["avatar-image-form"]) })
+                  )
+                }
+                type="file"
+                name="avatar"
+                id="profile-image"
+                className="hidden"
+              />
               <label
                 htmlFor="profile-image"
                 className="inline-block h-8 w-8 cursor-pointer rounded-lg bg-white/60 p-1 text-[#ae7aff] hover:bg-white"
@@ -68,7 +93,7 @@ function Settings() {
                   ></path>
                 </svg>
               </label>
-            </div>
+            </form>
           </div>
           {/* Channel Metadata */}
           <div className="mr-auto inline-block">

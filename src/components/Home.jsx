@@ -7,10 +7,7 @@ function Home() {
     <>
       <div className="h-screen overflow-y-auto bg-[#121212] text-white">
         <Header />
-        <div
-          id="popup-models"
-          className=""
-        ></div>
+        <div id="popup-models" className="bg-purple-400 relative"></div>
         <Outlet />
       </div>
     </>

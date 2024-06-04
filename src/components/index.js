@@ -20,9 +20,9 @@ import ChannelTweets from "./Tweet/ChannelTweets";
 import ChannelSubscribed from "./Subscription/ChannelSubscribed";
 import EmptySubscription from "./Subscription/EmptySubscription";
 import MyChannelEmptyVideo from "./Video/MyChannelEmptyVideo";
-import UploadVideo from "./Channel/UploadVideo";
-import UploadingVideo from "./Channel/UploadingVideo";
-import UploadSuccess from "./Channel/UploadSuccess";
+import UploadVideo from "./Dashboard/VideoForm";
+import UploadingVideo from "./Dashboard/UploadingVideo";
+import UploadSuccess from "./Dashboard/UploadSuccess";
 import MyChannelEmptyTweet from "./Tweet/MyChannelEmptyTweet";
 import MyChannelTweets from "./Channel/MyChannelTweets";
 import EditPersonalInfo from "./Settings/EditPersonalInfo";
@@ -50,7 +50,14 @@ import ConfirmPopup from "./Atoms/ConfirmPopup";
 import UserProfile from "./Atoms/UserProfile";
 import SubscriptionUser from "./Subscription/SubscriptionUser";
 import ChannelProfileAtom from "./Atoms/ChannelProfileAtom";
+import StatusAtom from "./Dashboard/StatusAtom";
+import AdminVideoAtom from "./Dashboard/AdminVideoAtom";
+import PopupForm from "./Atoms/PopupForm";
+
 export {
+  PopupForm,
+  StatusAtom,
+  AdminVideoAtom,
   ChannelProfileAtom,
   UserProfile,
   SubscriptionUser,

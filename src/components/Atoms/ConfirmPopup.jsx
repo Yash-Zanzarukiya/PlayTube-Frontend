@@ -1,18 +1,22 @@
-import React, { useImperativeHandle, useRef } from "react";
+import React, { useImperativeHandle, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 function ConfirmPopup(
   {
     title = "Are you sure?",
     subtitle,
+    message,
     confirm = "Confirm",
     cancel = "Cancel",
     critical = false,
+    checkbox = false,
     actionFunction,
   },
   ref
 ) {
   const dialog = useRef();
+
+  const [isChecked, setIsChecked] = useState(false);
 
   useImperativeHandle(ref, () => {
     return {
@@ -24,7 +28,8 @@ function ConfirmPopup(
 
   const handleClose = () => actionFunction(false);
 
-  const handleConfirm = () => {
+  const handleConfirm = (event) => {
+    event.preventDefault();
     actionFunction(true);
     dialog.current.close();
   };
@@ -61,13 +66,31 @@ function ConfirmPopup(
                 </svg>
               </button>
             </div>
-            {/* Message */}
-            <div className="flex flex-col items-center mb-8">
-              <h6 className="text-3xl font-semibold mb-3">{title}</h6>
-              {subtitle && <div className="block text-sm text-gray-300">{subtitle}</div>}
+
+            {/* Message Headers*/}
+            <div className="flex flex-col items-center mb-3">
+              <h6 className="text-3xl font-semibold mb-3  select-none">{title}</h6>
+              {subtitle && <div className="block text-xl text-gray-300">{subtitle}</div>}
+              {message && <div className="block text-xl text-gray-300 mt-3">{message}</div>}
             </div>
+
+            {/* Checkbox field */}
+            {checkbox && (
+              <div className="flex justify-center items-center my-5">
+                <input
+                  id={"confirm-checkbox"}
+                  type="checkbox"
+                  className="size-4 mr-2"
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                />
+                <label htmlFor={"confirm-checkbox"} className=" hover:cursor-pointer select-none">
+                  {checkbox}
+                </label>
+              </div>
+            )}
+
             {/* Control Buttons */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mt-4">
               <button
                 type="button"
                 onClick={() => dialog.current.close()}
@@ -77,9 +100,10 @@ function ConfirmPopup(
               </button>
               <button
                 type="submit"
+                disabled={!isChecked}
                 className={`${
                   critical ? "bg-[#212121]" : "bg-[#ae7aff]"
-                } px-4 py-3 border text-red-500 hover:text-black hover:bg-red-600 font-semibold hover:border-dashed`}
+                } px-4 py-3 border text-red-500 enabled:hover:text-black enabled:hover:bg-red-600 font-semibold hover:border-dashed disabled:cursor-not-allowed`}
               >
                 {confirm}
               </button>

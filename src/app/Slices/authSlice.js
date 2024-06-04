@@ -78,9 +78,13 @@ export const updateProfile = createAsyncThunk("auth/updateProfile", async (data)
   }
 });
 
-export const uploadAvatar = createAsyncThunk("user/avatar", async () => {
+export const uploadAvatar = createAsyncThunk("user/avatar", async ({ data }) => {
   try {
-    const response = await axiosInstance.get(`/users/avatar`);
+    const response = await axiosInstance.patch(`/users/avatar`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
@@ -90,9 +94,13 @@ export const uploadAvatar = createAsyncThunk("user/avatar", async () => {
   }
 });
 
-export const uploadCoverImage = createAsyncThunk("user/coverImage", async () => {
+export const uploadCoverImage = createAsyncThunk("user/coverImage", async ({ data }) => {
   try {
-    const response = await axiosInstance.get(`/users/cover-image`);
+    const response = await axiosInstance.patch(`/users/cover-image`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     toast.success(response.data.message);
     return response.data.data;
   } catch (error) {

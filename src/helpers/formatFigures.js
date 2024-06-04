@@ -32,6 +32,7 @@ export function formatVideoDuration(duration) {
   }
 }
 
+// BUG: Fix this Bugs
 export function formatDate(timestamp) {
   const date = new Date(timestamp);
   const day = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();

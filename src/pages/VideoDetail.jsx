@@ -85,6 +85,7 @@ function VideoDetail() {
             role="button"
             tabIndex="0"
           >
+            {/* Playlist */}
             <div className="flex flex-wrap gap-y-2">
               {/* video metadata */}
               <div className="w-full md:w-1/2 lg:w-full xl:w-1/2">

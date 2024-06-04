@@ -21,8 +21,8 @@ function PlaylistVideos() {
     dispatch(getPlaylistById(playlistId));
   }, [playlistId]);
 
-  function handleDeletePlaylist(isConform) {
-    if (isConform) {
+  function handleDeletePlaylist(isConfirm) {
+    if (isConfirm) {
       dispatch(deletePlaylist(playlistId)).then(() => {});
       navigate(`/`);
     }
@@ -155,7 +155,8 @@ function PlaylistVideos() {
 
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
-      {/* FIXME: this is rendering before the popup-model div renders */}
+      {/* FIXME:PlaylistForm - this is rendering before the popup-model div renders */}
+      {/* TODO:add remove video feature */}
       <PlaylistForm ref={dialog} playlist={playList} />
       <ConfirmPopup
         title="Confirm to Delete"
@@ -254,9 +255,7 @@ function PlaylistVideos() {
               </button>
             </div>
           )}
-
           <h2 className="mb-1 text-2xl font-semibold">{playList?.name}</h2>
-
           {/* Owner Detail */}
           <div className="mt-4 flex items-center gap-x-3">
             <div className="h-12 w-12 shrink-0">
