@@ -1,7 +1,6 @@
 import Header from "./Header/Header";
 import Logo from "./Atoms/Logo";
 import Aside from "./Aside";
-import Dashboard from "./Dashboard/Dashboard";
 import Home from "./Home";
 import AuthLayout from "./Auth/AuthLayout";
 import Login from "./Auth/Login";
@@ -34,7 +33,6 @@ import VideoGrid from "./Video/VideoGrid";
 import MyChannelVideos from "./Channel/MyChannelVideos";
 import MyChannelSubscribed from "./Channel/MyChannelSubscribed";
 import MyChannelPlaylists from "./Channel/MyChannelPlaylists";
-import Settings from "./Settings/Settings";
 import Input from "./Atoms/Input";
 import Button from "./Atoms/Button";
 import Comments from "./Comment/Comments";
@@ -66,7 +64,6 @@ export {
   TweetAtom,
   CommentAtom,
   CommentLike,
-  Settings,
   MyChannelEmptySubscribed,
   MyChannelEmptyPlaylist,
   Comments,
@@ -83,7 +80,6 @@ export {
   EmptyVideo,
   Logo,
   Aside,
-  Dashboard,
   Home,
   AuthLayout,
   Login,

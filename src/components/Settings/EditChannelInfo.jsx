@@ -40,7 +40,7 @@ function EditChannelInfo({ userData }) {
               </label>
               <div className="flex rounded-lg border">
                 <p className="flex shrink-0 items-center border-r border-white px-3 align-middle">
-                  vidplay.com/
+                  playtube.com/
                 </p>
                 <input
                   type="text"
@@ -61,25 +61,27 @@ function EditChannelInfo({ userData }) {
                 className="w-full rounded-lg border bg-transparent px-2 py-1.5"
                 rows="4"
                 id="desc"
+                defaultValue={data?.description}
                 placeholder="Channel Description"
               >
-                {data?.description}
+
               </textarea>
               <p className="mt-0.5 text-sm text-gray-300">275 characters left</p>
             </div>
             <div className="flex w-full items-center gap-3">
               <div className="w-full max-w-xs rounded-lg border">
-                <select className="w-full border-r-8 border-transparent bg-transparent py-1.5 pl-2">
+                <select
+                  defaultValue="regular"
+                  className="w-full border-r-8 border-transparent bg-transparent py-1.5 pl-2"
+                >
                   <option value="light">Light</option>
-                  <option value="regular" selected="">
-                    Regular
-                  </option>
+                  <option value="regular">Regular</option>
                   <option value="semi-bold">Semi bold</option>
                   <option value="bold">Bold</option>
                   <option value="bolder">Bolder</option>
                 </select>
               </div>
-              <button className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
+              <button type="button" className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
                 <svg
                   width="11"
                   height="14"
@@ -93,7 +95,7 @@ function EditChannelInfo({ userData }) {
                   ></path>
                 </svg>
               </button>
-              <button className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
+              <button type="button" className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
                 <svg
                   width="12"
                   height="14"
@@ -107,7 +109,7 @@ function EditChannelInfo({ userData }) {
                   ></path>
                 </svg>
               </button>
-              <button className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
+              <button type="button" className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
                 <svg
                   width="20"
                   height="10"
@@ -121,7 +123,7 @@ function EditChannelInfo({ userData }) {
                   ></path>
                 </svg>
               </button>
-              <button className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
+              <button type="button" className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -137,7 +139,7 @@ function EditChannelInfo({ userData }) {
                   ></path>
                 </svg>
               </button>
-              <button className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
+              <button type="button" className="h-6 w-6 hover:text-[#ae7aff] focus:text-[#ae7aff]">
                 <svg
                   width="19"
                   height="16"
@@ -175,6 +177,7 @@ function EditChannelInfo({ userData }) {
                 </div>
                 <select
                   id="timezone"
+                  defaultValue="UTC+05:30"
                   className="w-full border-r-8 border-transparent bg-transparent py-1.5 pl-8"
                 >
                   <option value="UTC-12:00">(UTC-12:00) International Date Line West</option>
@@ -198,9 +201,7 @@ function EditChannelInfo({ userData }) {
                   <option value="UTC+04:00">(UTC+04:00) Abu Dhabi, Muscat</option>
                   <option value="UTC+04:30">(UTC+04:30) Kabul</option>
                   <option value="UTC+05:00">(UTC+05:00) Tashkent</option>
-                  <option value="UTC+05:30" selected="">
-                    (UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi
-                  </option>
+                  <option value="UTC+05:30">(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
                   <option value="UTC+05:45">(UTC+05:45) Kathmandu</option>
                   <option value="UTC+06:00">(UTC+06:00) Almaty, Novosibirsk</option>
                   <option value="UTC+06:30">(UTC+06:30) Yangon (Rangoon)</option>

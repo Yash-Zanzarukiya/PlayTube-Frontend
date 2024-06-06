@@ -1,5 +1,5 @@
 import "./App.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getCurrentUser } from "./app/Slices/authSlice";
 import { healthCheck } from "./app/Slices/healthcheck";
@@ -8,11 +8,16 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 function App() {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    dispatch(healthCheck());
-    dispatch(getCurrentUser());
+    dispatch(healthCheck())
+      .unwrap()
+      .then(() => {
+        dispatch(getCurrentUser()).unwrap();
+      });
   }, []);
+
+  // TODO: Apply Validations and AJAX on all Forms
 
   return (
     <>

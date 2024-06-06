@@ -24,8 +24,8 @@ function PlaylistForm({ playlist }, ref) {
   useImperativeHandle(ref, () => {
     return {
       open() {
-        dialog.current.show();
-        // dialog.current.showModal();
+        // dialog.current.show();
+        dialog.current.showModal();
       },
     };
   });
@@ -45,7 +45,7 @@ function PlaylistForm({ playlist }, ref) {
   }
 
   return createPortal(
-    <dialog ref={dialog} className="h-full" onClose={handleClose}>
+    <dialog ref={dialog} className="h-full items-center backdrop:backdrop-blur-sm" onClose={handleClose}>
       <div className="relative flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]">
         <div className="fixed inset-0 top-[calc(66px)] z-10 flex flex-col bg-black/50 px-4 pb-[86px] pt-4 sm:top-[calc(82px)] sm:px-14 sm:py-8">
           <form

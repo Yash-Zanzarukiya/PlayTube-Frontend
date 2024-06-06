@@ -25,10 +25,13 @@ function EditVideo() {
               </svg>
             </button>
           </div>
+
           <label htmlFor="thumbnail" className="mb-1 inline-block">
             Thumbnail
             <sup>*</sup>
           </label>
+
+          
           <label
             className="relative mb-4 block cursor-pointer border border-dashed p-2 after:absolute after:inset-0 after:bg-transparent hover:after:bg-black/10"
             htmlFor="thumbnail"
@@ -39,6 +42,8 @@ function EditVideo() {
               alt="State Management with Redux"
             />
           </label>
+
+
           <div className="mb-6 flex flex-col gap-y-4">
             <div className="w-full">
               <label htmlFor="title" className="mb-1 inline-block">

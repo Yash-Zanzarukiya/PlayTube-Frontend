@@ -104,6 +104,8 @@ function ChannelPlaylist({ owner = false }) {
     );
   }
 
+  // FIXME: Show Empty playlist when user has created playlist without videos
+
   return playlists?.length > 0 ? (
     <>
       <PlaylistForm ref={dialog} />

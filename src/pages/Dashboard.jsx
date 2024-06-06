@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getChannelStats, getChannelVideos } from "../../app/Slices/dashboardSlice";
+import { getChannelStats, getChannelVideos } from "../app/Slices/dashboardSlice";
 import { useDispatch } from "react-redux";
-import { AdminVideoAtom, StatusAtom, PopupForm, UploadVideo } from "../index";
+import { AdminVideoAtom, StatusAtom, PopupForm, UploadVideo } from "../components/index";
 
 function Dashboard() {
   const [channelStates, setChannelState] = useState(null);
@@ -160,10 +160,12 @@ function Dashboard() {
               <tr>
                 <th className="border-collapse border-b p-4">Status</th>
                 <th className="border-collapse border-b p-4">Status</th>
-                <th className="border-collapse border-b p-4">Uploaded</th>
-                <th className="border-collapse border-b p-4">Rating</th>
+                <th className="border-collapse border-b p-4">Video</th>
                 <th className="border-collapse border-b p-4">Date uploaded</th>
-                <th className="border-collapse border-b p-4"></th>
+                <th className="border-collapse border-b p-4">Views</th>
+                <th className="border-collapse border-b p-4">Comments</th>
+                <th className="border-collapse border-b p-4">Ratings</th>
+                <th className="border-collapse border-b p-4">Options</th>
               </tr>
             </thead>
             <tbody>

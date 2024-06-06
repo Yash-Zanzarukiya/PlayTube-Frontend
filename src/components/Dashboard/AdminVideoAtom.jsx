@@ -46,7 +46,6 @@ function AdminVideoAtom({ video }) {
           </label>
         </div>
       </td>
-
       {/* Publish-Unpublished label */}
       <td className="border-collapse border-b border-gray-600 px-4 py-3 group-last:border-none">
         <div className="flex justify-center">
@@ -78,6 +77,21 @@ function AdminVideoAtom({ video }) {
         </div>
       </td>
 
+      {/* upload date */}
+      <td className="border-collapse text-center border-b border-gray-600 px-4 py-3 group-last:border-none">
+        {formatDate(video.createdAt)}
+      </td>
+
+      {/* Views */}
+      <td className="border-collapse text-center border-b border-gray-600 px-4 py-3 group-last:border-none">
+        {video.views}
+      </td>
+
+      {/* Comments Count */}
+      <td className="border-collapse text-center border-b border-gray-600 px-4 py-3 group-last:border-none">
+        {video.commentsCount}
+      </td>
+
       {/* Like-Dislike Count */}
       <td className="border-collapse border-b border-gray-600 px-4 py-3 group-last:border-none">
         <div className="flex justify-center gap-4">
@@ -88,11 +102,6 @@ function AdminVideoAtom({ video }) {
             {video.dislikesCount} dislikes
           </span>
         </div>
-      </td>
-
-      {/* upload date */}
-      <td className="border-collapse text-center border-b border-gray-600 px-4 py-3 group-last:border-none">
-        {formatDate(video.createdAt)}
       </td>
 
       {/* Video Manipulation*/}

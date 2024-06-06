@@ -10,15 +10,21 @@ const initialState = {
   data: null,
 };
 
-export const publishVideo = createAsyncThunk("video/publishVideo", async ({ data }) => {
+export const publishVideo = createAsyncThunk("video/publishVideo", async ({ data }, { signal }) => {
   const formData = new FormData();
 
   for (const key in data) formData.append(key, data[key]);
   formData.append("thumbnail", data.thumbnail[0]);
   formData.append("videoFile", data.videoFile[0]);
 
+  const controller = new AbortController();
+  signal.addEventListener("abort", () => {
+    controller.abort();
+  });
+
   try {
     const response = await axiosInstance.post(`/videos`, formData, {
+      signal: controller.signal,
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -26,8 +32,16 @@ export const publishVideo = createAsyncThunk("video/publishVideo", async ({ data
     toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
-    toast.error(parseErrorMessage(error.response.data));
-    console.log(error);
+    if (axiosInstance.isCancel(error)) {
+      // Handle Cancel errors
+      toast.error("Video Upload canceled");
+      console.log("Video Upload canceled");
+    } else {
+      // other errors
+      toast.error(parseErrorMessage(error.response.data));
+      console.log(error);
+      throw error;
+    }
     throw error;
   }
 });

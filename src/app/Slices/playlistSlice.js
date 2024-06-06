@@ -81,7 +81,7 @@ export const removeVideoFromPlaylist = createAsyncThunk(
   async ({ playlistId, videoId }) => {
     try {
       const response = await axiosInstance.patch(`/playlist/remove/${playlistId}/${videoId}`);
-      // toast.success(response.data.message);
+      toast.success(response.data.message);
       return response.data.data;
     } catch (error) {
       toast.error(parseErrorMessage(error.response.data));
@@ -187,13 +187,13 @@ const playlistSlice = createSlice({
       // state.loading = true;
     });
     builder.addCase(addVideoToPlaylist.fulfilled, (state, action) => {
-      state.loading = false;
+      // state.loading = false;
       // state.data = action.payload;
-      state.status = true;
+      // state.status = true;
     });
     builder.addCase(addVideoToPlaylist.rejected, (state) => {
-      state.loading = false;
-      state.status = false;
+      // state.loading = false;
+      // state.status = false;
     });
 
     // remove Video From Playlist
@@ -201,13 +201,13 @@ const playlistSlice = createSlice({
       // state.loading = true;
     });
     builder.addCase(removeVideoFromPlaylist.fulfilled, (state, action) => {
-      state.loading = false;
+      // state.loading = false;
       // state.data = action.payload;
-      state.status = true;
+      // state.status = true;
     });
     builder.addCase(removeVideoFromPlaylist.rejected, (state) => {
-      state.loading = false;
-      state.status = false;
+      // state.loading = false;
+      // state.status = false;
     });
 
     // update Playlist

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { EditPersonalInfo, EditChannelInfo, ChangePassword } from "../index";
+import { EditPersonalInfo, EditChannelInfo, ChangePassword } from "../components/index";
 import { useDispatch } from "react-redux";
-import { uploadAvatar, uploadCoverImage } from "../../app/Slices/authSlice";
+import { uploadAvatar, uploadCoverImage } from "../app/Slices/authSlice";
 
 function Settings() {
   const [currentTab, setCurrentTab] = useState(0);
@@ -34,7 +34,7 @@ function Settings() {
           />
           <label
             htmlFor="cover-image"
-            className="inline-block h-10 w-10 cursor-pointer rounded-lg bg-white/60 p-1 text-[#ae7aff] hover:bg-white"
+            className="inline-block h-10 w-10 cursor-pointer rounded-lg bg-white/70 p-1 text-[#ae7aff] hover:bg-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ function Settings() {
               />
               <label
                 htmlFor="profile-image"
-                className="inline-block h-8 w-8 cursor-pointer rounded-lg bg-white/60 p-1 text-[#ae7aff] hover:bg-white"
+                className="inline-block h-8 w-8 cursor-pointer rounded-lg bg-white/70 p-1 text-[#ae7aff] hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

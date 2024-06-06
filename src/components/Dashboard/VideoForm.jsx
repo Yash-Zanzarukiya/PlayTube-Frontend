@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { createPlaylist, updatePlaylist } from "../../app/Slices/playlistSlice";
-import { toast } from "react-toastify";
 import { publishVideo, updateVideo } from "../../app/Slices/videoSlice";
+import { UploadSuccess, UploadingVideo } from "../index";
 
 function VideoForm({ video }, ref) {
   const dialog = useRef();
+  const uploadingDialog = useRef();
+  const successDialog = useRef();
   const dispatch = useDispatch();
+
+  const [promise, setPromise] = useState(null);
 
   const {
     register,
@@ -31,31 +34,43 @@ function VideoForm({ video }, ref) {
     };
   });
 
-  function handleClose() {}
-
-  function handleVideo(data) {
+  async function handleVideo(data) {
     // TODO do not submit if details are not modified
     if (video) {
       dispatch(updateVideo({ videoId: video._id, data })).then((res) => {
         if (res.meta.requestStatus === "fulfilled") dialog.current.close();
       });
     } else {
-      dispatch(publishVideo({ data })).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") dialog.current.close();
+      let uploadPromise = dispatch(publishVideo({ data }));
+
+      uploadPromise.then((res) => {
+        if (res.meta.requestStatus == "fulfilled") {
+          uploadingDialog.current.close();
+          successDialog.current.open();
+        } else if (res.meta.requestStatus == "rejected") {
+          uploadingDialog.current.close();
+        }
       });
+      
+      setPromise(uploadPromise);
+      dialog.current.close();
+      uploadingDialog.current.open();
     }
   }
+
+  const handleAbort = () => promise.abort();
 
   return createPortal(
     <dialog
       ref={dialog}
       className="size-full h-fit backdrop:backdrop-blur-lg lg:w-1/2 md:w-2/3"
-      onClose={handleClose}
     >
+      <UploadingVideo ref={uploadingDialog} abort={handleAbort} video={video} />
+      <UploadSuccess ref={successDialog} video={video} />
       <div className=" bg-black/85 p-2 sm:p-2 text-white">
         <form
           onSubmit={handleSubmit(handleVideo)}
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
           className="h-fit border bg-[#121212]"
         >
           {/* Close Buttons */}
@@ -103,7 +118,16 @@ function VideoForm({ video }, ref) {
                   >
                     <input
                       type="file"
-                      {...register("videoFile", { required: true })}
+                      {...register("videoFile", {
+                        required: true,
+                        validate: (file) => {
+                          const allowedExtensions = ["video/mp4"];
+                          const fileType = file[0].type;
+                          return allowedExtensions.includes(fileType)
+                            ? true
+                            : "Invalid file type! Only .mp4 files are accepted";
+                        },
+                      })}
                       id="upload-video"
                       className="sr-only"
                     />
@@ -113,9 +137,11 @@ function VideoForm({ video }, ref) {
                 {errors.videoFile?.type === "required" && (
                   <div className="text-red-500">*VideoFile is required</div>
                 )}
+                {errors.videoFile && <div className="text-red-500">{errors.videoFile.message}</div>}
               </>
             )}
 
+            {/* TODO: add thumbnail preview if exist */}
             {/* Thumbnail */}
             <div className="w-full">
               <label htmlFor="thumbnail" className="mb-1 inline-block hover:cursor-pointer">
@@ -125,7 +151,16 @@ function VideoForm({ video }, ref) {
               <input
                 id="thumbnail"
                 type="file"
-                {...register("thumbnail", { required: video ? false : true })}
+                {...register("thumbnail", {
+                  required: video ? false : true,
+                  validate: (file) => {
+                    const allowedExtensions = ["image/jpeg", "image/png", "image/jpg"];
+                    const fileType = file[0].type;
+                    return allowedExtensions.includes(fileType)
+                      ? true
+                      : "Invalid file type! Only .png .jpg and .jpeg files are accepted";
+                  },
+                })}
                 className="w-full border p-1 file:mr-4 file:border-none file:bg-[#ae7aff] file:px-3 file:py-1.5"
               />
             </div>
@@ -180,7 +215,7 @@ function VideoForm({ video }, ref) {
                 }
                 className="bg-[#ae7aff] px-4 py-3 text-black hover:font-semibold hover:border disabled:bg-[#E4D3FF] disabled:cursor-not-allowed"
               >
-                {video ? "Update" : "Create"}
+                {video ? "Update" : "Publish"}
               </button>
             </div>
           </div>

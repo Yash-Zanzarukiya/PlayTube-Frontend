@@ -23,19 +23,25 @@ function ConfirmPopup(
       open() {
         dialog.current.showModal();
       },
+      close() {
+        dialog.current.close();
+      },
     };
   });
 
-  const handleClose = () => actionFunction(false);
+  const handleClose = () => {
+    dialog.current.close();
+    actionFunction(false);
+  };
 
   const handleConfirm = (event) => {
     event.preventDefault();
-    actionFunction(true);
     dialog.current.close();
+    actionFunction(true);
   };
 
   return createPortal(
-    <dialog ref={dialog} className="h-full" onClose={handleClose}>
+    <dialog ref={dialog} className="h-full backdrop:backdrop-blur-sm">
       <div className="relative flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]">
         <div className="fixed inset-0 top-[calc(66px)] z-10 flex flex-col bg-black/50 px-4 pb-[86px] pt-4 sm:top-[calc(82px)] sm:px-14 sm:py-8">
           <form
@@ -43,12 +49,12 @@ function ConfirmPopup(
             className="mx-auto w-full max-w-lg overflow-auto rounded-lg border border-gray-700 text-white bg-[#121212] p-4"
           >
             {/* close button */}
-            <div className="mb-2 flex items-start justify-end">
+            <div className="mb-2 flex items-start justify-end ">
               <button
                 autoFocus
                 type="button"
-                onClick={() => dialog.current.close()}
-                className="h-6 w-6 focus:border focus:border-dotted hover:border-dotted hover:border"
+                onClick={handleClose}
+                className="h-6 w-6 focus:border focus:border-dotted hover:border-dotted hover:border "
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -68,10 +74,10 @@ function ConfirmPopup(
             </div>
 
             {/* Message Headers*/}
-            <div className="flex flex-col items-center mb-3">
+            <div className="flex flex-col items-center text-center justify-center mb-3">
               <h6 className="text-3xl font-semibold mb-3  select-none">{title}</h6>
-              {subtitle && <div className="block text-xl text-gray-300">{subtitle}</div>}
-              {message && <div className="block text-xl text-gray-300 mt-3">{message}</div>}
+              {subtitle && <span className=" text-lg text-gray-300">{subtitle}</span>}
+              {message && <span className=" text-lg text-gray-300 mt-3">{message}</span>}
             </div>
 
             {/* Checkbox field */}
@@ -93,17 +99,17 @@ function ConfirmPopup(
             <div className="grid grid-cols-2 gap-4 mt-4">
               <button
                 type="button"
-                onClick={() => dialog.current.close()}
+                onClick={handleClose}
                 className="border px-4 py-3 hover:bg-[#212121FF] hover:border-dashed"
               >
                 {cancel}
               </button>
               <button
                 type="submit"
-                disabled={!isChecked}
+                disabled={checkbox && !isChecked}
                 className={`${
-                  critical ? "bg-[#212121]" : "bg-[#ae7aff]"
-                } px-4 py-3 border text-red-500 enabled:hover:text-black enabled:hover:bg-red-600 font-semibold hover:border-dashed disabled:cursor-not-allowed`}
+                  critical ? "bg-[#212121] text-red-500" : "bg-[#ae7aff] text-white"
+                } px-4 py-3 border enabled:hover:text-black enabled:hover:bg-red-600 font-semibold hover:border-dashed disabled:cursor-not-allowed`}
               >
                 {confirm}
               </button>

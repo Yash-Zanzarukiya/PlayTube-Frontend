@@ -15,13 +15,11 @@ import {
   ChannelSubscribed,
   ChannelTweets,
   ChannelVideos,
-  Dashboard,
   Feed,
   Home,
   Login,
   SignUp,
   VideoDetail,
-  Settings,
   PlaylistVideos,
   AuthLayout,
 } from "./components/index.js";
@@ -31,6 +29,8 @@ import Channel from "./pages/Channel.jsx";
 import MyChannel from "./pages/MyChannel.jsx";
 import History from "./pages/History.jsx";
 import LikedVideos from "./pages/LikedVideos.jsx";
+import Settings from "./pages/Settings.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
