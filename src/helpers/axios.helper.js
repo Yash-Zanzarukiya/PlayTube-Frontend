@@ -2,7 +2,7 @@ import axios from "axios";
 // import { loadProgressBar } from "axios-progress-bar";
 // import "axios-progress-bar/dist/nprogress.css";
 
-const baseURL = "http://localhost:3000/api/v1";
+const baseURL = "https://play-tube-by-yashpz.vercel.app/api/v1";
 
 export const axiosInstance = axios.create({
   baseURL,
