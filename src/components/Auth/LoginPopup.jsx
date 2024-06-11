@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { login } from "../../app/Slices/authSlice.js";
 import { Logo, Input, Button } from "../index.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useImperativeHandle } from "react";
 import { createPortal } from "react-dom";
 import { icons } from "../../assets/icons.jsx";
@@ -19,12 +19,7 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      username: "yashpz",
-      password: "12345678",
-    },
-  });
+  } = useForm();
 
   useImperativeHandle(ref, () => {
     return {
@@ -75,7 +70,13 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
                 {icons.cross}
               </button>
               <Logo width="w-12" className="absolute  top-0 left-[45%] sm:w-12 " />
-              <h6 className="mx-auto mt-12 mb-4 text-2xl font-semibold">{message}</h6>
+              <h6 className="mx-auto mt-14 mb-2 text-2xl font-semibold">{message}</h6>
+              <h6 className="mx-auto text-md mb-3">
+                Don't have an Account yet?{" "}
+                <Link to={"/signup"} className="font-semibold text-blue-600 hover:text-blue-400">
+                  Sign up now
+                </Link>
+              </h6>
               <form
                 onSubmit={handleSubmit(handleLogin)}
                 className="mx-auto flex w-full flex-col px-4 gap-y-2"
@@ -94,19 +95,20 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
                   })}
                 />
                 {errors.username?.type === "required" && (
-                  <span className="text-red-500">*username or email is required</span>
+                  <span className="text-red-500 mt-1">*username or email is required</span>
                 )}
                 <Input
                   label="Password"
+                  labelClassName="mt-4"
                   type="password"
                   required
                   placeholder="Enter the Password"
                   {...register("password", { required: true })}
                 />
                 {errors.password?.type === "required" && (
-                  <span className="text-red-500">*password is required</span>
+                  <span className="text-red-500 mt-1">*password is required</span>
                 )}
-                <div className="flex flex-1 gap-x-4">
+                <div className="flex flex-1 gap-x-4 mt-5">
                   <Button
                     type="button"
                     onClick={handleClose}

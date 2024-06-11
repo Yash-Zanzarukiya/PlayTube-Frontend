@@ -1,11 +1,17 @@
 import React, { useId } from "react";
 
-function Input({ label, type = "text", required = false, className = "", ...props }, ref) {
+function Input(
+  { label, type = "text", required = false, className = "", labelClassName = "", ...props },
+  ref
+) {
   const id = useId();
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label htmlFor={id} className="mb-1 inline-block text-gray-300 capitalize">
+        <label
+          htmlFor={id}
+          className={`mb-1 inline-block text-gray-300 capitalize ${labelClassName}`}
+        >
           {required && <span className=" text-red-600 text-l">* </span>}
           {label}
         </label>
@@ -14,7 +20,7 @@ function Input({ label, type = "text", required = false, className = "", ...prop
         type={type}
         id={id}
         ref={ref}
-        className={`mb-4 rounded-lg border bg-transparent px-3 py-2 ${className}`}
+        className={`rounded-lg border bg-transparent px-3 py-2 ${className}`}
         {...props}
       />
     </div>

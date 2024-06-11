@@ -30,10 +30,10 @@ function VideoForm({ video = false }, ref) {
     return {
       open() {
         setShowPopup(true);
-        dialog.current.showModal();
+        dialog.current?.showModal();
       },
       close() {
-        dialog.current.close();
+        dialog.current?.close();
       },
     };
   });
@@ -146,8 +146,10 @@ function VideoForm({ video = false }, ref) {
                       {errors.videoFile?.type === "required" && (
                         <div className="text-red-500">*VideoFile is required</div>
                       )}
-                      {errors.videoFile && (
-                        <div className="text-red-500">{errors.videoFile.message}</div>
+                      {errors.videoFile?.type === "validate" && (
+                        <div className="text-red-500">
+                          *Invalid file type! Only .mp4 files are accepted
+                        </div>
                       )}
                     </>
                   )}
@@ -166,6 +168,7 @@ function VideoForm({ video = false }, ref) {
                         required: !video,
                         validate: (file) => {
                           if (video) return true;
+                          if (!file[0]) return true;
                           const allowedExtensions = ["image/jpeg", "image/png", "image/jpg"];
                           const fileType = file[0]?.type;
                           return allowedExtensions.includes(fileType)
@@ -179,7 +182,11 @@ function VideoForm({ video = false }, ref) {
                   {errors.thumbnail?.type === "required" && (
                     <div className=" text-red-500">*Thumbnail is required</div>
                   )}
-                  {errors.thumbnail && <div className=" text-red-500">*Thumbnail is required</div>}
+                  {errors.thumbnail?.type === "validate" && (
+                    <div className=" text-red-500">
+                      *Only .png .jpg and .jpeg files are accepted
+                    </div>
+                  )}
 
                   {/* Title */}
                   <div className="w-full">
