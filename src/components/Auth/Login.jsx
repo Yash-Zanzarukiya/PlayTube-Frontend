@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { login } from "../../app/Slices/authSlice.js";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { status } = useSelector(({ auth }) => auth);
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -15,6 +16,10 @@ function Login() {
       password: "12345678",
     },
   });
+
+  useEffect(() => {
+    if (status) navigate("/");
+  }, []);
 
   const handleLogin = (data) => {
     dispatch(login(data)).then((res) => {

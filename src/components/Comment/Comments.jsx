@@ -4,13 +4,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getVideoComments } from "../../app/Slices/commentSlice";
-import { CommentAtom, LikesComponent } from "../index";
+import { CommentAtom, LikesComponent, LoginPopup } from "../index";
 import { toast } from "react-toastify";
 
 function Comments({ videoId, ownerAvatar }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef();
+  const loginPopupDialog = useRef();
+
+  const { status: authStatus } = useSelector(({ auth }) => auth);
 
   const { status, data } = useSelector((state) => state.comment);
   const [localCommentData, setLocalCommentData] = useState(null);
@@ -24,12 +27,13 @@ function Comments({ videoId, ownerAvatar }) {
 
   function handleAddComment(event) {
     event.preventDefault();
+    if (!authStatus) return loginPopupDialog.current?.open();
     const content = event.target.content.value;
     if (!content) {
       toast.warning("Please Enter some message...");
       return;
     }
-    // TODO Optimize my performance by making a very small network request or no request for adding new comment
+    // OPTIMIZEME Optimize my performance by making a very small network request or no request for adding new comment
     setLocalCommentData(data);
     dispatch(addComment({ videoId, content }));
     inputRef.current.value = "";
@@ -51,6 +55,7 @@ function Comments({ videoId, ownerAvatar }) {
 
   return (
     <div className="fixed inset-x-0 top-full z-[60] h-[calc(100%-69px)] overflow-auto rounded-lg border bg-[#121212] p-4 duration-200 hover:top-[67px]  peer-focus:top-[67px] sm:static sm:h-auto sm:max-h-[500px] lg:max-h-none">
+      <LoginPopup ref={loginPopupDialog} message="Sign in to Comment on Video..." />
       {/* add comment */}
       <div className="block">
         <h6 className="mb-4 font-semibold">

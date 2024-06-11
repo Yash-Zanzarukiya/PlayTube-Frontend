@@ -3,7 +3,7 @@ import { NavLink, Outlet, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { channelProfile } from "../app/Slices/userSlice";
+import { channelProfile } from "../../app/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
 
 function MyChannel() {
@@ -18,12 +18,15 @@ function MyChannel() {
 
   return profile ? (
     <section className="relative w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+      {/* Cover Image */}
       <div className="relative min-h-[150px] w-full pt-[16.28%]">
         <div className="absolute inset-0 overflow-hidden">
           <img src={profile?.coverImage} alt={profile?.username} />
         </div>
       </div>
+
       <div className=" px-4 pb-4">
+        {/* Channel Metadata */}
         <div className="flex flex-wrap gap-4 pb-4 pt-6">
           <span className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full border-2">
             <img src={profile?.avatar} alt="Channel" className="h-full w-full" />
@@ -61,6 +64,7 @@ function MyChannel() {
             </button>
           </div>
         </div>
+        {/* Tab List */}
         <ul className="no-scrollbar sticky top-[66px] z-[2] flex flex-row gap-x-2 overflow-auto border-b-2 border-gray-400 bg-[#121212] py-2 sm:top-[82px]">
           <li className="w-full">
             <NavLink to={""}>

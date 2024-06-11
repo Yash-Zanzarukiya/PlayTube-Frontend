@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { channelProfile } from "../../app/Slices/userSlice";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { formatSubscription } from "../../helpers/formatFigures";
 import { toggleSubscription } from "../../app/Slices/subscriptionSlice";
+import { LoginPopup } from "..";
 
 function UserProfile({ userId }) {
-  const { userData, loading, status } = useSelector((state) => state.user);
+  const loginPopupDialog = useRef();
   const dispatch = useDispatch();
+
+  const { userData, loading, status } = useSelector((state) => state.user);
+  const { status: authStatus } = useSelector(({ auth }) => auth);
+
   const [localData, setLocalData] = useState(null);
 
   useEffect(() => {
@@ -17,6 +22,7 @@ function UserProfile({ userId }) {
   }, [userId, dispatch]);
 
   async function handleToggleSubscription(channelId) {
+    if (!authStatus) return loginPopupDialog.current?.open();
     setLocalData((pre) => ({ ...pre, isSubscribed: !pre.isSubscribed }));
     dispatch(toggleSubscription(channelId)).then(() => dispatch(channelProfile(userId)));
   }
@@ -35,6 +41,7 @@ function UserProfile({ userId }) {
 
   return (
     <div className="mt-4 flex items-center justify-between">
+      <LoginPopup ref={loginPopupDialog} message="Sign in to Subscribe..." />
       {/* Owner Data */}
       <div key="owner-data" className="flex items-center gap-x-4">
         <div className="mt-2 h-12 w-12 shrink-0">

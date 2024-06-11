@@ -8,6 +8,7 @@ import tweetSlice from "./Slices/tweetSlice";
 import likeSlice from "./Slices/likeSlice";
 import commentSlice from "./Slices/commentSlice";
 import dashboardSlice from "./Slices/dashboardSlice";
+import paginationSlice from "./Slices/paginationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     like: likeSlice,
     comment: commentSlice,
     dashboard: dashboardSlice,
+    pagingVideos: paginationSlice,
   },
 });

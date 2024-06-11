@@ -22,6 +22,7 @@ function App() {
   return (
     <>
       <Outlet />
+      <div id="popup-models" className="bg-purple-400 relative"></div>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}

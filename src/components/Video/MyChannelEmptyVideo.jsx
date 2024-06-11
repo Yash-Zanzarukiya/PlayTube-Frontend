@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function MyChannelEmptyVideo() {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-center p-4">
       <div className="w-full max-w-sm text-center">
@@ -24,10 +26,11 @@ function MyChannelEmptyVideo() {
           </span>
         </p>
         <h5 className="mb-2 font-semibold">No videos uploaded</h5>
-        <p>
-          This page has yet to upload a video. Search another page in order to find more videos.
-        </p>
-        <button className="mt-4 inline-flex items-center gap-x-2 bg-[#ae7aff] px-3 py-2 font-semibold text-black">
+        <p>Yore Channel has no Videos yet. Go to the admin panel to upload the videos.</p>
+        <button
+          onClick={() => navigate("/admin/dashboard")}
+          className="mt-4 inline-flex items-center gap-x-2 bg-[#ae7aff] hover:bg-[#ae7aff]/95 border border-transparent hover:border-dotted hover:border-white px-3 py-2 font-semibold text-black"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

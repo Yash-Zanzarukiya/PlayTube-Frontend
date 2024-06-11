@@ -12,7 +12,6 @@ import { Link, useParams } from "react-router-dom";
 import { formatSubscription } from "../../helpers/formatFigures";
 
 // TESTME Fix redux logic in channel
-// TODO <a> cannot appear as a descendant of <a>.
 
 function ChannelSubscribed({ owner = false, isSubscribers = false }) {
   const dispatch = useDispatch();

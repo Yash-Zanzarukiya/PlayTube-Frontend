@@ -51,9 +51,31 @@ import ChannelProfileAtom from "./Atoms/ChannelProfileAtom";
 import StatusAtom from "./Dashboard/StatusAtom";
 import AdminVideoAtom from "./Dashboard/AdminVideoAtom";
 import PopupForm from "./Atoms/PopupForm";
-
+import ChannelState from "./Dashboard/ChannelState";
+import AdminPanelVideos from "./Dashboard/AdminPanelVideos";
+import AboutChannel from "./Channel/AboutChannel";
+import LoginPopup from "./Auth/LoginPopup";
+import GuestComponent from "./GuestPages/GuestComponent";
+import GuestAdmin from "./GuestPages/GuestAdmin";
+import GuestHistory from "./GuestPages/GuestHistory";
+import GuestLikedVideos from "./GuestPages/GuestLikedVideos";
+import GuestSubscription from "./GuestPages/GuestSubscription";
+import GuestMyChannel from "./GuestPages/GuestMyChannel";
+import GuestSubscribers from "./GuestPages/GuestSubscribers";
+import VideoPlayer from "./Atoms/VideoPlayer";
 export {
+  VideoPlayer,
+  GuestComponent,
+  GuestSubscribers,
+  GuestMyChannel,
+  GuestSubscription,
+  GuestLikedVideos,
+  GuestHistory,
+  GuestAdmin,
+  LoginPopup,
+  AboutChannel,
   PopupForm,
+  AdminPanelVideos,
   StatusAtom,
   AdminVideoAtom,
   ChannelProfileAtom,
@@ -95,6 +117,7 @@ export {
   UploadingVideo,
   UploadSuccess,
   UploadVideo,
+  ChannelState,
   MyChannelEmptyVideo,
   EmptySubscription,
   ChannelSubscribed,

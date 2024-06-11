@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { channelProfile } from "../app/Slices/userSlice";
 import { ChannelProfileAtom } from "../components/index";
-import { toggleSubscription } from "../app/Slices/subscriptionSlice";
 
 function Channel({ owner = false }) {
   const [profile, setProfile] = useState(null);
@@ -16,12 +15,20 @@ function Channel({ owner = false }) {
   const loggedInUsername = useSelector((state) => state.auth.userData?.username);
 
   useEffect(() => {
-    if (loggedInUsername === username) navigate(`/channel/${loggedInUsername}`);
+    if (!owner && loggedInUsername === username) navigate(`/channel/${loggedInUsername}`);
     if (!username) return;
     dispatch(channelProfile(username)).then((res) => {
       setProfile(res.payload);
     });
-  }, [username]);
+  }, [username, loggedInUsername]);
+
+  const tabList = [
+    { name: "Videos", route: "" },
+    { name: "Playlists", route: "playlists" },
+    { name: "Tweets", route: "tweets" },
+    { name: "Subscribed", route: "subscribed" },
+    { name: "About", route: "about" },
+  ];
 
   return profile ? (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
@@ -34,42 +41,27 @@ function Channel({ owner = false }) {
 
       <div className="px-4 pb-4">
         {/* Channel Metadata */}
-
-        <ChannelProfileAtom profile={profile} />
-        {/* BUG Active element */}
-        {/* List Options */}
+        <ChannelProfileAtom profile={profile} owner={owner}/>
+        {/* Tab List */}
         <ul className="no-scrollbar sticky top-[66px] z-[2] flex flex-row gap-x-2 overflow-auto border-b-2 border-gray-400 bg-[#121212] py-2 sm:top-[82px]">
-          <li className="w-full">
-            <NavLink to={""} activeclassname="active" className="navlink">
-              <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
-                Videos
-              </button>
-            </NavLink>
-          </li>
-          <li className="w-full">
-            <NavLink to={"playlists"} activeclassname="active">
-              <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
-                Playlist
-              </button>
-            </NavLink>
-          </li>
-          <li className="w-full">
-            <NavLink to={"tweets"} activeclassname="active">
-              <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
-                Tweets
-              </button>
-            </NavLink>
-          </li>
-          <li className="w-full">
-            <NavLink to={"subscribed"} activeclassname="active">
-              <button className="w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400 active:border-[#ae7aff] active:bg-white  active:text-[#ae7aff]">
-                Subscribed
-              </button>
-            </NavLink>
-          </li>
+          {tabList?.map((item) => (
+            <li className="w-full">
+              <NavLink
+                to={item.route}
+                end
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? " bg-white/90 border-[#ae7aff] text-black rounded-t"
+                      : "text-[#ae7aff] "
+                  } w-full text-center flex justify-center border-b-2  px-3 py-1.5`
+                }
+              >
+                <span className=" inline-block mx-auto ">{item.name}</span>
+              </NavLink>
+            </li>
+          ))}
         </ul>
-
-        {/* Outlet */}
         <Outlet />
       </div>
     </section>

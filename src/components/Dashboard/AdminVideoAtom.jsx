@@ -4,6 +4,7 @@ import { formatDate, formatTimestamp } from "../../helpers/formatFigures";
 import { Link } from "react-router-dom";
 import { deleteVideo, togglePublish } from "../../app/Slices/videoSlice";
 import { ConfirmPopup, UploadVideo } from "../index";
+import { getChannelVideos } from "../../app/Slices/dashboardSlice";
 
 function AdminVideoAtom({ video }) {
   const dispatch = useDispatch();
@@ -12,19 +13,21 @@ function AdminVideoAtom({ video }) {
 
   const [publishedStatus, setPublishedStatus] = useState(video.isPublished);
 
+  // EXTRA Update video update to dashboard slice
+
   function handleTogglePublish() {
     dispatch(togglePublish(video._id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") setPublishedStatus((pre) => !pre);
+      dispatch(getChannelVideos());
     });
   }
 
-  function handleEditVideo() {}
-
   function handleDeleteVideo(isConfirm) {
-    if (isConfirm) dispatch(deleteVideo(video._id));
+    if (isConfirm) {
+      dispatch(deleteVideo(video._id));
+      dispatch(getChannelVideos());
+    }
   }
-
-  // TODO: Add Views & Comments
 
   return (
     <tr key={video._id} className="group border">

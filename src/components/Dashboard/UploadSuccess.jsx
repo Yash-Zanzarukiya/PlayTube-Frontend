@@ -1,7 +1,7 @@
 import React, { useRef, useImperativeHandle } from "react";
 import { createPortal } from "react-dom";
 
-function UploadSuccess({ video }, ref) {
+function UploadSuccess({ video, updating = false }, ref) {
   const dialog = useRef();
 
   useImperativeHandle(ref, () => {
@@ -20,9 +20,9 @@ function UploadSuccess({ video }, ref) {
             <div className="w-full max-w-lg overflow-auto rounded-lg border border-gray-700 bg-[#121212] p-4">
               <div className="mb-4 flex items-start justify-between">
                 <h2 className="text-xl font-semibold">
-                  Video Uploaded Successfully...
+                  Video {updating ? "Updated" : "Uploaded"} Successfully...
                   <span className="block text-sm text-gray-300">
-                    Track your video uploading process.
+                    Track your video {updating ? "Updating" : "Uploading"} process.
                   </span>
                 </h2>
                 <button onClick={() => dialog.current.close()} className="h-6 w-6">
@@ -62,7 +62,7 @@ function UploadSuccess({ video }, ref) {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h6>Dashboard prototype recording.mp4</h6>
+                  <h6>{updating ? video.title : "Dashboard prototype recording.mp4"}</h6>
                   <p className="text-sm">16 MB</p>
                   <div className="mt-2 flex items-center">
                     <span className="mr-2 inline-block w-6 text-[#ae7aff]">
@@ -79,7 +79,7 @@ function UploadSuccess({ video }, ref) {
                         ></path>
                       </svg>
                     </span>
-                    Video Uploaded
+                    Video {updating ? "Updated" : "Uploaded"}
                   </div>
                 </div>
               </div>

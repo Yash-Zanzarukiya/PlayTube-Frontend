@@ -28,8 +28,8 @@ function MyChannelEmptyPlaylist({ onClickBtn }) {
           Your Channel has yet to create a playlist. <br /> create a playlist and add some videos.
         </p>
         <button
-          onClick={onClickBtn}
-          className="mt-4 inline-flex items-center gap-x-2 bg-[#ae7aff] px-3 py-2 font-semibold text-black"
+          onClick={() => onClickBtn()}
+          className="mt-4 inline-flex items-center gap-x-2 bg-[#ae7aff] border border-transparent hover:border-dotted hover:border-white px-3 py-2 font-semibold text-black"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

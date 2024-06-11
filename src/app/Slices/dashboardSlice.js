@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const initialState = {
   loading: false,
   status: false,
-  data: null,
+  data: {},
 };
 
 export const getChannelStats = createAsyncThunk("dashboard/getChannelStats", async () => {
@@ -18,6 +18,7 @@ export const getChannelStats = createAsyncThunk("dashboard/getChannelStats", asy
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error;
   }
 });
 
@@ -29,6 +30,7 @@ export const getChannelVideos = createAsyncThunk("dashboard/getChannelVideos", a
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));
     console.log(error);
+    throw error;
   }
 });
 
@@ -42,7 +44,7 @@ const dashboardSlice = createSlice({
     });
     builder.addCase(getChannelStats.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.data.channelStates = action.payload;
       state.status = true;
     });
     builder.addCase(getChannelStats.rejected, (state) => {
@@ -56,7 +58,7 @@ const dashboardSlice = createSlice({
     });
     builder.addCase(getChannelVideos.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.data.channelVideos = action.payload;
       state.status = true;
     });
     builder.addCase(getChannelVideos.rejected, (state) => {

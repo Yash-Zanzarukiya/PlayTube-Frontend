@@ -2,7 +2,7 @@ import React, { useRef, useImperativeHandle, useState } from "react";
 import { createPortal } from "react-dom";
 import ConfirmPopup from "../Atoms/ConfirmPopup";
 
-function UploadingVideo({ video, abort }, ref) {
+function UploadingVideo({ video, abort, updating = false }, ref) {
   const dialog = useRef();
   const confirmCancelDialog = useRef();
 
@@ -26,7 +26,7 @@ function UploadingVideo({ video, abort }, ref) {
   return createPortal(
     <dialog
       ref={dialog}
-      onClose={() => confirmCancelDialog.current.close()}
+      onClose={() => confirmCancelDialog.current?.close()}
       className="h-full text-white backdrop:backdrop-blur-sm"
     >
       <div className="relative flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]">
@@ -35,9 +35,9 @@ function UploadingVideo({ video, abort }, ref) {
             <div className="w-full max-w-lg overflow-auto rounded-lg border border-gray-700 bg-[#121212] p-4">
               <div className="mb-4 flex items-start justify-between">
                 <h2 className="text-xl font-semibold">
-                  Uploading Video...
+                  {updating ? "Updating" : "Uploading"} Video...
                   <span className="block text-sm text-gray-300">
-                    Track your video uploading process.
+                    Track your video {updating ? "Updating" : "Uploading"} process.
                   </span>
                 </h2>
                 <button onClick={() => dialog.current.close()} className="h-6 w-6">
@@ -77,8 +77,10 @@ function UploadingVideo({ video, abort }, ref) {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h6>Dashboard prototype recording.mp4</h6>
-                  <p className="text-sm">16 MB</p>
+                  <h6>
+                    {updating ? "Updating " + video.title : "Dashboard prototype recording.mp4"}
+                  </h6>
+                  {!updating && <p className="text-sm">16 MB</p>}
                   <div className="mt-2">
                     <svg
                       aria-hidden="true"
@@ -97,26 +99,28 @@ function UploadingVideo({ video, abort }, ref) {
                         fill="#AE7AFF"
                       ></path>
                     </svg>
-                    Uploading...
+                    {updating ? "Updating" : "Uploading"}...
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <button onClick={() => dialog.current.close()} className="border px-4 py-3">
-                  Close
-                </button>
-                <ConfirmPopup
-                  ref={confirmCancelDialog}
-                  actionFunction={handleCancel}
-                  title="Are you sure to cancel the Upload?"
-                />
-                <button
-                  onClick={() => confirmCancelDialog.current.open()}
-                  className="bg-[#ae7aff] px-4 py-3 text-black disabled:bg-[#E4D3FF]"
-                >
-                  Cancel Upload
-                </button>
-              </div>
+              {!updating && (
+                <div className="grid grid-cols-2 gap-4">
+                  <button onClick={() => dialog.current.close()} className="border px-4 py-3">
+                    Close
+                  </button>
+                  <ConfirmPopup
+                    ref={confirmCancelDialog}
+                    actionFunction={handleCancel}
+                    title="Are you sure to cancel the Upload?"
+                  />
+                  <button
+                    onClick={() => confirmCancelDialog.current.open()}
+                    className="bg-[#ae7aff] px-4 py-3 text-black disabled:bg-[#E4D3FF]"
+                  >
+                    Cancel Upload
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,32 +1,37 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import EmptyTweet from "./EmptyTweet";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTweet, createTweet } from "../../app/Slices/tweetSlice";
 import { formatTimestamp } from "../../helpers/formatFigures";
-import { LikesComponent, MyChannelEmptyTweet, TweetAtom } from "../index";
+import { LikesComponent, LoginPopup, MyChannelEmptyTweet, TweetAtom } from "../index";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+// OPTIMIZEME: Optimize this tweets
+
 function ChannelTweets({ owner = false }) {
-  const [localTweets, setLocalTweets] = useState(null);
-  const { register, handleSubmit, reset, setFocus } = useForm();
   const dispatch = useDispatch();
   let { username } = useParams();
-  const { data, status } = useSelector((state) => state.tweet);
-  let userId = useSelector((state) => state.user.userData?._id);
-  let currentUser = useSelector((state) => state.auth.userData);
+
+  const { data, status } = useSelector(({ tweet }) => tweet);
+  let userId = useSelector(({ user }) => user.userData?._id);
+  const { status: authStatus, userData: currentUser } = useSelector(({ auth }) => auth);
+
+  const [localTweets, setLocalTweets] = useState(null);
+  const { register, handleSubmit, reset, setFocus } = useForm();
 
   useEffect(() => {
     if (owner) {
       userId = currentUser?._id;
     }
+    console.log("userId: ", userId);
     if (!userId) return;
     dispatch(getTweet(userId)).then((res) => {
-      if (res.payload) setLocalTweets(res.payload);
+      if (res.meta.requestStatus == "fulfilled") setLocalTweets(res.payload);
     });
-  }, [username, userId]);
+  }, [username, userId, authStatus]);
 
   function addTweet(data) {
     if (!data.tweet.trim()) {
@@ -37,8 +42,8 @@ function ChannelTweets({ owner = false }) {
       toast.error("Minimum 10 characters are required");
       setFocus("tweet");
       return;
-    } else if (data.tweet.trim()?.length > 80) {
-      toast.error("Maximum 80 characters are allowed");
+    } else if (data.tweet.trim()?.length > 500) {
+      toast.error("Maximum 500 characters are allowed");
       setFocus("tweet");
       return;
     }
@@ -110,12 +115,11 @@ function ChannelTweets({ owner = false }) {
       {tweets?.length > 0 ? (
         <ul className="py-4">
           {tweets.map((tweet) => (
-            <li
+            <TweetAtom
               key={tweet._id}
-              className="flex gap-3 border-b border-gray-700 py-4 last:border-b-transparent"
-            >
-              <TweetAtom tweet={tweet} owner />
-            </li>
+              tweet={tweet}
+              owner={owner}
+            />
           ))}
         </ul>
       ) : owner ? (

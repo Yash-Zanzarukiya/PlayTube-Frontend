@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getLikedVideos } from "../app/Slices/likeSlice";
 import { formatTimestamp, formatVideoDuration } from "../helpers/formatFigures";
+import { GuestComponent, VideoList } from "../components";
+import { icons } from "../assets/icons";
 
 function LikedVideos() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,9 +20,19 @@ function LikedVideos() {
     });
   }, []);
 
-  if(isLoading){
-    return <h1>Loading...</h1>
-  }
+  const isHistoryEmpty = !isLoading && videos?.length < 1;
+
+  return <>
+  {!isHistoryEmpty && <VideoList videos={videos} loading={isLoading} />}
+  {isHistoryEmpty && (
+    <GuestComponent
+      title="Empty Liked Video"
+      subtitle="You have no previously Liked Videos."
+      icon={<span className="p-5">{icons.Like}</span>}
+      guest={false}
+    />
+  )}
+  </>
 
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">

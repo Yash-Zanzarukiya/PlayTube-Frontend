@@ -22,15 +22,24 @@ import {
   VideoDetail,
   PlaylistVideos,
   AuthLayout,
+  AboutChannel,
+  GuestHistory,
+  GuestLikedVideos,
+  GuestSubscription,
+  GuestAdmin,
+  GuestMyChannel,
+  GuestSubscribers,
 } from "./components/index.js";
 
 import FeedVideos from "./pages/FeedVideos.jsx";
 import Channel from "./pages/Channel.jsx";
-import MyChannel from "./pages/MyChannel.jsx";
 import History from "./pages/History.jsx";
 import LikedVideos from "./pages/LikedVideos.jsx";
 import Settings from "./pages/Settings.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import FeedTweets from "./pages/FeedTweets.jsx";
+import Support from "./pages/Support.jsx";
+import SearchResult from "./pages/SearchResult.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,21 +48,28 @@ const router = createBrowserRouter(
         <Route path="" element={<Feed />}>
           {/* Home Page Feed Videos */}
           <Route path="" element={<FeedVideos />} />
+
+          {/* Home Page Feed Tweets */}
+          <Route path="tweets" element={<FeedTweets />} />
+
           {/* Playlists */}
           <Route path="playlist/:playlistId" element={<PlaylistVideos />} />
+
           {/* All Other Channels */}
           <Route path="user/:username" element={<Channel />}>
             <Route path="" element={<ChannelVideos owner={false} />} />
             <Route path="playlists" element={<ChannelPlaylist owner={false} />} />
             <Route path="tweets" element={<ChannelTweets />} owner={false} />
             <Route path="subscribed" element={<ChannelSubscribed owner={false} />} />
+            <Route path="about" element={<AboutChannel owner={false} />} />
           </Route>
+
           {/* Owning My Channel(currently Logged in user) */}
           <Route
             path="channel/:username"
             element={
-              <AuthLayout authentication>
-                <MyChannel />
+              <AuthLayout authentication guestComponent={<GuestMyChannel />}>
+                <Channel owner />
               </AuthLayout>
             }
           >
@@ -61,33 +77,42 @@ const router = createBrowserRouter(
             <Route path="tweets" element={<ChannelTweets owner />} />
             <Route path="playlists" element={<ChannelPlaylist owner />} />
             <Route path="subscribed" element={<ChannelSubscribed owner />} />
+            <Route path="about" element={<AboutChannel owner />} />
           </Route>
+
+          {/* Search Results */}
+          <Route path="/results" element={<SearchResult />} />
+
           {/* User Feeds */}
           <Route
             path="feed/history"
             element={
-              <AuthLayout authentication>
+              <AuthLayout authentication guestComponent={<GuestHistory />}>
                 <History />
               </AuthLayout>
             }
           />
+
+          {/* Liked Videos */}
           <Route
             path="feed/liked"
             element={
-              <AuthLayout authentication>
+              <AuthLayout authentication guestComponent={<GuestLikedVideos />}>
                 <LikedVideos />
               </AuthLayout>
             }
           />
+
+          {/* <Subscribers /> */}
           <Route
             path="feed/subscribers"
             element={
-              <AuthLayout authentication>
+              <AuthLayout authentication guestComponent={<GuestSubscribers />}>
                 <ChannelSubscribed owner isSubscribers />
-                {/* <Subscribers /> */}
               </AuthLayout>
             }
           />
+
           {/* Settings */}
           <Route
             path="settings"
@@ -97,19 +122,26 @@ const router = createBrowserRouter(
               </AuthLayout>
             }
           />
+
+          {/* Support */}
+          <Route path="support" element={<Support />} />
         </Route>
+
         {/* Video Watching */}
         <Route path="/watch/:videoId" element={<VideoDetail />} />
+
         {/* Admin Dashboard */}
         <Route
           path="/admin/dashboard"
           element={
-            <AuthLayout authentication>
+            <AuthLayout authentication guestComponent={<GuestAdmin />}>
               <Dashboard />
             </AuthLayout>
           }
         />
       </Route>
+
+      {/* Login  */}
       <Route
         path="/login"
         element={
@@ -118,6 +150,8 @@ const router = createBrowserRouter(
           </AuthLayout>
         }
       />
+
+      {/* Sign up */}
       <Route
         path="/signup"
         element={

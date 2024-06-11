@@ -35,8 +35,12 @@ export function formatVideoDuration(duration) {
 // BUG: Fix this Bugs
 export function formatDate(timestamp) {
   const date = new Date(timestamp);
-  const day = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
-  const month = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth();
+  const days = date.getDay() + 1;
+  const months = date.getMonth() + 1;
+  
+  const day = days < 10 ? "0" + days : days;
+  const month = months < 10 ? "0" + months : months;
+
   return day + "/" + month + "/" + date.getFullYear();
 }
 
@@ -44,4 +48,9 @@ export function formatSubscription(count) {
   if (count < 1) return "0 Subscriber";
   else if (count == 1) return "1 Subscriber";
   else if (count > 1) return `${count} Subscribers`;
+}
+
+export function formatPlural(count, str = "Subscriber") {
+  if (count <= 1) return `${count} ${str}`;
+  else if (count > 1) return `${count} ${str}s`;
 }

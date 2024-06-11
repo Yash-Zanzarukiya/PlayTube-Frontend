@@ -1,539 +1,208 @@
 import React from "react";
+import { formatTimestamp, formatVideoDuration } from "../../helpers/formatFigures";
+import { Link, useNavigate } from "react-router-dom";
 
-function VideoView() {
+function VideoView({ videos = [], loading = true, fetching = false }) {
+  const navigate = useNavigate();
+
+  if (loading)
+    return (
+      <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+        <div className="flex flex-col gap-4 p-4">
+          <div className="w-full max-w-3xl gap-x-4 md:flex">
+            <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
+              <div className="w-full pt-[56%]">
+                <div className="absolute inset-0">
+                  <div className="h-full w-full bg-slate-100/10 rounded animate-pulse" />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-x-2 md:w-7/12">
+              <div className="h-10 w-10 shrink-0 md:hidden">
+                <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+              </div>
+              <div className="w-full">
+                <h6 className="mb-1 font-semibold h-7 rounded bg-slate-100/10 animate-pulse md:min-w-[75%]"></h6>
+                <p className="flex bg-slate-100/10 animate-pulse rounded h-6 w-60 max-w-full mb-1 sm:mt-1"></p>
+                <div className="flex items-center text-transparent gap-x-4">
+                  <div className="mt-2 hidden h-10 w-10 max-w-full shrink-0 md:block">
+                    <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+                  </div>
+                  <p className="text-sm text-transparent max-w-full w-40 bg-slate-100/10 animate-pulse rounded">
+                    Code Master
+                  </p>
+                </div>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[80%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[40%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+              </div>
+            </div>
+          </div>
+          <div className="w-full max-w-3xl gap-x-4 md:flex">
+            <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
+              <div className="w-full pt-[56%]">
+                <div className="absolute inset-0">
+                  <div className="h-full w-full bg-slate-100/10 rounded animate-pulse" />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-x-2 md:w-7/12">
+              <div className="h-10 w-10 shrink-0 md:hidden">
+                <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+              </div>
+              <div className="w-full">
+                <h6 className="mb-1 font-semibold h-7 rounded bg-slate-100/10 animate-pulse md:min-w-[75%]"></h6>
+                <p className="flex bg-slate-100/10 animate-pulse rounded h-6 w-60 max-w-full mb-1 sm:mt-1"></p>
+                <div className="flex items-center text-transparent gap-x-4">
+                  <div className="mt-2 hidden h-10 w-10 max-w-full shrink-0 md:block">
+                    <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+                  </div>
+                  <p className="text-sm text-transparent max-w-full w-40 bg-slate-100/10 animate-pulse rounded">
+                    Code Master
+                  </p>
+                </div>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[80%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[40%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+              </div>
+            </div>
+          </div>
+          <div className="w-full max-w-3xl gap-x-4 md:flex">
+            <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
+              <div className="w-full pt-[56%]">
+                <div className="absolute inset-0">
+                  <div className="h-full w-full bg-slate-100/10 rounded animate-pulse" />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-x-2 md:w-7/12">
+              <div className="h-10 w-10 shrink-0 md:hidden">
+                <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+              </div>
+              <div className="w-full">
+                <h6 className="mb-1 font-semibold h-7 rounded bg-slate-100/10 animate-pulse md:min-w-[75%]"></h6>
+                <p className="flex bg-slate-100/10 animate-pulse rounded h-6 w-60 max-w-full mb-1 sm:mt-1"></p>
+                <div className="flex items-center text-transparent gap-x-4">
+                  <div className="mt-2 hidden h-10 w-10 max-w-full shrink-0 md:block">
+                    <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+                  </div>
+                  <p className="text-sm text-transparent max-w-full w-40 bg-slate-100/10 animate-pulse rounded">
+                    Code Master
+                  </p>
+                </div>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[80%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[40%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+              </div>
+            </div>
+          </div>
+          <div className="w-full max-w-3xl gap-x-4 md:flex">
+            <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
+              <div className="w-full pt-[56%]">
+                <div className="absolute inset-0">
+                  <div className="h-full w-full bg-slate-100/10 rounded animate-pulse" />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-x-2 md:w-7/12">
+              <div className="h-10 w-10 shrink-0 md:hidden">
+                <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+              </div>
+              <div className="w-full">
+                <h6 className="mb-1 font-semibold h-7 rounded bg-slate-100/10 animate-pulse md:min-w-[75%]"></h6>
+                <p className="flex bg-slate-100/10 animate-pulse rounded h-6 w-60 max-w-full mb-1 sm:mt-1"></p>
+                <div className="flex items-center text-transparent gap-x-4">
+                  <div className="mt-2 hidden h-10 w-10 max-w-full shrink-0 md:block">
+                    <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+                  </div>
+                  <p className="text-sm text-transparent max-w-full w-40 bg-slate-100/10 animate-pulse rounded">
+                    Code Master
+                  </p>
+                </div>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[80%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+                <p className="mt-2 h-5 hidden text-sm text-transparent max-w-[40%] bg-slate-100/10 animate-pulse rounded md:block"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
-      <div className="flex flex-col gap-4 p-4">
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="JavaScript Fundamentals: Variables and Data Types"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                20:45
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/3532545/pexels-photo-3532545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="codemaster"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                JavaScript Fundamentals: Variables and Data Types
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">10.3k Views · 44 minutes ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/3532545/pexels-photo-3532545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="codemaster"
-                    className="h-full w-full rounded-full"
-                  />
+      <ul className="flex flex-col gap-4 p-4">
+        {videos?.length > 0 &&
+          videos.map((video) => (
+            <li key={video._id} className="w-full hover:bg-white/5">
+              <Link to={`/watch/${video._id}`}>
+                <div className="w-full max-w-3xl lg:max-w-4xl gap-x-4 md:flex">
+                  <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
+                    <div className="w-full pt-[56%]">
+                      <div className="absolute inset-0">
+                        <img src={video.thumbnail} alt={video.title} className="h-full w-full" />
+                      </div>
+                      <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
+                        {formatVideoDuration(video.duration)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex gap-x-2 md:w-7/12">
+                    <div className="h-10 w-10 shrink-0 md:hidden">
+                      <button onClick={() => navigate(`/user/${video.owner.username}`)}>
+                        <img
+                          src={video.owner.avatar}
+                          alt={video.owner.username}
+                          className="h-full w-full rounded-full"
+                        />
+                      </button>
+                    </div>
+                    <div className="w-full">
+                      <h6 className="mb-1 font-semibold md:max-w-[75%]">{video.title}</h6>
+                      <p className="flex text-sm text-gray-200 sm:mt-3">
+                        {video.views} Views · {formatTimestamp(video.createdAt)}
+                      </p>
+                      <div className="flex items-center gap-x-4">
+                        <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
+                          <img
+                            src={video.owner.avatar}
+                            alt={video.owner.username}
+                            className="h-full w-full rounded-full"
+                          />
+                        </div>
+                        <p className="text-sm text-gray-200">{video.owner.fullName}</p>
+                      </div>
+                      <p className="mt-2 hidden text-sm md:block">
+                        {video.description.substr(0, 170) +
+                          (video.description.length > 170 ? "..." : "")}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-200">Code Master</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn the basics of JavaScript, including variables, data types, and how to use them
-                in your programs.
-              </p>
+              </Link>
+            </li>
+          ))}
+        {fetching && (
+          <>
+            <div className="mt-2 flex items-center justify-center text-xl">
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="mr-2 inline-block h-7 w-7 animate-spin text-gray-200"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                ></path>
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="#AE7AFF"
+                ></path>
+              </svg>
+              Please wait...
             </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/2519817/pexels-photo-2519817.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Getting Started with Express.js"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                22:18
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/2519812/pexels-photo-2519812.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="expresslearner"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">Getting Started with Express.js</h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">11.k Views · 5 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/2519812/pexels-photo-2519812.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="expresslearner"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">Express Learner</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn the basics of building web applications with Node.js and Express.js framework.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1739849/pexels-photo-1739849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Building a RESTful API with Node.js and Express"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                24:33
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/1739942/pexels-photo-1739942.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="apibuilder"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                Building a RESTful API with Node.js and Express
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">14.5k Views · 7 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/1739942/pexels-photo-1739942.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="apibuilder"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">API Builder</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to create a RESTful API using Node.js and the Express framework for
-                building web applications.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1739854/pexels-photo-1739854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Introduction to React Native"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                19:58
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/1739856/pexels-photo-1739856.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="reactnativedev"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">Introduction to React Native</h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">10.9k Views · 8 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/1739856/pexels-photo-1739856.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="reactnativedev"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">React Native Dev</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Discover how to build mobile applications using React Native for both Android and
-                iOS platforms.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1144256/pexels-photo-1144256.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Creating Custom Hooks in React"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                16:37
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/1144257/pexels-photo-1144257.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="hookmaster"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">Creating Custom Hooks in React</h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">9.3k Views · 9 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/1144257/pexels-photo-1144257.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="hookmaster"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">Hook Master</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to create and use custom hooks to share logic across multiple React
-                components.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1144260/pexels-photo-1144260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Building Scalable Web Applications with Django"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                32:18
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/1144269/pexels-photo-1144269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="djangomaster"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                Building Scalable Web Applications with Django
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">18.9M Views · 12 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/1144269/pexels-photo-1144269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="djangomaster"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">Django Master</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to build robust and scalable web applications using the Django framework
-                for Python.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1144276/pexels-photo-1144276.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Creating Interactive UIs with React and D3"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                29:30
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/1144277/pexels-photo-1144277.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="reactd3"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                Creating Interactive UIs with React and D3
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">20.1k Views · 14 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/1144277/pexels-photo-1144277.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="reactd3"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">ReactD3</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to build dynamic and interactive user interfaces with React and the D3.js
-                data visualization library.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1144274/pexels-photo-1144274.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Node.js Authentication with Passport.js"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                26:58
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/1144270/pexels-photo-1144270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="passportpro"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                Node.js Authentication with Passport.js
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">21.2k Views · 15 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/1144270/pexels-photo-1144270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="passportpro"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">Passport Pro</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to implement user authentication in Node.js applications using the
-                Passport.js middleware.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1144231/pexels-photo-1144231.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Data Visualization with Tableau"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                32:14
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="tableaumaster"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">Data Visualization with Tableau</h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">24.5k Views · 18 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="tableaumaster"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">Tableau Master</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to create stunning visualizations and dashboards using Tableau for data
-                analysis.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1144250/pexels-photo-1144250.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Building Real-Time Applications with Socket.IO"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                27:37
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="socketioexpert"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                Building Real-Time Applications with Socket.IO
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">25.6k Views · 19 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="socketioexpert"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">Socket.IO Expert</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to create real-time applications using Socket.IO for seamless
-                communication between clients and servers.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1115824/pexels-photo-1115824.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Advanced CSS: Animations and Transitions"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                31:55
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="cssanimations"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">
-                Advanced CSS: Animations and Transitions
-              </h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">28.9k Views · 22 hours ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="cssanimations"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">CSS Animations</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Learn how to create captivating animations and transitions using CSS for dynamic web
-                experiences.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-3xl gap-x-4 md:flex">
-          <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
-            <div className="w-full pt-[56%]">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.pexels.com/photos/1115808/pexels-photo-1115808.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Advanced React Patterns"
-                  className="h-full w-full"
-                />
-              </div>
-              <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                30:25
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-x-2 md:w-7/12">
-            <div className="h-10 w-10 shrink-0 md:hidden">
-              <img
-                src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="reactpatterns"
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            <div className="w-full">
-              <h6 className="mb-1 font-semibold md:max-w-[75%]">Advanced React Patterns</h6>
-              <p className="flex text-sm text-gray-200 sm:mt-3">30.1k Views · 1 day ago</p>
-              <div className="flex items-center gap-x-4">
-                <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                  <img
-                    src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="reactpatterns"
-                    className="h-full w-full rounded-full"
-                  />
-                </div>
-                <p className="text-sm text-gray-200">React Patterns</p>
-              </div>
-              <p className="mt-2 hidden text-sm md:block">
-                Explore advanced patterns and techniques for building scalable and maintainable
-                React applications.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+          </>
+        )}
+      </ul>
     </section>
   );
 }

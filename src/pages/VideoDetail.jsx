@@ -1,9 +1,9 @@
-import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getVideo, updateView } from "../app/Slices/videoSlice";
-import { Comments, LikesComponent } from "../components/index";
+import { Comments, LikesComponent, LoginPopup, VideoPlayer } from "../components/index";
 import { formatTimestamp } from "../helpers/formatFigures";
 import UserProfile from "../components/Atoms/UserProfile";
 import {
@@ -18,7 +18,10 @@ function VideoDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { videoId } = useParams();
+  const loginPopupDialog = useRef();
+  const playerRef = useRef(null);
 
+  const { status: authStatus } = useSelector(({ auth }) => auth);
   const { loading, status, data: video } = useSelector((state) => state.video);
 
   const {
@@ -53,6 +56,14 @@ function VideoDetail() {
     });
   }
 
+  function handleSavePlaylist() {
+    if (authStatus) {
+      dispatch(getCurrentPlaylists(videoId));
+    } else {
+      loginPopupDialog.current?.open();
+    }
+  }
+
   // TODO Something went wrong and loading proper video skelton and components while refreshing
 
   if (loading)
@@ -65,6 +76,33 @@ function VideoDetail() {
       </h1>
     );
 
+  const videoLink = video?.videoFile;
+
+  const videoPlayerOptions = {
+    controls: true,
+    responsive: true,
+    fluid: true,
+    sources: [
+      {
+        src: videoLink,
+        type: "video/mp4",
+      },
+    ],
+  };
+
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
+
+    // You can handle player events here, for example:
+    player.on("waiting", () => {
+      videojs.log("player is waiting");
+    });
+
+    player.on("dispose", () => {
+      videojs.log("player will dispose");
+    });
+  };
+
   return video ? (
     <section className="w-full pb-[70px] sm:pb-0">
       {/* sm:ml-[70px] */}
@@ -73,19 +111,16 @@ function VideoDetail() {
           {/* video */}
           <div className="relative mb-4 w-full pt-[56%]">
             <div className="absolute inset-0">
-              <video className="h-full w-full" controls>
-                <source src={video?.videoFile} type="video/mp4" />
-              </video>
+              <VideoPlayer options={videoPlayerOptions} onReady={handlePlayerReady} />
             </div>
           </div>
 
-          {/* video and owner data */}
+          {/* video, Playlist, Like and owner data */}
           <div
             className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5"
             role="button"
             tabIndex="0"
           >
-            {/* Playlist */}
             <div className="flex flex-wrap gap-y-2">
               {/* video metadata */}
               <div className="w-full md:w-1/2 lg:w-full xl:w-1/2">
@@ -107,9 +142,13 @@ function VideoDetail() {
                   />
                   {/* Playlist */}
                   <div className="relative block">
+                    <LoginPopup
+                      ref={loginPopupDialog}
+                      message="Sign in to Save video in Playlist..."
+                    />
                     {/* Save to Playlist Button */}
                     <button
-                      onClick={() => dispatch(getCurrentPlaylists(videoId))}
+                      onClick={handleSavePlaylist}
                       className="peer flex items-center gap-x-2 rounded-lg bg-white px-4 py-1.5 text-black"
                     >
                       <span className="inline-block w-5">
@@ -131,77 +170,84 @@ function VideoDetail() {
                       Save
                     </button>
                     {/* save to playlist popup */}
-                    {/* TODO: FIX glitch and improve user experience */}
-                    <div className="absolute right-0 top-full z-10 hidden w-64 overflow-hidden rounded-lg bg-[#121212] p-4 shadow shadow-slate-50/30 hover:block peer-focus:block">
-                      <h3 className="mb-4 text-center text-lg font-semibold">Save to playlist</h3>
-                      <ul className="mb-4">
-                        {playlistLoading && (
-                          <li className="mb-2 last:mb-0">
-                            <label
-                              className="group/label inline-flex cursor-pointer items-center gap-x-3"
-                              htmlFor="Collections-checkbox"
-                            >
-                              Please Wait...
-                            </label>
-                          </li>
-                        )}
-                        {playlists?.length > 0 &&
-                          playlists?.map((item) => (
-                            <li key={item._id} className="mb-2 last:mb-0">
+                    {/* OPTIMIZEME: FIX glitch and improve user experience */}
+                    {authStatus && (
+                      <div className="absolute right-0 top-full z-10 hidden w-64 overflow-hidden rounded-lg bg-[#121212] p-4 shadow shadow-slate-50/30 hover:block peer-focus:block">
+                        <h3 className="mb-4 text-center text-lg font-semibold">Save to playlist</h3>
+                        <ul className="mb-4">
+                          {playlistLoading && (
+                            <li className="mb-2 last:mb-0">
                               <label
                                 className="group/label inline-flex cursor-pointer items-center gap-x-3"
-                                htmlFor={"Collections-checkbox" + item._id}
+                                htmlFor="Collections-checkbox"
                               >
-                                <input
-                                  type="checkbox"
-                                  className="peer hidden"
-                                  id={"Collections-checkbox" + item._id}
-                                  defaultChecked={item.isVideoPresent}
-                                  onChange={(e) => handlePlaylistVideo(item._id, e.target.checked)}
-                                />
-                                <span className="inline-flex h-4 w-4 items-center justify-center rounded-[4px] border border-transparent bg-white text-white group-hover/label:border-[#ae7aff] peer-checked:border-[#ae7aff] peer-checked:text-[#ae7aff]">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="3"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M4.5 12.75l6 6 9-13.5"
-                                    ></path>
-                                  </svg>
-                                </span>
-                                {item.name}
+                                Please Wait...
                               </label>
                             </li>
-                          ))}
-                      </ul>
+                          )}
+                          {playlists?.length > 0 &&
+                            playlists?.map((item) => (
+                              <li key={item._id} className="mb-2 last:mb-0">
+                                <label
+                                  className="group/label inline-flex cursor-pointer items-center gap-x-3"
+                                  htmlFor={"Collections-checkbox" + item._id}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    className="peer hidden"
+                                    id={"Collections-checkbox" + item._id}
+                                    defaultChecked={item.isVideoPresent}
+                                    onChange={(e) =>
+                                      handlePlaylistVideo(item._id, e.target.checked)
+                                    }
+                                  />
+                                  <span className="inline-flex h-4 w-4 items-center justify-center rounded-[4px] border border-transparent bg-white text-white group-hover/label:border-[#ae7aff] peer-checked:border-[#ae7aff] peer-checked:text-[#ae7aff]">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      strokeWidth="3"
+                                      stroke="currentColor"
+                                      aria-hidden="true"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M4.5 12.75l6 6 9-13.5"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                  {item.name}
+                                </label>
+                              </li>
+                            ))}
+                        </ul>
 
-                      {/* Create new playlist */}
-                      <form onSubmit={handleCreateNewPlaylist} className="flex flex-col">
-                        <label htmlFor="playlist-name" className="mb-1 inline-block cursor-pointer">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          id="playlist-name"
-                          placeholder="Enter playlist name"
-                          required
-                          className="w-full rounded-lg border border-transparent bg-white px-3 py-2 text-black outline-none focus:border-[#ae7aff]"
-                        />
-                        <button
-                          type="submit"
-                          className="mx-auto mt-4 rounded-lg bg-[#ae7aff] px-4 py-2 text-black"
-                        >
-                          Create new playlist
-                        </button>
-                      </form>
-                    </div>
+                        {/* Create new playlist */}
+                        <form onSubmit={handleCreateNewPlaylist} className="flex flex-col">
+                          <label
+                            htmlFor="playlist-name"
+                            className="mb-1 inline-block cursor-pointer"
+                          >
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            name="name"
+                            id="playlist-name"
+                            placeholder="Enter playlist name"
+                            required
+                            className="w-full rounded-lg border border-transparent bg-white px-3 py-2 text-black outline-none focus:border-[#ae7aff]"
+                          />
+                          <button
+                            type="submit"
+                            className="mx-auto mt-4 rounded-lg bg-[#ae7aff] px-4 py-2 text-black"
+                          >
+                            Create new playlist
+                          </button>
+                        </form>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

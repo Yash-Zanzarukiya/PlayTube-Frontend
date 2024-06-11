@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { formatTimestamp, formatVideoDuration } from "../../helpers/formatFigures";
 import { addVideoToPlaylist, removeVideoFromPlaylist } from "../../app/Slices/playlistSlice";
 import { useDispatch } from "react-redux";
+import { icons } from "../../assets/icons";
 
-function PlaylistVideoAtom({ video, playlistId }) {
+function PlaylistVideoAtom({ video, playlistId, owner = false }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const dispatch = useDispatch();
 
@@ -69,49 +70,24 @@ function PlaylistVideoAtom({ video, playlistId }) {
             </div>
           </div>
           {/* Delete button */}
-          <span className="absolute right-2 top-2">
-            <button onClick={handleButtonClick} className="h-5 justify-self-end  text-xl mr-1">
-              {/* Remove */}
-              {!isDeleted && (
-                <span title="remove video" className="h-4 text-red-400 hover:text-red-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M3 6h18" />
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                  </svg>
-                </span>
-              )}
-              {/* Undo */}
-              {isDeleted && (
-                <span title="undo changes" className="h-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M3 7v6h6" />
-                    <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
-                  </svg>
-                </span>
-              )}
-            </button>
-          </span>
+          {owner && (
+            <span className="absolute right-2 top-2">
+              <button onClick={handleButtonClick} className="h-5 justify-self-end  text-xl mr-1">
+                {/* Remove */}
+                {!isDeleted && (
+                  <span title="remove video" className="h-4 text-red-400 hover:text-red-600">
+                    {icons.emptyDelete}
+                  </span>
+                )}
+                {/* Undo */}
+                {isDeleted && (
+                  <span title="undo changes" className="h-4">
+                    {icons.undo}
+                  </span>
+                )}
+              </button>
+            </span>
+          )}
         </div>
       </div>
       {/* <Link to={`/watch/${video?._id}`}>

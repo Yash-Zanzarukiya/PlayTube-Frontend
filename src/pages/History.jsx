@@ -1,82 +1,73 @@
 import React from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { watchHistory } from "../app/Slices/authSlice";
-import { formatTimestamp, formatVideoDuration } from "../helpers/formatFigures";
+import { clearWatchHistory, watchHistory } from "../app/Slices/authSlice";
+import { GuestComponent, VideoList } from "../components";
+import { icons } from "../assets/icons";
 
 function History() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [videos, setVideos] = useState([]);
   const dispatch = useDispatch();
 
+  const { userData, loading } = useSelector(({ auth }) => auth);
+
   useEffect(() => {
-    dispatch(watchHistory()).then((res) => {
-      setVideos(res.payload);
-      setIsLoading(false);
-    });
+    dispatch(watchHistory());
   }, []);
 
-  if(isLoading){
-    return <h1>Loading...</h1>
-  }
-  
+  const deleteWatchHistory = () => {
+    dispatch(clearWatchHistory());
+  };
+
+  const videos = useSelector(({ auth }) => auth.userData.watchHistory);
+
+  const isHistoryEmpty = !loading && videos?.length < 1;
+
   return (
-    <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
-      <ul className="flex flex-col gap-4 p-4">
-        {videos.map((video) => (
-          <li key={video._id} className="hover:bg-[#212121AA]">
-            <Link to={`/watch/${video._id}`}>
-              <div className="w-full max-w-3xl gap-x-4 md:flex max-h-[175px] overflow-hidden">
-                <div className="relative mb-2 w-full md:mb-0 md:w-5/12  ">
-                  <div className="w-full pt-[56%]">
-                    <div className="absolute inset-0">
-                      <img src={video.thumbnail} alt={video.title} className="h-full w-full" />
-                    </div>
-                    <span className="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">
-                      {formatVideoDuration(video.duration)}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex gap-x-2 md:w-7/12">
-                  <div className="h-10 w-10 shrink-0 md:hidden">
-                    <Link to={`/user/${video.owner.username}`}>
-                      <img
-                        src={video.owner.avatar}
-                        alt={video.owner.username}
-                        className="h-full w-full rounded-full"
-                      />
-                    </Link>
-                  </div>
-                  <div className="w-full">
-                    <h6 className="mb-1 font-semibold md:max-w-[75%]">{video.title}</h6>
-                    <p className="flex text-sm text-gray-200 sm:mt-3">
-                      {video.views} Views · {formatTimestamp(video.createdAt)}
-                    </p>
-                    <div className="flex items-center gap-x-4">
-                      <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
-                        <Link to={`/user/${video.owner.username}`}>
-                          <img
-                            src={video.owner.avatar}
-                            alt="codemaster"
-                            className="h-full w-full rounded-full"
-                          />
-                        </Link>
-                      </div>
-                      <p className="text-sm text-gray-200 hover:text-gray-300">
-                        <Link to={`/user/${video.owner.username}`}>{video.owner.fullName}</Link>
-                      </p>
-                    </div>
-                    <p className="mt-2 hidden text-sm md:block">{video.description}</p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <>
+      <section className="w-full">
+        {!isHistoryEmpty && (
+          <div className="flex items-center justify-center py-2">
+            <button
+              onClick={deleteWatchHistory}
+              className="mt-4 rounded inline-flex items-center gap-x-2 bg-[#ae7aff] hover:bg-[#ae7aff]/95 border border-transparent hover:border-dotted hover:border-white px-3 py-2 font-semibold text-black"
+            >
+              <span className="h-5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-trash-2 h-full w-full"
+                >
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                  <line x1="10" x2="10" y1="11" y2="17" />
+                  <line x1="14" x2="14" y1="11" y2="17" />
+                </svg>
+              </span>
+              Clear History
+            </button>
+          </div>
+        )}
+        <ul className="w-full flex flex-col gap-4">
+          {!isHistoryEmpty && <VideoList videos={videos} loading={loading} />}
+          {isHistoryEmpty && (
+            <GuestComponent
+              title="Empty Video History"
+              subtitle="You have no previously saved history."
+              icon={icons.history}
+              guest={false}
+            />
+          )}
+        </ul>
+      </section>
+    </>
   );
 }
 

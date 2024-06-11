@@ -6,6 +6,7 @@ import { deletePlaylist, getPlaylistById } from "../../app/Slices/playlistSlice"
 import { formatTimestamp } from "../../helpers/formatFigures";
 import { PlaylistForm, EmptyPlaylist, ConfirmPopup } from "../index";
 import PlaylistVideoAtom from "./PlaylistVideoAtom";
+import { icons } from "../../assets/icons";
 
 function PlaylistVideos() {
   const dispatch = useDispatch();
@@ -157,7 +158,7 @@ function PlaylistVideos() {
 
   return (
     <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
-      {/* FIXME: PlaylistForm - this is rendering before the popup-model div renders */}
+      {/* TODO: All POPUP - this is rendering before the popup-model div renders */}
 
       <div className="flex flex-wrap gap-x-4 gap-y-10 p-4 xl:flex-nowrap">
         {/* Playlist Info */}
@@ -193,34 +194,25 @@ function PlaylistVideos() {
           </div>
           {/* Playlist Controls */}
           {isOwner && (
-            <div className="flex justify-evenly h-5 py-1 gap-x-5 mb-2">
-              {/* delete button */}
-              <button
-                onClick={() => deletePlaylistDialog.current?.open()}
-                className="flex items-center justify-end gap-x-2 h-5  hover:text-red-600 text-red-400 text-xl mr-1"
-              >
-                <span className="h-5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-trash-2 h-full w-full"
-                  >
-                    <path d="M3 6h18" />
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                    <line x1="10" x2="10" y1="11" y2="17" />
-                    <line x1="14" x2="14" y1="11" y2="17" />
-                  </svg>
-                </span>
-                <span className="mb-[1px]">Delete</span>
-              </button>
+            <div className="flex justify-evenly py-1 gap-x-5 mb-2 mt-3">
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={() => deletePlaylistDialog.current?.open()}
+                  className=" w-28 rounded inline-flex items-center justify-center gap-x-2 bg-[#ae7aff] hover:bg-gray-900 hover:text-red-500 border border-transparent hover:border-dotted hover:border-white px-3 py-2 font-semibold text-black"
+                >
+                  <span className="h-5">{icons.delete}</span>
+                  Delete
+                </button>
+              </div>
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={() => dialog.current?.open()}
+                  className=" w-28 rounded inline-flex items-center justify-center gap-x-2 bg-[#ae7aff] hover:bg-gray-900 hover:text-[#ae7aff] border border-transparent hover:border-dotted hover:border-white px-3 py-2 font-semibold text-black"
+                >
+                  <span className="h-5">{icons.edit}</span>
+                  Edit
+                </button>
+              </div>
               <ConfirmPopup
                 ref={deletePlaylistDialog}
                 title={`Confirm to Delete '${playList.name}'?`}
@@ -231,30 +223,6 @@ function PlaylistVideos() {
                 critical
                 actionFunction={handleDeletePlaylist}
               />
-              {/* Edit button */}
-              <button
-                onClick={() => dialog.current?.open()}
-                className="flex items-center justify-end gap-x-2 h-5 hover:text-[#ad7affbc] text-[#ae7aff] text-xl mr-1"
-              >
-                <span className="h-5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-pencil w-full h-full"
-                  >
-                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                    <path d="m15 5 4 4" />
-                  </svg>
-                </span>
-                <span className="mb-[1px]">Edit</span>
-              </button>
               <PlaylistForm ref={dialog} playlist={playList} />
             </div>
           )}
@@ -288,7 +256,12 @@ function PlaylistVideos() {
             </div>
           )}
           {playList?.videos?.map((video) => (
-            <PlaylistVideoAtom key={video._id} video={video} playlistId={playlistId} />
+            <PlaylistVideoAtom
+              key={video._id}
+              video={video}
+              playlistId={playlistId}
+              owner={isOwner}
+            />
           ))}
         </ul>
       </div>

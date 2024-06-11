@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../../app/Slices/likeSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { LoginPopup } from "..";
 
 function LikesComponent({
   videoId,
@@ -16,8 +17,13 @@ function LikesComponent({
   const [like, setLike] = useState({ isLiked, totalLikes });
   const [dislike, setDislike] = useState({ isDisLiked, totalDisLikes });
   const dispatch = useDispatch();
+  const loginPopupDialog = useRef();
+
+  const { status: authStatus } = useSelector(({ auth }) => auth);
 
   const handleToggleLike = (status) => {
+    if (!authStatus) return loginPopupDialog.current?.open();
+
     let qs = "";
     if (videoId) qs = `videoId=${videoId}`;
     else if (commentId) qs = `commentId=${commentId}`;
@@ -38,6 +44,7 @@ function LikesComponent({
         videoId ? "" : "max-w-fit h-fit text-xs"
       }`}
     >
+      <LoginPopup ref={loginPopupDialog} message="Sign in to Like Video..." />
       <button
         onClick={() => handleToggleLike(true)}
         className={`flex items-center border-r border-gray-700 gap-x-2 ${

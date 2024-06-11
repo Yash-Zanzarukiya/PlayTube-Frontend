@@ -7,7 +7,7 @@ import { parseErrorMessage } from "../../helpers/parseErrMsg.helper";
 const initialState = {
   loading: false,
   status: false,
-  userData: null,
+  userData: {},
 };
 
 export const login = createAsyncThunk("auth/login", async (data) => {
@@ -44,7 +44,7 @@ export const getCurrentUser = createAsyncThunk("auth/getCurrentUser", async () =
   }
 });
 
-// FIXME MAke me secure by urlrncoding
+// OPTIMIZEME Make me secure by urlrncoding
 export const changePassword = createAsyncThunk("auth/changePassword", async (data) => {
   try {
     const response = await axiosInstance.patch("/users/change-password", data, {
@@ -122,6 +122,18 @@ export const watchHistory = createAsyncThunk("user/history", async () => {
   }
 });
 
+export const clearWatchHistory = createAsyncThunk("user/clearWatchHistory", async () => {
+  try {
+    const response = await axiosInstance.delete(`/users/history`);
+    toast.success(response.data.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(parseErrorMessage(error.response.data));
+    console.log(error);
+    throw error;
+  }
+});
+
 export const userPlaylists = createAsyncThunk("user/userPlaylists", async (userId) => {
   try {
     const response = await axiosInstance.get(`/playlist/users/${userId}`);
@@ -133,6 +145,44 @@ export const userPlaylists = createAsyncThunk("user/userPlaylists", async (userI
     throw error;
   }
 });
+
+export const addLink = createAsyncThunk("user/addLink", async ({ formData }) => {
+  try {
+    const response = await axiosInstance.post(`/about/user/link/add`, formData);
+    toast.success(response.data.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(parseErrorMessage(error.response.data));
+    console.log(error);
+    throw error;
+  }
+});
+
+export const updateLink = createAsyncThunk("user/updateLink", async ({ linkId, formData }) => {
+  try {
+    const response = await axiosInstance.patch(`/about/user/link/${linkId}`, formData);
+    toast.success(response.data.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(parseErrorMessage(error.response.data));
+    console.log(error);
+    throw error;
+  }
+});
+
+export const deleteLink = createAsyncThunk("user/deleteLink", async (linkId) => {
+  try {
+    const response = await axiosInstance.delete(`/about/user/link/${linkId}`);
+    toast.success(response.data.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(parseErrorMessage(error.response.data));
+    console.log(error);
+    throw error;
+  }
+});
+
+// TODO Check all state modification on actions
 
 const authSlice = createSlice({
   name: "auth",
@@ -188,7 +238,7 @@ const authSlice = createSlice({
     });
     builder.addCase(changePassword.fulfilled, (state) => {
       state.loading = false;
-      state.status = true;
+      // state.status = true;
     });
     builder.addCase(changePassword.rejected, (state) => {
       state.loading = false;
@@ -201,7 +251,7 @@ const authSlice = createSlice({
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       state.loading = false;
       state.userData = action.payload;
-      state.status = true;
+      // state.status = true;
     });
     builder.addCase(updateProfile.rejected, (state) => {
       state.loading = false;
@@ -214,7 +264,6 @@ const authSlice = createSlice({
     builder.addCase(uploadAvatar.fulfilled, (state, action) => {
       state.loading = false;
       state.userData = action.payload;
-      state.status = true;
     });
     builder.addCase(uploadAvatar.rejected, (state) => {
       state.loading = false;
@@ -227,7 +276,6 @@ const authSlice = createSlice({
     builder.addCase(uploadCoverImage.fulfilled, (state, action) => {
       state.loading = false;
       state.userData = action.payload;
-      state.status = true;
     });
     builder.addCase(uploadCoverImage.rejected, (state) => {
       state.loading = false;
@@ -239,12 +287,22 @@ const authSlice = createSlice({
     });
     builder.addCase(watchHistory.fulfilled, (state, action) => {
       state.loading = false;
-      state.status = true;
       state.userData.watchHistory = action.payload;
     });
     builder.addCase(watchHistory.rejected, (state) => {
       state.loading = false;
-      state.status = false;
+    });
+
+    // clear WatchHistory
+    builder.addCase(clearWatchHistory.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(clearWatchHistory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userData.watchHistory = [];
+    });
+    builder.addCase(clearWatchHistory.rejected, (state) => {
+      state.loading = false;
     });
 
     //get Playlists
@@ -253,13 +311,26 @@ const authSlice = createSlice({
     });
     builder.addCase(userPlaylists.fulfilled, (state, action) => {
       state.loading = false;
-      state.status = true;
       state.userData.userPlaylists = action.payload;
     });
     builder.addCase(userPlaylists.rejected, (state) => {
       state.loading = false;
-      state.status = false;
     });
+
+    //Add Link
+    builder.addCase(addLink.pending, (state) => {});
+    builder.addCase(addLink.fulfilled, (state, action) => {});
+    builder.addCase(addLink.rejected, (state) => {});
+
+    //Update Link
+    builder.addCase(updateLink.pending, (state) => {});
+    builder.addCase(updateLink.fulfilled, (state, action) => {});
+    builder.addCase(updateLink.rejected, (state) => {});
+
+    //Delete Link
+    builder.addCase(deleteLink.pending, (state) => {});
+    builder.addCase(deleteLink.fulfilled, (state, action) => {});
+    builder.addCase(deleteLink.rejected, (state) => {});
   },
 });
 
