@@ -78,9 +78,9 @@ function UploadingVideo({ video, abort, updating = false }, ref) {
                 </div>
                 <div className="flex flex-col">
                   <h6>
-                    {updating ? "Updating " + video.title : "Dashboard prototype recording.mp4"}
+                    {updating ? "Updating " + video.title : "Uploading video please wait..."}
                   </h6>
-                  {!updating && <p className="text-sm">16 MB</p>}
+                  {!updating && <p className="text-sm">? MB</p>}
                   <div className="mt-2">
                     <svg
                       aria-hidden="true"
