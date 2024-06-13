@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": "https://play-tube-eta.vercel.app",
+      "/api": "https://playtube-backend.vercel.app/api/v1",
     },
   },
 });
