@@ -169,6 +169,7 @@ const videoSlice = createSlice({
     // Get video
     builder.addCase(getVideo.pending, (state) => {
       state.loading = true;
+      state.data = null;
     });
     builder.addCase(getVideo.fulfilled, (state, action) => {
       state.loading = false;

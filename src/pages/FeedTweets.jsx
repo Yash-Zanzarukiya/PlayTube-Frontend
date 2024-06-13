@@ -32,8 +32,8 @@ function FeedTweets({ owner = false }) {
       toast.error("Minimum 10 characters are required");
       setFocus("tweet");
       return;
-    } else if (data.tweet.trim()?.length > 80) {
-      toast.error("Maximum 80 characters are allowed");
+    } else if (data.tweet.trim()?.length > 500) {
+      toast.error("Maximum 500 characters are allowed");
       setFocus("tweet");
       return;
     }

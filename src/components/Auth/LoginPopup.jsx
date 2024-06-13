@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { login } from "../../app/Slices/authSlice.js";
 import { Logo, Input, Button } from "../index.js";
@@ -14,6 +14,8 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
   const navigate = useNavigate();
 
   const [showPopup, setShowPopup] = useState(false);
+
+  const { loading } = useSelector(({ auth }) => auth);
 
   const {
     register,
@@ -118,9 +120,10 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
                   </Button>
                   <Button
                     type="submit"
+                    disabled={loading}
                     className="grow bg-[#ae7aff] hover:bg-[#ae7aff]/90 hover:border-dotted border border-white text-black"
                   >
-                    Sign in
+                    {loading ? <span>{icons.loading}</span> : "Sign in"}
                   </Button>
                 </div>
               </form>

@@ -5,6 +5,7 @@ import { formatTimestamp } from "../../helpers/formatFigures";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { deleteTweet, getTweet, updateTweet } from "../../app/Slices/tweetSlice";
+import { Link } from "react-router-dom";
 
 function TweetAtom({ tweet, owner, authStatus }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -50,15 +51,22 @@ function TweetAtom({ tweet, owner, authStatus }) {
     <>
       <li className="flex gap-3 relative border-b border-gray-700 py-4 last:border-b-transparent">
         <div className="h-14 w-14 shrink-0">
-          <img
-            src={tweet.owner?.avatar}
-            alt={tweet.owner?.username}
-            className="h-full w-full rounded-full"
-          />
+          <Link to={`${owner ? "" : "/user/" + tweet.owner?.username}`}>
+            <img
+              src={tweet.owner?.avatar}
+              alt={tweet.owner?.username}
+              className="h-full w-full rounded-full"
+            />
+          </Link>
         </div>
         <div className="w-full ">
           <h4 className="mb-1 flex items-center gap-x-2">
-            <span className="font-semibold">{tweet.owner?.fullName}</span> 
+            <span className="font-semibold">
+              <Link to={`${owner ? "" : "/user/" + tweet.owner?.username}`}>
+                {tweet.owner?.fullName}
+              </Link>
+            </span>
+             
             <span className="inline-block text-sm text-gray-400">
               {formatTimestamp(tweet.createdAt)}
             </span>

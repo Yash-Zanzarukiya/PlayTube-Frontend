@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import { login } from "../../app/Slices/authSlice.js";
 import { Logo, Input, Button } from "../index.js";
 import { Link, useNavigate } from "react-router-dom";
+import { icons } from "../../assets/icons.jsx";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status } = useSelector(({ auth }) => auth);
+  const { loading, status } = useSelector(({ auth }) => auth);
 
   const {
     register,
@@ -72,8 +73,8 @@ function Login() {
           {errors.password?.type === "required" && (
             <span className="text-red-500 mt-1">*password is required</span>
           )}
-          <Button type="submit" className="mt-5">
-            Sign in
+          <Button type="submit" disabled={loading} className="mt-5 disabled:cursor-not-allowed">
+            {loading ? <span>{icons.loading}</span> : "Sign in"}
           </Button>
         </form>
         <h6 className="mx-auto text-md mt-4">

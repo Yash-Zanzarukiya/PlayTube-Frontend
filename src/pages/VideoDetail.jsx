@@ -463,7 +463,7 @@ function VideoDetail() {
           </button>
 
           {/* comments */}
-          <Comments videoId={video?._id} ownerAvatar={video?.owner?.avatar} />
+          {!loading && <Comments videoId={videoId} ownerAvatar={video?.owner?.avatar} />}
         </div>
 
         {/* side video suggegtions */}

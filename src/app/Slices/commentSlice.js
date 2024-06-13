@@ -68,6 +68,7 @@ const commentSlice = createSlice({
     // get Video Comments
     builder.addCase(getVideoComments.pending, (state) => {
       state.loading = true;
+      state.data = [];
     });
     builder.addCase(getVideoComments.fulfilled, (state, action) => {
       state.loading = false;

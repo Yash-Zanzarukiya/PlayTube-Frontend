@@ -62,7 +62,7 @@ function UploadSuccess({ video, updating = false }, ref) {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h6>{updating ? video.title : "Dashboard prototype recording.mp4"}</h6>
+                  <h6>{updating ? video.title : "video upload completed"}</h6>
                   <p className="text-sm">16 MB</p>
                   <div className="mt-2 flex items-center">
                     <span className="mr-2 inline-block w-6 text-[#ae7aff]">

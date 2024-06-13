@@ -4,9 +4,14 @@ import { Button, Input, Logo } from "../index";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { register as createAccount } from "../../app/Slices/userSlice";
+import { icons } from "../../assets/icons";
 function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const authStatus = useSelector(({ auth }) => auth.status);
+  const { loading } = useSelector(({ user }) => user);
+
   const {
     register,
     handleSubmit,
@@ -14,8 +19,9 @@ function SignUp() {
   } = useForm();
 
   const handleSignUp = (data) => {
+    if (authStatus) navigate("/");
     dispatch(createAccount(data)).then((res) => {
-      navigate("/login");
+      if (res.meta.requestStatus === "fulfilled") navigate("/login");
     });
   };
 
@@ -137,8 +143,8 @@ function SignUp() {
           {errors.coverImage?.type === "validate" && (
             <span className="text-red-500 mt-1">Only .png & .jpg & .jpeg files are accepted</span>
           )}
-          <Button type="submit" className="mt-5">
-            Sign Up
+          <Button type="submit" disabled={loading} className="mt-5 disabled:cursor-not-allowed">
+            {loading ? <span>{icons.loading}</span> : "Sign Up"}
           </Button>
         </form>
       </div>
