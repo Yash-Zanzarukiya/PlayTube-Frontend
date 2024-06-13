@@ -28,15 +28,34 @@ function UserProfile({ userId }) {
   }
 
   if (!localData)
-    return <h1 className="h-full w-full text-center text-3xl text-red-700">Loading Profile...</h1>;
+    return (
+      <div className="mt-4 flex items-center justify-between">
+        {/* Owner Data */}
+        <div key="owner-data" className="flex items-center gap-x-4">
+          <div className="mt-2 h-12 w-12 shrink-0">
+            <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
+          </div>
+          <div className="block mt-2">
+            <p className="text-transparent w-52 h-5 mb-1 bg-slate-100/10 rounded animate-pulse"></p>
+            <p className="text-sm text-transparent w-32 h-5 bg-slate-100/10 rounded animate-pulse"></p>
+          </div>
+        </div>
+        <div key="subscribe-btn" className="block">
+          <div
+            className={`group/btn mr-1 flex w-full items-center gap-x-2 px-3 py-2 text-center font-bold text-transparent bg-slate-100/10 rounded animate-pulse sm:w-auto`}
+          >
+            <span className="inline-block w-36 h-8"></span>
+          </div>
+        </div>
+      </div>
+    );
 
   let profileData = userData || localData;
 
+  // Something went wrong Profile...
   if (!profileData)
     return (
-      <h1 className="h-full w-full text-center text-3xl bg-red-700">
-        Something went wrong Profile...
-      </h1>
+      <div className="flex w-full h-screen flex-col gap-y-4 px-16 py-4 rounded bg-slate-100/10 animate-pulse"></div>
     );
 
   return (

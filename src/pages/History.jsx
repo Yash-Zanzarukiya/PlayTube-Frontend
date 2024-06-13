@@ -25,7 +25,7 @@ function History() {
   return (
     <>
       <section className="w-full">
-        {!isHistoryEmpty && (
+        {!isHistoryEmpty && !loading && (
           <div className="flex items-center justify-center py-2">
             <button
               onClick={deleteWatchHistory}

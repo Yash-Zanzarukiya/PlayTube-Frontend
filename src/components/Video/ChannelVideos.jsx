@@ -29,38 +29,34 @@ function ChannelVideos({ owner = false }) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 pt-4">
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-3 pt-4">
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
-            <div className="absolute inset-0 bg-gray-800 animate-pulse"></div>
-            <span className="absolute bottom-1 right-1 inline-block rounded bg-gray-800 animate-pulse w-16 h-6"></span>
+          <div className="relative mb-1 w-full pt-[56%]">
+            <div className="absolute inset-0 bg-slate-100/10 rounded animate-pulse"></div>
           </div>
-          <div className="mb-1 font-semibold bg-gray-800 animate-pulse h-6 w-full"></div>
-          <div className="flex text-sm text-gray-200 bg-gray-800 animate-pulse h-4 w-full"></div>
+          <div className="mb-1 rounded bg-slate-100/10 animate-pulse h-8 w-full"></div>
+          <div className="flex rounded text-gray-200 bg-slate-100/10 animate-pulse h-5 w-full"></div>
         </div>
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
-            <div className="absolute inset-0 bg-gray-800 animate-pulse"></div>
-            <span className="absolute bottom-1 right-1 inline-block rounded bg-gray-800 animate-pulse w-16 h-6"></span>
+          <div className="relative mb-1 w-full pt-[56%]">
+            <div className="absolute inset-0 bg-slate-100/10 rounded animate-pulse"></div>
           </div>
-          <div className="mb-1 font-semibold bg-gray-800 animate-pulse h-6 w-full"></div>
-          <div className="flex text-sm text-gray-200 bg-gray-800 animate-pulse h-4 w-full"></div>
+          <div className="mb-1 rounded bg-slate-100/10 animate-pulse h-8 w-full"></div>
+          <div className="flex rounded text-gray-200 bg-slate-100/10 animate-pulse h-5 w-full"></div>
         </div>
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
-            <div className="absolute inset-0 bg-gray-800 animate-pulse"></div>
-            <span className="absolute bottom-1 right-1 inline-block rounded bg-gray-800 animate-pulse w-16 h-6"></span>
+          <div className="relative mb-1 w-full pt-[56%]">
+            <div className="absolute inset-0 bg-slate-100/10 rounded animate-pulse"></div>
           </div>
-          <div className="mb-1 font-semibold bg-gray-800 animate-pulse h-6 w-full"></div>
-          <div className="flex text-sm text-gray-200 bg-gray-800 animate-pulse h-4 w-full"></div>
+          <div className="mb-1 rounded bg-slate-100/10 animate-pulse h-8 w-full"></div>
+          <div className="flex rounded text-gray-200 bg-slate-100/10 animate-pulse h-5 w-full"></div>
         </div>
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
-            <div className="absolute inset-0 bg-gray-800 animate-pulse"></div>
-            <span className="absolute bottom-1 right-1 inline-block rounded bg-gray-800 animate-pulse w-16 h-6"></span>
+          <div className="relative mb-1 w-full pt-[56%]">
+            <div className="absolute inset-0 bg-slate-100/10 rounded animate-pulse"></div>
           </div>
-          <div className="mb-1 font-semibold bg-gray-800 animate-pulse h-6 w-full"></div>
-          <div className="flex text-sm text-gray-200 bg-gray-800 animate-pulse h-4 w-full"></div>
+          <div className="mb-1 rounded bg-slate-100/10 animate-pulse h-8 w-full"></div>
+          <div className="flex rounded text-gray-200 bg-slate-100/10 animate-pulse h-5 w-full"></div>
         </div>
       </div>
     );

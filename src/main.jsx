@@ -29,6 +29,7 @@ import {
   GuestAdmin,
   GuestMyChannel,
   GuestSubscribers,
+  GuestTweets,
 } from "./components/index.js";
 
 import FeedVideos from "./pages/FeedVideos.jsx";
@@ -50,7 +51,14 @@ const router = createBrowserRouter(
           <Route path="" element={<FeedVideos />} />
 
           {/* Home Page Feed Tweets */}
-          <Route path="tweets" element={<FeedTweets />} />
+          <Route
+            path="tweets"
+            element={
+              <AuthLayout authentication guestComponent={<GuestTweets />}>
+                <FeedTweets />
+              </AuthLayout>
+            }
+          />
 
           {/* Playlists */}
           <Route path="playlist/:playlistId" element={<PlaylistVideos />} />

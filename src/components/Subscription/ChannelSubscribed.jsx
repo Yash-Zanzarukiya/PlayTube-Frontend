@@ -37,50 +37,50 @@ function ChannelSubscribed({ owner = false, isSubscribers = false }) {
     return (
       <div className="flex flex-col gap-y-4 pt-1">
         <div className="flex flex-col gap-y-4 pt-4">
-          <div className="relative mb-2 rounded-sm bg-gray-700 animate-pulse py-2 pl-8 pr-3">
+          <div className="relative mb-2 rounded-sm bg-slate-100/10 animate-pulse py-2 pl-8 pr-3">
             <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400"></span>
             <div className="w-full h-6 bg-transparent outline-none" />
           </div>
           <div className="flex w-full justify-between">
             <div className="flex items-center gap-x-2">
-              <div className="h-14 w-14 shrink-0 bg-gray-700 rounded-full animate-pulse"></div>
+              <div className="h-14 w-14 shrink-0 bg-slate-100/10 rounded-full animate-pulse"></div>
               <div className="block">
-                <h6 className="font-semibold mb-2 bg-gray-700 animate-pulse h-4 w-24 rounded"></h6>
-                <p className="text-sm text-gray-300 bg-gray-700 animate-pulse h-4 w-32 rounded"></p>
+                <h6 className="font-semibold mb-2 bg-slate-100/10 animate-pulse h-4 w-24 rounded"></h6>
+                <p className="text-sm text-gray-300 bg-slate-100/10 animate-pulse h-4 w-32 rounded"></p>
               </div>
             </div>
             <div className="block">
-              <button className="group/btn px-3 py-2 text-black bg-gray-700 rounded-sm animate-pulse">
+              <div className="group/btn px-3 py-2 text-black bg-slate-100/10 rounded-sm animate-pulse">
                 <span className="inline-block w-24 h-4 rounded"></span>
-              </button>
+              </div>
             </div>
           </div>
           <div className="flex w-full justify-between">
             <div className="flex items-center gap-x-2">
-              <div className="h-14 w-14 shrink-0 bg-gray-700 rounded-full animate-pulse"></div>
+              <div className="h-14 w-14 shrink-0 bg-slate-100/10 rounded-full animate-pulse"></div>
               <div className="block">
-                <h6 className="font-semibold mb-2 bg-gray-700 animate-pulse h-4 w-24 rounded"></h6>
-                <p className="text-sm text-gray-300 bg-gray-700 animate-pulse h-4 w-32 rounded"></p>
+                <h6 className="font-semibold mb-2 bg-slate-100/10 animate-pulse h-4 w-24 rounded"></h6>
+                <p className="text-sm text-gray-300 bg-slate-100/10 animate-pulse h-4 w-32 rounded"></p>
               </div>
             </div>
             <div className="block">
-              <button className="group/btn px-3 py-2 text-black bg-gray-700 rounded-sm animate-pulse">
+              <div className="group/btn px-3 py-2 text-black bg-slate-100/10 rounded-sm animate-pulse">
                 <span className="inline-block w-24 h-4 rounded"></span>
-              </button>
+              </div>
             </div>
           </div>
           <div className="flex w-full justify-between">
             <div className="flex items-center gap-x-2">
-              <div className="h-14 w-14 shrink-0 bg-gray-700 rounded-full animate-pulse"></div>
+              <div className="h-14 w-14 shrink-0 bg-slate-100/10 rounded-full animate-pulse"></div>
               <div className="block">
-                <h6 className="font-semibold mb-2 bg-gray-700 animate-pulse h-4 w-24 rounded"></h6>
-                <p className="text-sm text-gray-300 bg-gray-700 animate-pulse h-4 w-32 rounded"></p>
+                <h6 className="font-semibold mb-2 bg-slate-100/10 animate-pulse h-4 w-24 rounded"></h6>
+                <p className="text-sm text-gray-300 bg-slate-100/10 animate-pulse h-4 w-32 rounded"></p>
               </div>
             </div>
             <div className="block">
-              <button className="group/btn px-3 py-2 text-black bg-gray-700 rounded-sm animate-pulse">
+              <div className="group/btn px-3 py-2 text-black bg-slate-100/10 rounded-sm animate-pulse">
                 <span className="inline-block w-24 h-4 rounded"></span>
-              </button>
+              </div>
             </div>
           </div>
         </div>
@@ -92,9 +92,7 @@ function ChannelSubscribed({ owner = false, isSubscribers = false }) {
 
   if ((!status && !loading) || !subscribed)
     return (
-      <h1 className="h-full w-full text-center text-3xl text-white bg-blue-700">
-        Something went wrong Video...
-      </h1>
+      <div className="flex w-full h-screen flex-col gap-y-4 px-16 py-4 rounded bg-slate-100/10 animate-pulse"></div>
     );
 
   function handleUserInput(input) {

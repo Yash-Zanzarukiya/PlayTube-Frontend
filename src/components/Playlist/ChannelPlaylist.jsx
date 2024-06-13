@@ -35,70 +35,67 @@ function ChannelPlaylist({ owner = false }) {
     return (
       <div className={`grid gap-4 pt-2 mt-3 sm:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))]`}>
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
+          <div className="relative mb-1 w-full pt-[62%]">
             <div className="absolute inset-0">
               {/* <!-- Skeleton for the image --> */}
-              <div className="h-full w-full bg-gray-700 animate-pulse"></div>
+              <div className="h-full w-full bg-slate-100/10 animate-pulse"></div>
               <div className="absolute inset-x-0 bottom-0">
-                <div className="relative border-t bg-white/10 p-4 text-white backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
+                <div className="relative border-t bg-white/10 p-4 backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
                   <div className="relative z-[1]">
-                    {/* <!-- Skeleton for the text --> */}
                     <div className="flex justify-between">
-                      <div className="inline-block h-4 mb-2 bg-gray-700 rounded w-1/2 animate-pulse"></div>
-                      <div className="inline-block h-4 bg-gray-700  rounded w-12 animate-pulse"></div>
+                      <div className="inline-block h-6 mb-2 bg-slate-100/10 rounded w-1/2 animate-pulse"></div>
+                      <div className="inline-block h-6 bg-slate-100/10  rounded w-20 animate-pulse"></div>
                     </div>
-                    <div className="text-sm text-gray-700 h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
+                    <div className="text-sm text-gray-700 h-6 bg-slate-100/10 rounded w-3/4 animate-pulse"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mb-1 font-semibold h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
-          <div className="flex text-sm text-gray-700 h-4 bg-gray-700 rounded w-full animate-pulse"></div>
+          <div className="mb-1 font-semibold h-5 bg-slate-100/10 rounded w-1/2 animate-pulse"></div>
+          <div className="flex  h-5 bg-slate-100/10 rounded w-3/4 animate-pulse"></div>
         </div>
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
+          <div className="relative mb-1 w-full pt-[62%]">
             <div className="absolute inset-0">
               {/* <!-- Skeleton for the image --> */}
-              <div className="h-full w-full bg-gray-700 animate-pulse"></div>
+              <div className="h-full w-full bg-slate-100/10 animate-pulse"></div>
               <div className="absolute inset-x-0 bottom-0">
-                <div className="relative border-t bg-white/10 p-4 text-white backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
+                <div className="relative border-t bg-white/10 p-4 backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
                   <div className="relative z-[1]">
-                    {/* <!-- Skeleton for the text --> */}
                     <div className="flex justify-between">
-                      <div className="inline-block h-4 mb-2 bg-gray-700 rounded w-1/2 animate-pulse"></div>
-                      <div className="inline-block h-4 bg-gray-700  rounded w-12 animate-pulse"></div>
+                      <div className="inline-block h-6 mb-2 bg-slate-100/10 rounded w-1/2 animate-pulse"></div>
+                      <div className="inline-block h-6 bg-slate-100/10  rounded w-20 animate-pulse"></div>
                     </div>
-                    <div className="text-sm text-gray-700 h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
+                    <div className="text-sm text-gray-700 h-6 bg-slate-100/10 rounded w-3/4 animate-pulse"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mb-1 font-semibold h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
-          <div className="flex text-sm text-gray-700 h-4 bg-gray-700 rounded w-full animate-pulse"></div>
+          <div className="mb-1 font-semibold h-5 bg-slate-100/10 rounded w-1/2 animate-pulse"></div>
+          <div className="flex  h-5 bg-slate-100/10 rounded w-3/4 animate-pulse"></div>
         </div>
         <div className="w-full">
-          <div className="relative mb-2 w-full pt-[56%]">
+          <div className="relative mb-1 w-full pt-[62%]">
             <div className="absolute inset-0">
               {/* <!-- Skeleton for the image --> */}
-              <div className="h-full w-full bg-gray-700 animate-pulse"></div>
+              <div className="h-full w-full bg-slate-100/10 animate-pulse"></div>
               <div className="absolute inset-x-0 bottom-0">
-                <div className="relative border-t bg-white/10 p-4 text-white backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
+                <div className="relative border-t bg-white/10 p-4 backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
                   <div className="relative z-[1]">
-                    {/* <!-- Skeleton for the text --> */}
                     <div className="flex justify-between">
-                      <div className="inline-block h-4 mb-2 bg-gray-700 rounded w-1/2 animate-pulse"></div>
-                      <div className="inline-block h-4 bg-gray-700  rounded w-12 animate-pulse"></div>
+                      <div className="inline-block h-6 mb-2 bg-slate-100/10 rounded w-1/2 animate-pulse"></div>
+                      <div className="inline-block h-6 bg-slate-100/10  rounded w-20 animate-pulse"></div>
                     </div>
-                    <div className="text-sm text-gray-700 h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
+                    <div className="text-sm text-gray-700 h-6 bg-slate-100/10 rounded w-3/4 animate-pulse"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mb-1 font-semibold h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
-          <div className="flex text-sm text-gray-700 h-4 bg-gray-700 rounded w-full animate-pulse"></div>
+          <div className="mb-1 font-semibold h-5 bg-slate-100/10 rounded w-1/2 animate-pulse"></div>
+          <div className="flex  h-5 bg-slate-100/10 rounded w-3/4 animate-pulse"></div>
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ function FeedTweets({ owner = false }) {
     dispatch(getAllTweets()).then((res) => {
       if (res.payload) setLocalTweets(res.payload);
     });
-  }, []);
+  }, [authStatus]);
 
   function addTweet(data) {
     if (!authStatus) return loginPopupDialog.current?.open();
@@ -45,17 +45,209 @@ function FeedTweets({ owner = false }) {
 
   if (!localTweets) {
     return (
-      <h1 className="h-full w-full text-center text-3xl text-orange-700">Loading tweets...</h1>
+      <section className="w-full py-1 px-3 pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+        <div className="mt-2 border pb-2 text-transparent bg-slate-100/10 rounded animate-pulse">
+          <div className="mb-2 h-12 w-full resize-none border-none px-3 pt-2"></div>
+
+          <div className="flex items-center justify-end gap-x-3 px-3">
+            <div className="w-20 h-10 bg-slate-100/20 rounded animate-pulse"></div>
+          </div>
+        </div>
+        <hr className=" border-[#ae7aff]/80 animate-pulse mt-4 mb-4" />
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>{" "}
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>{" "}
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>{" "}
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>{" "}
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>{" "}
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>{" "}
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>
+        <div className=" px-1">
+          <div className="flex justify-between ">
+            {/* comment content */}
+            <span className="flex w-full gap-x-4 ">
+              {/* avatar */}
+              <div className="mt-2 h-12 w-12 shrink-0 ">
+                <div className="h-full w-full rounded-full border-white bg-slate-100/10 animate-pulse"></div>
+              </div>
+              {/* Content */}
+              <div className="block w-full">
+                <div className="flex items-center">
+                  <span className="bg-slate-100/10 rounded animate-pulse w-44 h-6 mr-1"></span>
+                  <span className="bg-slate-100/10 rounded animate-pulse w-16 h-6"></span>
+                </div>
+                <div className="bg-slate-100/10 rounded animate-pulse w-32 mt-1 h-4"></div>
+                <p className="my-1 text-[14px]">
+                  <div className="text-transparent h-6 bg-slate-100/10 rounded animate-pulse w-[50%] outline-none border-b-[1px] border-transparent"></div>
+                </p>
+              </div>
+            </span>
+          </div>
+          <hr className="my-2 border-slate-100/50 animate-pulse" />
+        </div>
+      </section>
     );
   }
 
   let tweets = data || localTweets;
 
+  // Something went wrong
   if (!status && !tweets) {
     return (
-      <h1 className="h-full w-full text-center text-3xl text-white bg-orange-700">
-        Something went wrong tweet...
-      </h1>
+      <div className="flex w-full h-screen flex-col gap-y-4 px-16 py-4 rounded bg-slate-100/10 animate-pulse"></div>
     );
   }
 
@@ -73,22 +265,7 @@ function FeedTweets({ owner = false }) {
 
           <div className="flex items-center justify-end gap-x-3 px-3">
             {/* Emoji button */}
-            <button type="button" className="inline-block h-5 w-5 hover:text-[#ae7aff]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
-                ></path>
-              </svg>
-            </button>
+            {/* <button type="button" className="inline-block h-5 w-5 hover:text-[#ae7aff]"></button> */}
             {/* Cancel button */}
             <button
               type="button"

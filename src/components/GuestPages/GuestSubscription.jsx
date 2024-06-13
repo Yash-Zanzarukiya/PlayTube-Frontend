@@ -7,7 +7,7 @@ function GuestSubscription() {
     <GuestComponent
       title="Subscribe to Stay Updated"
       subtitle="Sign in to Sign in to follow creators and see updates from your favorite channels."
-      icon={icons.Subscribers}
+      icon={icons.Subscription}
     />
   );
 }
