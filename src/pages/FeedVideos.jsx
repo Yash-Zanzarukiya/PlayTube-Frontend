@@ -22,7 +22,7 @@ function FeedVideos() {
     sectionRef.current = document.getElementById("scrollable_results_screen");
     sectionRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
-    let fetchAllVideosPromise = dispatch(getAllVideosByOption({ page: 1, limit: 10 }));
+    let fetchAllVideosPromise = dispatch(getAllVideosByOption({ page: 1, limit: 15 }));
 
     fetchAllVideosPromise.then(() => {
       fetchedPageRef.current.add(1);
@@ -50,7 +50,7 @@ function FeedVideos() {
         !fetchedPageRef.current?.has(currentPagingInfo.nextPage)
       ) {
         fetchedPageRef.current.add(currentPagingInfo.nextPage);
-        dispatch(getAllVideosByOption({ page: `${currentPagingInfo.nextPage}`, limit: 10 }));
+        dispatch(getAllVideosByOption({ page: `${currentPagingInfo.nextPage}`, limit: 15 }));
       }
     }
   };

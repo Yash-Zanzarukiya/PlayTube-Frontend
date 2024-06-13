@@ -20,7 +20,7 @@ export const register = createAsyncThunk("user/register", async (data) => {
       formData.append("coverImage", data.coverImage[0]);
     }
     const response = await axiosInstance.post("/users/register", formData);
-    //toast.success("Account Created successfully 🥳");
+    toast.success("Account Created successfully 🥳");
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));

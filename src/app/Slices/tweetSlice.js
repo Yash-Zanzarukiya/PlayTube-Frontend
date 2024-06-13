@@ -61,7 +61,7 @@ export const updateTweet = createAsyncThunk("tweet/updateTweet", async ({ tweetI
 export const deleteTweet = createAsyncThunk("tweet/deleteTweet", async ({ tweetId }) => {
   try {
     const response = await axiosInstance.delete(`/tweets/${tweetId}`);
-    //toast.success(response.data.message);
+    toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
     toast.error(parseErrorMessage(error.response.data));

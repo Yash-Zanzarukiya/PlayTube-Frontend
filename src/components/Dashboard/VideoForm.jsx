@@ -116,10 +116,12 @@ function VideoForm({ video = false }, ref) {
                           </svg>
                         </span>
                         <h6 className="mb-1 md:mb-2 font-semibold text-sm md:text:lg">
-                          Drag and drop video files to upload
+                          Select video file to upload
+                          {/* Drag and drop video files to upload */}
                         </h6>
                         <p className="text-gray-400 text-sm md:text:lg">
-                          Your videos will be private until you publish them.
+                          Your videos will be public until you un-publish them.
+                          {/* Your videos will be private until you publish them. */}
                         </p>
                         <label
                           htmlFor="upload-video"
