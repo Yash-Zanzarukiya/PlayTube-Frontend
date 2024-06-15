@@ -62,8 +62,18 @@ function UploadSuccess({ video, updating = false }, ref) {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h6>{updating ? video.title : "video upload completed"}</h6>
-                  <p className="text-sm">16 MB</p>
+                  <h6>
+                    {updating
+                      ? "Updated " + video.title
+                      : video?.videoFile?.length > 0 && video?.videoFile[0].name}
+                  </h6>
+                  {!updating && (
+                    <p className="text-sm">
+                      {video?.videoFile?.length > 0 &&
+                        (video?.videoFile[0].size / 1000000).toFixed(2)}{" "}
+                      MB
+                    </p>
+                  )}
                   <div className="mt-2 flex items-center">
                     <span className="mr-2 inline-block w-6 text-[#ae7aff]">
                       <svg
@@ -84,11 +94,11 @@ function UploadSuccess({ video, updating = false }, ref) {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <button onClick={() => dialog.current.close()} className="border px-4 py-3">
-                  Cancel
+                <button onClick={() => dialog.current?.close()} className="border px-4 py-3">
+                  Close
                 </button>
                 <button
-                  onClick={() => dialog.current.close()}
+                  onClick={() => dialog.current?.close()}
                   className="bg-[#ae7aff] px-4 py-3 text-black disabled:bg-[#E4D3FF]"
                 >
                   Finish

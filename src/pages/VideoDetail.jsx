@@ -306,7 +306,7 @@ function VideoDetail() {
       <div className="flex w-full flex-wrap gap-4 p-4 lg:flex-nowrap">
         <div className="col-span-12 w-full">
           {/* video */}
-          <div className="relative mb-4 w-full pt-[56%]">
+          <div className="relative mb-4 w-full pt-[56%] overflow-hidden">
             <div className="absolute inset-0">
               <VideoPlayer options={videoPlayerOptions} onReady={handlePlayerReady} />
             </div>

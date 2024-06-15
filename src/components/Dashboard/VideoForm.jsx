@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
@@ -18,6 +18,7 @@ function VideoForm({ video = false }, ref) {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -37,6 +38,12 @@ function VideoForm({ video = false }, ref) {
       },
     };
   });
+
+  useEffect(() => {
+    if (showPopup) {
+      dialog.current.showModal();
+    }
+  }, [showPopup]);
 
   async function handleVideo(data) {
     // OPTIMIZEME do not submit if details are not modified
@@ -58,13 +65,11 @@ function VideoForm({ video = false }, ref) {
     });
 
     setPromise(uploadPromise);
-    dialog.current.close();
-    uploadingDialog.current.open();
+    dialog.current?.close();
+    uploadingDialog.current?.open();
   }
 
   const handleAbort = () => promise.abort();
-
-  // FIXME WTF is the bug in editing
 
   return (
     <div>
@@ -74,10 +79,14 @@ function VideoForm({ video = false }, ref) {
             <UploadingVideo
               ref={uploadingDialog}
               abort={handleAbort}
-              video={video}
+              video={video || getValues()}
               updating={video ? true : false}
             />
-            <UploadSuccess ref={successDialog} video={video} updating={video ? true : false} />
+            <UploadSuccess
+              ref={successDialog}
+              video={video || getValues()}
+              updating={video ? true : false}
+            />
             <div className=" bg-black/85 p-2 sm:p-2 text-white">
               <form onSubmit={handleSubmit(handleVideo)} className="h-fit border bg-[#121212]">
                 {/* Close Buttons */}

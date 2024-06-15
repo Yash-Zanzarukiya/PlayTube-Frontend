@@ -26,7 +26,7 @@ function ConfirmPopup(
         setShowPopup(true);
       },
       close() {
-        dialog.current.close();
+        dialog.current?.close();
       },
     };
   });
@@ -45,7 +45,7 @@ function ConfirmPopup(
 
   const handleConfirm = (event) => {
     event.preventDefault();
-    dialog.current.close();
+    dialog.current?.close();
     actionFunction(true);
   };
 
