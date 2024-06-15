@@ -99,7 +99,6 @@ function SignUp() {
             label="Avatar"
             type="file"
             required
-            accept="image/jpg"
             labelClassName="mt-4"
             placeholder="Upload your avatar"
             {...register("avatar", {
@@ -122,7 +121,6 @@ function SignUp() {
           <Input
             label="Cover Image"
             type="file"
-            accept="image/jpg"
             labelClassName="mt-4"
             placeholder="Upload your Cover Image"
             {...register("coverImage", {
