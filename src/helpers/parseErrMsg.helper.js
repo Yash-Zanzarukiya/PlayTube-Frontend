@@ -12,5 +12,5 @@ export const parseErrorMessage = (responseHTMLString) => {
     }
   }
 
-  return "Opps! something went wrong 😕";
+  return "Please try again, Something went wrong 😕";
 };
