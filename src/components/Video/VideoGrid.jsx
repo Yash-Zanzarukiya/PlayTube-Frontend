@@ -115,10 +115,10 @@ function VideoGrid({ videos = [], loading = true, fetching = false }) {
               </div>
               <div className="flex gap-x-2">
                 <div className="h-10 w-10 shrink-0">
-                  <Link to={`/user/${video.owner.username}`}>
+                  <Link to={`/user/${video.owner?.username}`}>
                     <img
-                      src={video.owner.avatar}
-                      alt={video.owner.fullName}
+                      src={video.owner?.avatar}
+                      alt={video.owner?.fullName}
                       className="h-full w-full rounded-full"
                     />
                   </Link>
@@ -131,8 +131,8 @@ function VideoGrid({ videos = [], loading = true, fetching = false }) {
                     {video.views} Views · {formatTimestamp(video.createdAt)}
                   </p>
                   <p className="text-sm text-gray-200">
-                    <Link to={`/user/${video.owner.username}`} className=" hover:text-gray-300/90">
-                      {video.owner.fullName}
+                    <Link to={`/user/${video.owner?.username}`} className=" hover:text-gray-300/90">
+                      {video.owner?.fullName}
                     </Link>
                   </p>
                 </div>

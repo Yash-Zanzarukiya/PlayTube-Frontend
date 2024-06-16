@@ -136,7 +136,8 @@ const tweetSlice = createSlice({
     });
     builder.addCase(deleteTweet.fulfilled, (state, action) => {
       state.loading = false;
-      // state.data = action.payload;
+      let filteredTweets = state.data.filter((tweet) => tweet._id !== action.payload._id);
+      state.data = filteredTweets;
       state.status = true;
     });
     builder.addCase(deleteTweet.rejected, (state) => {

@@ -11,7 +11,7 @@ function UserProfile({ userId }) {
   const loginPopupDialog = useRef();
   const dispatch = useDispatch();
 
-  const { userData, loading, status } = useSelector((state) => state.user);
+  const { userData, loading } = useSelector((state) => state.user);
   const { status: authStatus } = useSelector(({ auth }) => auth);
 
   const [localData, setLocalData] = useState(null);
@@ -27,7 +27,7 @@ function UserProfile({ userId }) {
     dispatch(toggleSubscription(channelId)).then(() => dispatch(channelProfile(userId)));
   }
 
-  if (!localData)
+  if ((!localData && loading) || !userId)
     return (
       <div className="mt-4 flex items-center justify-between">
         {/* Owner Data */}

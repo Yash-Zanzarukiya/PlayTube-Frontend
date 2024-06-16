@@ -38,7 +38,7 @@ function FeedTweets({ owner = false }) {
       return;
     }
     dispatch(createTweet({ data })).then(() => {
-      getAllTweets();
+      dispatch(getAllTweets());
       reset();
     });
   }

@@ -42,9 +42,7 @@ function TweetAtom({ tweet, owner, authStatus }) {
   }
 
   function handleDelete() {
-    dispatch(deleteTweet({ tweetId: tweet._id })).then(() => {
-      dispatch(getTweet(tweet.owner._id));
-    });
+    dispatch(deleteTweet({ tweetId: tweet._id }));
   }
 
   return (

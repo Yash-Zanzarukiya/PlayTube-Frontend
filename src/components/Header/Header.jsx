@@ -165,7 +165,7 @@ function Header() {
           <div className="relative flex w-full items-center justify-between border-b border-white px-4 py-2 sm:hidden">
             <span className="inline-block w-12">{icons.roundCross}</span>
             {/* Close Button */}
-            <button className="inline-block w-8">
+            {/* <button className="inline-block w-8">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -180,7 +180,7 @@ function Header() {
                   d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 ></path>
               </svg>
-            </button>
+            </button> */}
           </div>
           <ul className="my-4 flex w-full flex-wrap gap-2 px-4 sm:hidden">
             {HamburgerMenu.map((item) => (

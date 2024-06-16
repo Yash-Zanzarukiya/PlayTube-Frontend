@@ -56,16 +56,16 @@ function PlaylistVideoAtom({ video, playlistId, owner = false }) {
             {/* Owner Details */}
             <div className="flex items-center gap-x-4">
               <div className="mt-2 hidden h-10 w-10 shrink-0 sm:block">
-                <Link to={`/user/${video.owner.username}`}>
+                <Link to={`/user/${video.owner?.username}`}>
                   <img
-                    src={video.owner.avatar}
-                    alt={video.owner.fullName}
+                    src={video.owner?.avatar}
+                    alt={video.owner?.fullName}
                     className="h-full w-full rounded-full"
                   />
                 </Link>
               </div>
               <p className="text-sm hover:text-gray-300 text-gray-200">
-                <Link to={`/user/${video.owner.username}`}>{video.owner.fullName}</Link>
+                <Link to={`/user/${video.owner?.username}`}>{video.owner?.fullName}</Link>
               </p>
             </div>
           </div>

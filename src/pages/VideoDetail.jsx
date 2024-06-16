@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getVideo, updateView } from "../app/Slices/videoSlice";
+import { emptyVideosState, getVideo, updateView } from "../app/Slices/videoSlice";
 import { Comments, LikesComponent, LoginPopup, VideoPlayer } from "../components/index";
 import { formatTimestamp } from "../helpers/formatFigures";
 import UserProfile from "../components/Atoms/UserProfile";
@@ -22,7 +22,7 @@ function VideoDetail() {
   const playerRef = useRef(null);
 
   const { status: authStatus } = useSelector(({ auth }) => auth);
-  const { loading, status, data: video } = useSelector((state) => state.video);
+  const { loading, status, data: video } = useSelector(({ video }) => video);
 
   const {
     loading: playlistLoading,
@@ -34,6 +34,7 @@ function VideoDetail() {
     if (!videoId) return;
     dispatch(getVideo(videoId));
     dispatch(updateView(videoId));
+    return () => dispatch(emptyVideosState());
   }, [videoId, navigate]);
 
   function handlePlaylistVideo(playlistId, status) {
@@ -63,8 +64,6 @@ function VideoDetail() {
       loginPopupDialog.current?.open();
     }
   }
-
-  // TODO Something went wrong and loading proper video skelton and components while refreshing
 
   if (loading)
     return (
@@ -273,15 +272,13 @@ function VideoDetail() {
       <div className="flex w-full h-screen flex-col gap-y-4 px-16 py-4 rounded bg-slate-100/10 animate-pulse"></div>
     );
 
-  const videoLink = video?.videoFile;
-
   const videoPlayerOptions = {
     controls: true,
     responsive: true,
     fluid: true,
     sources: [
       {
-        src: videoLink,
+        src: video?.videoFile,
         type: "video/mp4",
       },
     ],
@@ -300,7 +297,7 @@ function VideoDetail() {
     });
   };
 
-  return video ? (
+  return video && !loading ? (
     <section className="w-full pb-[70px] sm:pb-0">
       {/* sm:ml-[70px] */}
       <div className="flex w-full flex-wrap gap-4 p-4 lg:flex-nowrap">

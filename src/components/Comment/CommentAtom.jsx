@@ -47,10 +47,10 @@ function CommentAtom({ comment, videoId, ownerAvatar = "" }) {
       <span className="flex w-full gap-x-4 ">
         {/* avatar */}
         <div className="mt-2 h-11 w-11 shrink-0 border-white">
-          <Link to={`/user/${comment.owner.username}`}>
+          <Link to={`/user/${comment.owner?.username}`}>
             <img
-              src={comment.owner.avatar}
-              alt={comment.owner.username}
+              src={comment.owner?.avatar}
+              alt={comment.owner?.username}
               className="h-full w-full rounded-full"
             />
           </Link>
@@ -58,11 +58,11 @@ function CommentAtom({ comment, videoId, ownerAvatar = "" }) {
         {/* Content */}
         <div className="block w-full">
           <p className="flex items-center text-gray-200 text-xs">
-            {comment.owner.fullName} · {" "}
+            {comment.owner?.fullName} · {" "}
             <span className="text-xs">{formatTimestamp(comment.createdAt)}</span>
           </p>
           <p className="text-xs text-gray-200">
-            <Link to={`/user/${comment.owner.username}`}>@{comment.owner.username}</Link>
+            <Link to={`/user/${comment.owner?.username}`}>@{comment.owner?.username}</Link>
           </p>
           <p className="my-1 text-[14px]">
             <input

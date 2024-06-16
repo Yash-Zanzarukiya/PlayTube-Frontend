@@ -112,28 +112,6 @@ export const updateView = createAsyncThunk("video/updateView", async (videoId) =
   }
 });
 
-// export const getAllVideosByOption = createAsyncThunk(
-//   "video/getAllVideosByOption",
-//   async ({ ...queryData }) => {
-//     try {
-//       // Structure Query
-//       const queryString = queryData ? "?" : "";
-//       for (const key in queryData) {
-//         queryString += key + "=" + queryData[key];
-//       }
-//       console.log("queryString: ", queryString);
-
-//       const response = await axiosInstance.get(`/videos/all/option${queryString}`);
-//       // toast.success(response.data.message);
-//       return response.data.data;
-//     } catch (error) {
-//       toast.error(parseErrorMessage(error.response.data));
-//       console.log(error);
-//       throw error;
-//     }
-//   }
-// );
-
 export const getAllVideos = createAsyncThunk("video/getAllVideos", async (userId) => {
   try {
     const response = await axiosInstance.get(`/videos?userId=${userId}`);
@@ -149,23 +127,14 @@ export const getAllVideos = createAsyncThunk("video/getAllVideos", async (userId
 const videoSlice = createSlice({
   name: "video",
   initialState,
+  reducers: {
+    emptyVideosState: (state, action) => {
+      console.log("state.data: ", state.data);
+      state.data = null;
+      console.log("state.data: ", state.data);
+    },
+  },
   extraReducers: (builder) => {
-    // Get All Videos By Option
-    // builder.addCase(getAllVideosByOption.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(getAllVideosByOption.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   const { videos, pagingInfo } = action.payload;
-    //   state.data.videos = [...state.data.videos, ...videos];
-    //   state.data.pagingInfo = pagingInfo;
-    //   state.status = true;
-    // });
-    // builder.addCase(getAllVideosByOption.rejected, (state) => {
-    //   state.loading = false;
-    //   state.status = false;
-    // });
-
     // Get video
     builder.addCase(getVideo.pending, (state) => {
       state.loading = true;
@@ -267,3 +236,4 @@ const videoSlice = createSlice({
 });
 
 export default videoSlice.reducer;
+export const { emptyVideosState } = videoSlice.actions;

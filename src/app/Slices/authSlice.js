@@ -39,7 +39,7 @@ export const getCurrentUser = createAsyncThunk("auth/getCurrentUser", async () =
     return response.data.data;
   } catch (error) {
     console.error("BACKEND_ERROR :: GET CURRENT USER");
-    toast.error("Not logged In...😕");
+    // toast.error("Not logged In...😕");
     throw error;
   }
 });
