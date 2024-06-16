@@ -64,8 +64,9 @@ import GuestMyChannel from "./GuestPages/GuestMyChannel";
 import GuestSubscribers from "./GuestPages/GuestSubscribers";
 import VideoPlayer from "./Atoms/VideoPlayer";
 import GuestTweets from "./GuestPages/GuestTweets";
-
+import PageNotFound from "./Atoms/PageNotFound";
 export {
+  PageNotFound,
   GuestTweets,
   VideoPlayer,
   GuestComponent,

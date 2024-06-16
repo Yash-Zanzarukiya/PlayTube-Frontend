@@ -5,6 +5,7 @@ import { login } from "../../app/Slices/authSlice.js";
 import { Logo, Input, Button } from "../index.js";
 import { Link, useNavigate } from "react-router-dom";
 import { icons } from "../../assets/icons.jsx";
+import { toast } from "react-toastify";
 
 function Login() {
   const dispatch = useDispatch();
@@ -22,7 +23,21 @@ function Login() {
   }, []);
 
   const handleLogin = (data) => {
-    dispatch(login(data));
+    const isEmail = !data.username.startsWith("@");
+
+    if (isEmail) {
+      let isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(data.username);
+      if (!isValidEmail) {
+        toast.error("Please enter valid email id");
+        return;
+      }
+    }
+
+    const loginData = isEmail
+      ? { email: data.username, password: data.password }
+      : { username: data.username.substr(1), password: data.password };
+
+    dispatch(login(loginData));
   };
 
   return (
@@ -39,24 +54,10 @@ function Login() {
           onSubmit={handleSubmit(handleLogin)}
           className="mx-auto mt-4 flex w-full max-w-sm flex-col px-4"
         >
-          {/* <Input
-            label="Email"
-            type="email"
-            required
-            placeholder="Enter your email"
-            {...register("email", {
-              required: true,
-              validate: {
-                matchPatern: (value) =>
-                  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                  "Email address must be a valid address",
-              },
-            })}
-          /> */}
           <Input
-            label="Username"
+            label="Username or Email address"
             required
-            placeholder="Enter your Username"
+            placeholder="use @ for username"
             {...register("username", { required: true })}
           />
           {errors.username?.type === "required" && (

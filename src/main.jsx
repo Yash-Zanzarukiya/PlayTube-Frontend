@@ -30,6 +30,7 @@ import {
   GuestMyChannel,
   GuestSubscribers,
   GuestTweets,
+  PageNotFound,
 } from "./components/index.js";
 
 import FeedVideos from "./pages/FeedVideos.jsx";
@@ -168,6 +169,9 @@ const router = createBrowserRouter(
           </AuthLayout>
         }
       />
+
+      {/* 404 */}
+      <Route path="*" element={<PageNotFound />} />
     </Route>
   )
 );

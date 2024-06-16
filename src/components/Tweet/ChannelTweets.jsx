@@ -26,7 +26,6 @@ function ChannelTweets({ owner = false }) {
     if (owner) {
       userId = currentUser?._id;
     }
-    console.log("userId: ", userId);
     if (!userId) return;
     dispatch(getTweet(userId)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") setLocalTweets(res.payload);

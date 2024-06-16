@@ -13,10 +13,9 @@ function Support() {
                 {icons.support}
               </span>
             </p>
-            <h5 className="mt-6 mb-2 text-2xl font-semibold">
+            <h5 className="mt-6 mb-7 text-2xl font-semibold">
               Contact me for any issue or Support
             </h5>
-            <p className="mt-4 mb-8">Here is my Socials.</p>
             <ul className="text-center flex flex-col items-center space-y-2">
               <li className="flex items-center">
                 <span className="w-9 h-9 rounded-full mr-4">{icons.link}</span>
@@ -55,6 +54,13 @@ function Support() {
                   >
                     /Yash-Zanzarukiya
                   </a>
+                </div>
+              </li>
+              <li className="flex items-center">
+                <span className="w-9 h-9 rounded-full mr-4">{icons.link}</span>
+                <div className="h-full">
+                  <h2 className="text-lg font-bold my-0">Discord</h2>
+                  <p className="text-blue-500 text-sm hover:text-blue-400 ">@yash_zanzarukiya</p>
                 </div>
               </li>
             </ul>

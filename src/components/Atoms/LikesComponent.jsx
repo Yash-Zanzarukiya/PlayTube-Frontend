@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../../app/Slices/likeSlice";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import { LoginPopup } from "..";
 
 function LikesComponent({
@@ -24,18 +23,57 @@ function LikesComponent({
   const handleToggleLike = (status) => {
     if (!authStatus) return loginPopupDialog.current?.open();
 
+    let localLike = like.isLiked,
+      localDislike = dislike.isDisLiked,
+      localTotalLike = like.totalLikes,
+      localTotalDisLike = dislike.totalDisLikes;
+
+    if (status) {
+      if (dislike.isDisLiked) {
+        localLike = true;
+        localTotalLike = like.totalLikes + 1;
+        localDislike = false;
+        localTotalDisLike = dislike.totalDisLikes - 1;
+      } else if (like.isLiked) {
+        localLike = false;
+        localTotalLike = like.totalLikes - 1;
+      } else {
+        localLike = true;
+        localTotalLike = like.totalLikes + 1;
+      }
+    } else {
+      if (like.isLiked) {
+        localLike = false;
+        localTotalLike = like.totalLikes - 1;
+        localDislike = true;
+        localTotalDisLike = dislike.totalDisLikes + 1;
+      }
+      if (dislike.isDisLiked) {
+        localDislike = false;
+        localTotalDisLike = dislike.totalDisLikes - 1;
+      } else {
+        localDislike = true;
+        localTotalDisLike = dislike.totalDisLikes + 1;
+      }
+    }
+
+    setLike((pre) => ({ ...pre, isLiked: localLike, totalLikes: localTotalLike }));
+    setDislike((pre) => ({ ...pre, isDisLiked: localDislike, totalDisLikes: localTotalDisLike }));
+
     let qs = "";
     if (videoId) qs = `videoId=${videoId}`;
     else if (commentId) qs = `commentId=${commentId}`;
     else if (tweetId) qs = `tweetId=${tweetId}`;
     else return toast.error("No id found");
-    dispatch(toggleLike({ qs, toggleLike: status })).then((res) => {
-      if (res.payload) {
-        let { isLiked, totalLikes, isDisLiked, totalDisLikes } = res.payload;
-        setLike({ isLiked, totalLikes });
-        setDislike({ isDisLiked, totalDisLikes });
-      }
-    });
+
+    dispatch(toggleLike({ qs, toggleLike: status }));
+    // .then((res) => {
+    //   if (res.payload) {
+    //     let { isLiked, totalLikes, isDisLiked, totalDisLikes } = res.payload;
+    //     setLike({ isLiked, totalLikes });
+    //     setDislike({ isDisLiked, totalDisLikes });
+    //   }
+    // });
   };
 
   return (

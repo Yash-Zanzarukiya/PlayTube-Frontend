@@ -41,7 +41,21 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
   }, [showPopup]);
 
   const handleLogin = (data) => {
-    dispatch(login(data)).then((res) => {
+    const isEmail = !data.username.startsWith("@");
+
+    if (isEmail) {
+      let isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(data.username);
+      if (!isValidEmail) {
+        toast.error("Please enter valid email id");
+        return;
+      }
+    }
+
+    const loginData = isEmail
+      ? { email: data.username, password: data.password }
+      : { username: data.username.substr(1), password: data.password };
+
+    dispatch(login(loginData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") if (route) navigate(route);
       dialog.current.close();
     });
@@ -84,16 +98,11 @@ function LoginPopup({ route, message = "Login to Continue..." }, ref) {
                 className="mx-auto flex w-full flex-col px-4 gap-y-2"
               >
                 <Input
-                  label="Username"
+                  label="Username or Email address"
                   required
-                  placeholder="Enter your Username"
+                  placeholder="use @ for username"
                   {...register("username", {
                     required: true,
-                    // validate: {
-                    //   matchPatern: (value) =>
-                    //     /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                    //     "Email address must be a valid address",
-                    // },
                   })}
                 />
                 {errors.username?.type === "required" && (

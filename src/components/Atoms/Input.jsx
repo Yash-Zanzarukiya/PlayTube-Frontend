@@ -10,7 +10,7 @@ function Input(
       {label && (
         <label
           htmlFor={id}
-          className={`mb-1 inline-block text-gray-300 capitalize ${labelClassName}`}
+          className={`mb-1 inline-block text-gray-300 ${labelClassName}`}
         >
           {required && <span className=" text-red-600 text-l">* </span>}
           {label}
