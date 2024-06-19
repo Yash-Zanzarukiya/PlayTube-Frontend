@@ -14,18 +14,16 @@ function App() {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(healthCheck())
-      .unwrap()
-      .then(() => {
-        dispatch(getCurrentUser()).then(() => setInitialLoading(false));
-      });
+    dispatch(healthCheck()).then(() => {
+      dispatch(getCurrentUser()).then(() => setInitialLoading(false));
+    });
   }, []);
 
   if (initialLoading)
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center overflow-y-auto bg-[#121212] text-white">
-        <img src={poco_loading} className="logo" alt="Vite logo" />
-        <h1 className="text-2xl">Thank you for your patience...</h1>
+        <img src={poco_loading} className="logo" alt="Loading..." />
+        <h1 className="text-2xl text-center">Please wait...</h1>
       </div>
     );
 
