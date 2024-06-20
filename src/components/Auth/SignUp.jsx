@@ -10,7 +10,9 @@ function SignUp() {
   const navigate = useNavigate();
 
   const authStatus = useSelector(({ auth }) => auth.status);
-  const { loading } = useSelector(({ user }) => user);
+  const { loading, userData } = useSelector(({ user }) => user);
+
+  if (!authStatus && userData) navigate("/login");
 
   const {
     register,
@@ -20,9 +22,7 @@ function SignUp() {
 
   const handleSignUp = (data) => {
     if (authStatus) navigate("/");
-    dispatch(createAccount(data)).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") navigate("/login");
-    });
+    dispatch(createAccount(data));
   };
 
   return (

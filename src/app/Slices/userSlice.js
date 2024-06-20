@@ -23,7 +23,7 @@ export const register = createAsyncThunk("user/register", async (data) => {
     toast.success("Account Created successfully 🥳");
     return response.data.data;
   } catch (error) {
-    toast.error(parseErrorMessage(error.response.data));
+    toast.error(error.response.data.message || parseErrorMessage(error.response.data));
     console.log(error);
   }
 });
