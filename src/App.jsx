@@ -19,6 +19,9 @@ function App() {
         setInitialLoading(false);
       });
     });
+    setInterval(() => {
+      dispatch(healthCheck());
+    }, 5 * 60 * 1000);
   }, []);
 
   if (initialLoading)

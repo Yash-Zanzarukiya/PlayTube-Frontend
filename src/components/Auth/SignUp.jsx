@@ -12,6 +12,7 @@ function SignUp() {
   const authStatus = useSelector(({ auth }) => auth.status);
   const { loading, userData } = useSelector(({ user }) => user);
 
+  if (authStatus) navigate("/");
   if (!authStatus && userData) navigate("/login");
 
   const {
@@ -21,7 +22,6 @@ function SignUp() {
   } = useForm();
 
   const handleSignUp = (data) => {
-    if (authStatus) navigate("/");
     dispatch(createAccount(data));
   };
 
