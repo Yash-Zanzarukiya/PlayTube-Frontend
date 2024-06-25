@@ -20,9 +20,9 @@ function ChannelProfileAtom({ profile, owner = false }) {
   }
 
   return (
-    <div className="flex flex-wrap gap-4 pb-4 pt-6">
+    <div className="flex flex-wrap gap-4 pb-2 pt-2 sm:pb-4 sm:pt-6">
       <LoginPopup ref={loginPopupDialog} message="Sign in to Subscribe..." />
-      <span className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full border-2">
+      <span className="relative -mt-4 sm:-mt-12 inline-block size-24 sm:size-28 shrink-0 overflow-hidden rounded-full border-2">
         <img src={profile?.avatar} alt="Channel" className="h-full w-full" />
       </span>
       <div className="mr-auto inline-block">

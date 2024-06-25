@@ -106,7 +106,7 @@ function ChannelSubscribed({ owner = false, isSubscribers = false }) {
   }
 
   return data?.length > 0 ? (
-    <ul className={`flex w-full flex-col gap-y-4 ${isSubscribers ? "px-16 py-12" : "py-4"}`}>
+    <ul className={`flex w-full flex-col gap-y-4 ${isSubscribers ? "px-8 py-8 sm:px-16 sm:py-12" : "py-4"}`}>
       {/* Search bar */}
       <div className="relative mb-2 rounded-lg bg-white py-2 pl-8 pr-3 text-black">
         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400">

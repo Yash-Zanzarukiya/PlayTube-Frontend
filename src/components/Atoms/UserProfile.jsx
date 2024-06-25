@@ -36,7 +36,7 @@ function UserProfile({ userId }) {
             <div className="h-full w-full rounded-full bg-slate-100/10 animate-pulse"></div>
           </div>
           <div className="block mt-2">
-            <p className="text-transparent w-52 h-5 mb-1 bg-slate-100/10 rounded animate-pulse"></p>
+            <p className="text-transparent sm:w-52 h-5 mb-1 bg-slate-100/10 rounded animate-pulse"></p>
             <p className="text-sm text-transparent w-32 h-5 bg-slate-100/10 rounded animate-pulse"></p>
           </div>
         </div>
@@ -44,7 +44,7 @@ function UserProfile({ userId }) {
           <div
             className={`group/btn mr-1 flex w-full items-center gap-x-2 px-3 py-2 text-center font-bold text-transparent bg-slate-100/10 rounded animate-pulse sm:w-auto`}
           >
-            <span className="inline-block w-36 h-8"></span>
+            <span className="inline-block w-16 sm:w-32 h-8"></span>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ function UserProfile({ userId }) {
         <button
           className={`group/btn mr-1 flex w-full items-center gap-x-2 ${
             profileData?.isSubscribed ? "bg-[#ae7aff] " : "bg-white"
-          }  px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto`}
+          } px-2 py-2 sm:px-3 sm:py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto`}
         >
           <span className="inline-block w-5">
             {profileData?.isSubscribed ? (

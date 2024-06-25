@@ -32,7 +32,7 @@ function Aside() {
     {
       name: "Subscriptions",
       route: `/channel/${username}/subscribed`,
-      className: `${username ? "" : "hidden"} `,
+      className: `${username ? "hidden sm:block" : "hidden"} `,
       icon: icons.Subscription,
     },
     {
@@ -68,7 +68,8 @@ function Aside() {
     {
       name: "Settings",
       route: "settings",
-      className: `${username ? "hidden sm:block" : "hidden"} `,
+      className: `${username ? "" : "hidden"} `,
+      // `${username ? "hidden sm:block" : "hidden"} `,
       icon: icons.Settings,
     },
   ];
@@ -91,7 +92,9 @@ function Aside() {
               <span className="inline-block w-8 h-8 sm:h-5 sm:w-5 justify-center items-center shrink-0 sm:group-hover:mr-4 lg:mr-4">
                 {item.icon}
               </span>
-              <span className="block mt-[2px] sm:hidden sm:group-hover:inline lg:inline">{item.name}</span>
+              <span className="block mt-[2px] sm:hidden sm:group-hover:inline lg:inline">
+                {item.name}
+              </span>
             </NavLink>
           </li>
         ))}
